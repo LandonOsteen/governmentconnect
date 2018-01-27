@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import CCCredentials from '../../credentials';
 import { Platform } from 'ionic-angular/platform/platform';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 @Component({
   selector: 'page-home',
@@ -19,6 +20,7 @@ export class HomePage {
   loggedIn = false
 
   constructor(
+    public androidPermissions: AndroidPermissions,
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public plt: Platform,
@@ -77,7 +79,33 @@ export class HomePage {
     }
   } 
 
-  launchCometChat() {
+  async launchCometChat() {
+    if (this.plt.is('android')){
+      await this.androidPermissions.requestPermissions([
+        'android.permission.INTERNET',
+        'android.permission.CHANGE_NETWORK_STATE',
+        'android.permission.ACCESS_NETWORK_STATE',
+        'android.permission.ACCESS_WIFI_STATE',
+        'android.permission.WRITE_INTERNAL_STORAGE',
+        'android.permission.READ_INTERNAL_STORAGE',
+        'android.permission.READ_EXTERNAL_STORAGE',
+        'android.permission.WRITE_EXTERNAL_STORAGE',
+        'android.permission.CAMERA',
+        'android.permission.RECORD_AUDIO',
+        'android.permission.WAKE_LOCK',
+        'android.permission.VIBRATE',
+        'android.permission.RECEIVE_BOOT_COMPLETED',
+        'android.permission.READ_CONTACTS',
+        'android.permission.GET_ACCOUNTS',
+        'android.permission.SEND_SMS',
+        'android.permission.MODIFY_AUDIO_SETTINGS',
+        'android.permission.USE_CREDENTIALS',
+        'android.permission.READ_PHONE_STATE',
+        'com.google.android.providers.gsf.permission.READ_GSERVICES',
+        'com.google.android.c2dm.permission.RECEIVE'
+      ]);
+    }
+    
     window['CCCometChat'].launchCometChat(
       this.plt.is('ios') ? 'YES' : true, 
       () => { 
@@ -96,13 +124,13 @@ export class HomePage {
 
     window['CCCometChat'].login(this.username, this.password,
       () => { 
+        loader.dismiss()
         this.loggedIn = true
         this.zone.run(() => {});
-        loader.dismiss()
       }, function (err) { 
+        loader.dismiss()
         alert('Please try again')
         this.zone.run(() => {});
-        loader.dismiss()
       }
     )
   }
