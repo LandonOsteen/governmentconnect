@@ -22,8 +22,10 @@ npm install
 ionic serve
 ```
 
-This should load the app into your browser for local testing. The native CometChat UI will not be available in this context, but it's useful for testing.
+This should load the app into your browser for local testing. The native CometChat UI will not be available in this context, but it's useful for smoketesting.
 
 To prepare for on-device deployment, run `ionic cordova prepare`.
 
 To test on-device, you may run `ionic run ios` to fire up an iOS simulator, or `ionic run android` to deploy to a real Android device. In the latter case, you must have a Android device connected to your computer in order to successfully deploy.
+
+To test on iOS, you will need to be using an Apple laptop, though any operating system will work fine for testing with Android.
