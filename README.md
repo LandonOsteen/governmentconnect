@@ -22,7 +22,7 @@ npm install
 ionic serve
 ```
 
-This should load the app into your browser for local testing.
+This should load the app into your browser for local testing. The native CometChat UI will not be available in this context, but it's useful for testing.
 
 To prepare for on-device deployment, run `ionic cordova prepare`.
 
