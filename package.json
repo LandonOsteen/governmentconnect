@@ -28,7 +28,7 @@
     "@ionic/storage": "2.1.3",
     "CometChat": "file:comet_chat",
     "com-cccometchat-plugin": "./comet_chat",
-    "cordova-android": "6.3.0",
+    "cordova-android": "^6.3.0",
     "cordova-ios": "4.5.4",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-device": "^1.1.4",
