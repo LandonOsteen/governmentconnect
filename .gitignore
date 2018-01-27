@@ -19,6 +19,7 @@ npm-debug.log*
 .versions/
 coverage/
 dist/
+comet_chat/
 node_modules/
 tmp/
 temp/
