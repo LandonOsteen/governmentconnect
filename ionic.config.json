@@ -1,0 +1,8 @@
+{
+  "name": "government-connect",
+  "app_id": "25af6138",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
