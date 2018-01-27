@@ -3,7 +3,19 @@ Goverment Connect
 
 Welcome to the application repository for [Government Connect](https://governmentconnect.net/).
 
-To get started, ensure that you have the latest Ionic CLI installed, then add a folder at the root of the app directory titled `comet_chat`. Paste your CometChat mobile SDK files into this folder. Then run the following commands:
+To get started, ensure that you have the latest Ionic CLI installed, then add a folder at the root of the app directory titled `comet_chat`. Paste your CometChat mobile SDK files into this folder. 
+
+You'll also need to create a `credentials.ts` file within the `src` directory, and it should have the following format:
+
+```javascript
+export default {
+  'cometchat_domain': 'YOUR_COMET_CHAT_DOMAIN',
+  'cometchat_api_key': 'YOUR_COMET_CHAT_API_KEY',
+  'cometchat_license_key': 'YOUR_COMET_CHAT_LICENSE_KEY' 
+}
+```
+
+Then run the following commands:
 
 ```bash
 npm install

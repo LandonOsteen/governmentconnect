@@ -1,14 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Government Connect
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <p *ngIf="initializing">Initializing CometChat...</p>
+  <div *ngIf="!initializing">
+    <p>Welcome to the beginnings of the Government Connect app. Press the button below to launch the UI (it can take a second or so...)</p>
+    <button ion-button block color="primary" (click)="launchCometChat()">Launch Comet Chat UI</button>
+  </div>
 </ion-content>
+
