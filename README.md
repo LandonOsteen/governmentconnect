@@ -1,4 +1,4 @@
-Goverment Connect
+Government Connect
 =================
 
 Welcome to the application repository for [Government Connect](https://governmentconnect.net/).
