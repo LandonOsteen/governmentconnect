@@ -7,6 +7,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
 import { LoginPage } from "../pages/login/login";
 import { CometChatProvider } from '../providers/comet-chat/comet-chat';
+import { IonicStorageModule } from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CometChatProvider } from '../providers/comet-chat/comet-chat';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
