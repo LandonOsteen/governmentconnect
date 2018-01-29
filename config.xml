@@ -1,8 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.landonosteen.governmentconnect" version="1.0.0" 
-    xmlns="http://www.w3.org/ns/widgets" 
-    xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.landonosteen.governmentconnect" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Government Connect</name>
     <description>The Government Connect application.</description>
     <author email="support@governmentconnect.com" href="https://governmentconnect.com">Government Connect</author>
@@ -107,6 +104,15 @@
                 <key>NSAllowsArbitraryLoads</key>
                 <true />
             </dict>
+        </config-file>
+        <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
+            <string>We allow you to upload photos from your library.</string>
+        </config-file>
+        <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
+            <string>We allow you talk to other users.</string>
+        </config-file>
+        <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
+            <string>We allow you to take pictures and share them with other users.</string>
         </config-file>
     </platform>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
