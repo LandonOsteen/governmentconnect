@@ -14,12 +14,11 @@
     <div class="spacer-vertical"></div>
     <ion-spinner></ion-spinner>
   </div>
-  <div class="login-launch-message" *ngIf="launched">
-    <button ion-button block color="light-primary" (click)="launch()">Relaunch</button>
-    <button ion-button block color="primary" (click)="logout()">Logout</button>
-  </div>
-  <p *ngIf="!initializing && initializationError">Sorry, there was an error initializing the SDK. {{ initializationError }}</p>
-  <div *ngIf="!initializing && !launching && !initializationError">
+  <div *ngIf="initialized && !launching">
+    <div class="login-launch-message" *ngIf="loggedIn">
+      <button ion-button block color="light-primary" (click)="launch()">Relaunch</button>
+      <button ion-button block color="primary" (click)="logout()">Logout</button>
+    </div>
     <div *ngIf="!loggedIn">
       <ion-list class="login-item-list">
         <ion-item>
@@ -33,4 +32,5 @@
       </ion-list>
     </div>
   </div>
+  <p *ngIf="initializationError">Sorry, there was an error initializing the SDK. {{ initializationError }}</p>
 </ion-content>

@@ -112,4 +112,15 @@ export class CometChatProvider {
       CCCometChat.login(username, password, resolve, reject)
     })
   }
+
+  async logout() {
+    if (this.plt.is('core') || this.plt.is('mobileweb')) {
+      // Fake out login for testing in Ionic Serve.
+      return await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
+    return new Promise((resolve, reject) => {
+      CCCometChat.logout(resolve, reject)
+    })
+  }
 }

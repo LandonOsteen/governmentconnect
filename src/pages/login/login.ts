@@ -14,8 +14,9 @@ export class LoginPage {
   initialized = false
   initializationError = null
 
+  loggedIn = false
+
   launching = false
-  launched = false
   launchError = null
 
   username = ''
@@ -39,11 +40,12 @@ export class LoginPage {
 
     if (isLoggedIn) {
       this.launch()
-      this.initializing = false
-      this.initialized = true
-    } else {
-      this.initializing = false
+
+      this.loggedIn = true
     }
+
+    this.initializing = false
+    this.initialized = true
   }
 
   async launch() {
@@ -51,8 +53,7 @@ export class LoginPage {
 
     try {
       await this.cometChat.launch()
-
-      this.launched = true
+      this.launching = false
     } catch (err) {
       this.launchError = err;
 
@@ -76,8 +77,27 @@ export class LoginPage {
     }
 
     await this.storage.set('isLoggedIn', true)
+    this.loggedIn = true
 
     this.launch()
+
+    loader.dismiss()
+  }
+
+  async logout() {
+    const loader = this.loadingCtrl.create();
+
+    loader.present()
+
+    try {
+      await this.cometChat.logout()
+      await this.storage.set('isLoggedIn', false)
+
+      this.loggedIn = false
+    } catch (err) {
+      alert('Sorry, there was an error logging you out.')
+      return
+    }
 
     loader.dismiss()
   }
