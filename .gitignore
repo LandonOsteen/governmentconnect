@@ -17,6 +17,7 @@ npm-debug.log*
 .sass-cache/
 .tmp/
 .versions/
+assets/
 coverage/
 dist/
 comet_chat/
