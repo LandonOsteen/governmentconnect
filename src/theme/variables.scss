@@ -84,5 +84,7 @@ $colors: (
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+$font-family-base: 'Montserrat';
+$font-family-ios-base: 'Montserrat';
+$font-family-md-base: 'Montserrat';
+$font-family-wp-base: 'Montserrat';
