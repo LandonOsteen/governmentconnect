@@ -88,6 +88,11 @@ export class CometChatProvider {
   async launch() {
     await this.initialize()
 
+    if (this.plt.is('core') || this.plt.is('mobileweb')) {
+      // Fake out login for testing in Ionic Serve.
+      return await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
     if (this.plt.is('android')) {
       await this.androidPermissions.requestPermissions(ANDROID_PERMISSIONS)
     }
@@ -97,6 +102,11 @@ export class CometChatProvider {
 
   async login(username: string, password: string) {
     await this.initialize()
+
+    if (this.plt.is('core') || this.plt.is('mobileweb')) {
+      // Fake out login for testing in Ionic Serve.
+      return await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
 
     return new Promise((resolve, reject) => {
       CCCometChat.login(username, password, resolve, reject)

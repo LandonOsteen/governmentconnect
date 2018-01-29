@@ -15,7 +15,108 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+// Input Overrides
+
+ion-input.input {
+  margin-bottom: 1rem;
+
+  input {
+    margin: 0;
+    width: 100%;
+    font-family: 'Montserrat';
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+  }
+
+  &[color="light"] {
+    border-bottom: 2px solid map-get($colors, light);
+  }
+
+  &[color="light"] input {
+    color: map-get($colors, light);
+    
+    &::placeholder {
+      color: map-get($colors, light);
+    }
+  }
+
+  &[color="primary"] {
+    border-bottom: 2px solid map-get($colors, primary);
+  }
+
+  &[color="primary"] input {
+    color: map-get($colors, primary);
+    
+    &::placeholder {
+      color: map-get($colors, primary);
+    }
+  }
+}
+
+.item-block {
+  min-height: unset;
+}
+
+// Item Overrides
+
+
+.item-ios,
+.item-md,
+.item-wp {
+  background-color: transparent !important;
+}
+
+ion-thumbnail img {
+  border-radius: 5px;
+}
+
+.list-ios .item-input,
+.list-md .item-input,
+.list-wp .item-input {
+  border-bottom: 0 !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+}
+
+.list-ios .item-inner,
+.list-md .item-inner,
+.list-wp .item-inner {
+  padding: 0 !important;
+  border-bottom: 0 !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+}
+
+.item-ios.item-block .item-inner {
+  border-bottom: 0;
+}
+
+// Spacers
+
+.spacer-vertical {
+  height: 1rem;
+  width: 100%;
+}
+
+.spacer-horizontal {
+  height: 100%;
+  width: 1rem;
+}
+
+@for $i from 2 through 20 {
+  .spacer-vertical-#{$i} { 
+    height: 1rem * $i;
+    width: 100%;
+  }
+
+  .spacer-horizontal-#{$i} {
+    height: 100%;
+    width: 1rem * $i;
+  }
+}
+
 // Fonts
+
 
 @font-face {
   font-family: 'Montserrat';

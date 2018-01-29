@@ -1,0 +1,22 @@
+@import "../../theme/variables.scss";
+
+page-login {
+  .content {
+    background-color: map-get($colors, 'primary');
+  }
+
+  .login-item-list .item {
+    background-color: transparent;
+  }
+
+  .login-item-list > .item-block:first-child {
+    border-top: 0;
+  }
+
+  .login-init-message,
+  .login-launch-message {
+    color: map-get($colors, 'light');
+    text-align: center;
+  }
+
+}

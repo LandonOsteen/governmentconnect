@@ -5,13 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { LoginPage } from "../pages/login/login";
 import { CometChatProvider } from '../providers/comet-chat/comet-chat';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -20,14 +20,14 @@ import { CometChatProvider } from '../providers/comet-chat/comet-chat';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    LoginPage
   ],
   providers: [
     AndroidPermissions,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     CometChatProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

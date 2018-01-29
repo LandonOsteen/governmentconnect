@@ -1,24 +1,20 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import CCCredentials from '../../credentials';
-import { Platform } from 'ionic-angular/platform/platform';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { CometChatProvider } from '../../providers/comet-chat/comet-chat';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-login',
+  templateUrl: 'login.html'
 })
-export class HomePage {
+export class LoginPage {
 
   initializing = true
   initializationError = null
+  launching = false
 
   username = ''
   password = ''
-
-  loggedIn = false
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -36,14 +32,6 @@ export class HomePage {
     this.initializing = false
   }
 
-  async launchCometChat() {
-    try {
-      this.cometChat.launch()
-    } catch (err) {
-      alert('Sorry, there was an error launching the chat client.')
-    }
-  }
-
   async login() {
     const loader = this.loadingCtrl.create();
 
@@ -51,14 +39,23 @@ export class HomePage {
 
     try {
       await this.cometChat.login(this.username, this.password)
-
-      this.loggedIn = true
     } catch (err) {
       alert('Sorry, those credentials didn\'t work')
     }
 
     loader.dismiss()
 
+    this.launching = true
+
+    try {
+      this.cometChat.launch()
+    } catch (err) {
+      alert('Sorry, there was an error launching the chat client.')
+    }
+  }
+
+  recover() {
+    window.location.href = 'https://governmentconnect.net/password-reset'
   }
 
 }
