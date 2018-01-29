@@ -3,6 +3,8 @@ Government Connect
 
 Welcome to the application repository for [Government Connect](https://governmentconnect.net/).
 
+# Getting Started 
+
 To get started, ensure that you have the latest Ionic CLI installed, then add a folder at the root of the app directory titled `comet_chat`. Paste your CometChat mobile SDK files into this folder. 
 
 You'll also need to create a `credentials.ts` file within the `src` directory, and it should have the following format:
@@ -29,3 +31,9 @@ To prepare for on-device deployment, run `ionic cordova prepare`.
 To test on-device, you may run `ionic run ios` to fire up an iOS simulator, or `ionic run android` to deploy to a real Android device. In the latter case, you must have a Android device connected to your computer in order to successfully deploy.
 
 To test on iOS, you will need to be using an Apple laptop, though any operating system will work fine for testing with Android.
+
+# Tips & Pitfalls
+
+### ITMS-90535 Error When Uploading To iOS
+
+When uploading to iTunes Connect, you may receive an error that says "missing or invalid CFBundleExecutable in its info.plist", citing error number ITMS-90535, and referring to the CometChat MessageSDK. The solution to this issue is simply to open the MessageSDK framework `plist` and delete the `CFBundleExecutable` key and re-upload. 
