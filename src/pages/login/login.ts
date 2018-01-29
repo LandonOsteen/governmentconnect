@@ -34,6 +34,8 @@ export class LoginPage {
       await this.cometChat.initialize()
     } catch (err) {
       this.initializationError = err
+      this.initializing = false
+      return
     }
 
     const isLoggedIn = await this.storage.get('isLoggedIn')

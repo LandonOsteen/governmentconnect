@@ -187,3 +187,9 @@ ion-thumbnail img {
   font-weight: 700; 
   src: url('../assets/fonts/Montserrat-ExtraBoldItalic.ttf')  format('truetype')
 }
+
+// Spinner Overrides
+
+ion-spinner[color="light"] {
+  stroke: map-get($colors, "light");
+}

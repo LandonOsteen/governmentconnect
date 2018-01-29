@@ -40,6 +40,11 @@ export class CometChatProvider {
   ) { }
 
   private async _getInstance() {
+    if (this.plt.is('core') || this.plt.is('mobileweb')) {
+      // Fake out initialization for testing in Ionic Serve.
+      return await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
     return new Promise((resolve, reject) => {
       CCCometChat.getInstance(resolve, reject)
     })
@@ -48,7 +53,7 @@ export class CometChatProvider {
   private async _initialize() {
     if (this.plt.is('core') || this.plt.is('mobileweb')) {
       // Fake out initialization for testing in Ionic Serve.
-      return await new Promise((resolve) => setTimeout(resolve, 1000))
+      return await new Promise((resolve) => setTimeout(resolve, 2000))
     }
 
     return new Promise((resolve, reject) => {
