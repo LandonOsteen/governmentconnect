@@ -22,7 +22,9 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
+$font-size-base: 1.5rem;
 
+$h4-font-size: 1.8rem;
 
 
 // Named Color Variables
@@ -34,14 +36,15 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #75B1D8,
+  primary:    #4A90E2,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
+  fade:       #F5F5F5,
   light-primary: (
     base:     #f4f4f4,
-    contrast: #75B1D8
+    contrast: #4A90E2
   ),
 );
 
@@ -51,6 +54,15 @@ $colors: (
 
 $item-ios-padding-left: 0;
 $spinner-ios-ios-color: map-get($colors, 'light');
+
+$button-ios-border-radius: 6px;
+$button-ios-font-size: 15px;
+$button-ios-height: 50px;
+$button-ios-margin-top: 0;
+$button-ios-margin-end: 0;
+$button-ios-margin-bottom: 10px;
+$button-ios-margin-start: 10px;
+$button-ios-outline-border-width: 2px;
 
 // App Material Design Variables
 // --------------------------------------------------

@@ -1,0 +1,76 @@
+@import "../../theme/variables.scss";
+
+page-welcome {
+  .swiper-container {
+    overflow: initial;
+  }
+
+  .swiper-pagination {
+    transform: translateY(-110px);
+  }
+
+  .welcome-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .welcome-slider-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 auto;
+    width: 75vw;
+  }
+
+  .welcome-slider-image {
+    margin-bottom: 60px;
+    width: 75vw;
+    height: 75vw;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    transition: transform 500ms ease-in-out;
+    transform: scale(0.8);
+
+    &.staffer-with-coffee {
+      background-image: url(/assets/imgs/staffer-with-coffee.png);
+    }
+    
+    &.staffer-with-phone {
+      background-image: url(/assets/imgs/staffer-with-phone.png);
+    }
+    
+    &.staffer-with-phone-2 {
+      background-image: url(/assets/imgs/staffer-with-phone-2.png);
+    }
+  }
+
+  .welcome-slider-body {
+    height: 100px;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .swiper-slide-active .welcome-slider-image {
+    transform: scale(1);
+  }
+
+  .swiper-slide-active .welcome-slider-body { 
+    opacity: 1;
+    transition: opacity 500ms 100ms ease-in-out;
+  }
+
+  .welcome-get-started-container {
+    flex-basis: 100px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid map-get($colors, "fade");
+    padding: 20px;
+    width: 100vw;
+  }
+}
