@@ -77,6 +77,21 @@ $text-input-ios-margin-left: 0;
 $item-md-padding-left: 0;
 $spinner-ios-ios-color: map-get($colors, 'light');
 
+$button-md-border-radius: 6px;
+$button-md-box-shadow: unset;
+$button-md-box-shadow-activated: unset;
+$button-md-clear-box-shadow-activated: unset;
+$button-md-font-size: 15px;
+$button-md-font-weight: 500;
+$button-md-height: 50px;
+$button-md-margin-top: 0;
+$button-md-margin-end: 0;
+$button-md-margin-bottom: 10px;
+$button-md-margin-start: 10px;
+$button-md-outline-border-width: 2px;
+$button-md-outline-box-shadow-activated: unset;
+$button-md-text-transform: unset;
+
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
