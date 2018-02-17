@@ -9,6 +9,11 @@ page-welcome {
     transform: translateY(-110px);
   }
 
+  .scroll-content {
+    padding-top: 0;
+    overflow: hidden;
+  }
+
   .welcome-page-container {
     display: flex;
     flex-direction: column;
@@ -35,15 +40,28 @@ page-welcome {
     transform: scale(0.8);
 
     &.staffer-with-coffee {
-      background-image: url(/assets/imgs/staffer-with-coffee.png);
+      background-image: url(../assets/imgs/staffer-with-coffee.png);
     }
     
     &.staffer-with-phone {
-      background-image: url(/assets/imgs/staffer-with-phone.png);
+      background-image: url(../assets/imgs/staffer-with-phone.png);
     }
     
     &.staffer-with-phone-2 {
-      background-image: url(/assets/imgs/staffer-with-phone-2.png);
+      background-image: url(../assets/imgs/staffer-with-phone-2.png);
+    }
+  }
+
+  @media (max-height: 500px) {
+    .welcome-slider-image {
+      display: inline-block;
+      margin-bottom: 20px;
+      width: 60vw;
+      height: 60vw;
+    }
+
+    .swiper-pagination {
+      transform: translateY(-100px);
     }
   }
 
@@ -51,6 +69,8 @@ page-welcome {
     height: 100px;
     opacity: 0;
     transition: opacity 300ms ease-in-out;
+    text-align: center;
+    overflow: initial;
   }
 
   .swiper-slide-active .welcome-slider-image {
