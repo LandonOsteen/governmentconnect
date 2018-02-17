@@ -18,14 +18,16 @@
 // Input Overrides
 
 ion-input.input {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   input {
     margin: 0;
+    padding: 10px;
+    background-color: map-get($colors, 'fade');
     width: 100%;
     font-family: 'Montserrat';
-    font-size: 1.6rem;
-    line-height: 2.8rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
   }
 
   &[color="light"] {
@@ -118,6 +120,10 @@ ion-thumbnail img {
 
 .marginless {
   margin: 0 !important;
+}
+
+.no-border-radius {
+  border-radius: 0 !important;
 }
 
 // Fonts

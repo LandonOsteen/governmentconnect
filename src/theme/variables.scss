@@ -36,15 +36,15 @@ $h4-font-size: 1.8rem;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #4A90E2,
+  primary:    #4a90e2,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
+  fade:       #ebeced,
   dark:       #222,
-  fade:       #F5F5F5,
   light-primary: (
     base:     #f4f4f4,
-    contrast: #4A90E2
+    contrast: #4a90e2
   ),
 );
 
@@ -63,6 +63,12 @@ $button-ios-margin-end: 0;
 $button-ios-margin-bottom: 10px;
 $button-ios-margin-start: 10px;
 $button-ios-outline-border-width: 2px;
+
+$text-input-ios-background-color: map-get($colors, 'primary');
+$text-input-ios-margin-right: 0;
+$text-input-ios-margin-end: 0;
+$text-input-ios-margin-start: 0;
+$text-input-ios-margin-left: 0;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -88,7 +94,7 @@ $spinner-ios-ios-color: map-get($colors, 'light');
 @import "ionic.theme.default";
 
 $text-input-ios-margin-top: 0;
-$text-input-ios-margin-bottom: 10px;
+$text-input-ios-margin-bottom: 15px;
 
 // Ionicons
 // --------------------------------------------------
