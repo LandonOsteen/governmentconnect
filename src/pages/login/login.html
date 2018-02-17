@@ -1,3 +1,7 @@
 <ion-content padding>
-  <h1>WIP</h1>
+  <input type="email" [(ngModel)]="email" placeholder="Enter your email" />
+  <input type="password" [(ngModel)]="password" placeholder="Enter your password" />
+  <div>
+    <button (click)="login()">Login</button>
+  </div>
 </ion-content>
