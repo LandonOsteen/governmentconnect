@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
 import { LoginPage } from "../pages/login/login";
-import { CometChatProvider } from '../providers/comet-chat/comet-chat';
 import { IonicStorageModule } from "@ionic/storage";
 
 @NgModule({
@@ -29,7 +28,6 @@ import { IonicStorageModule } from "@ionic/storage";
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    CometChatProvider
   ]
 })
 export class AppModule { }

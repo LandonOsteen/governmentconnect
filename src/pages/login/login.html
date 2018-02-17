@@ -1,36 +1,3 @@
 <ion-content padding>
-  <div class="spacer-vertical-4"></div>
-  <img src="assets/imgs/text-logo-white.png" />
-  <div class="spacer-vertical-2"></div>
-  <div class="login-init-message" *ngIf="initializing">
-    <div class="spacer-vertical-2"></div>
-    <h4>Setting things up...</h4>
-    <div class="spacer-vertical"></div>
-    <ion-spinner color="light"></ion-spinner>
-  </div>
-  <div class="login-launch-message" *ngIf="launching">
-    <div class="spacer-vertical-2"></div>
-    <h4>Launching...</h4>
-    <div class="spacer-vertical"></div>
-    <ion-spinner color="light"></ion-spinner>
-  </div>
-  <div *ngIf="initialized && !launching">
-    <div class="login-launch-message" *ngIf="loggedIn">
-      <button ion-button block color="light-primary" (click)="launch()">Relaunch</button>
-      <button ion-button block color="primary" (click)="logout()">Logout</button>
-    </div>
-    <div *ngIf="!loggedIn">
-      <ion-list class="login-item-list">
-        <ion-item>
-          <ion-input color="light" type="text" placeholder="Your username" [(ngModel)]="username"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input color="light" type="password" placeholder="Your password" [(ngModel)]="password"></ion-input>
-        </ion-item>
-        <button ion-button block color="light-primary" (click)="login()">Login</button>
-        <button ion-button block color="primary" (click)="recover()">I forgot my password</button>
-      </ion-list>
-    </div>
-  </div>
-  <p *ngIf="initializationError">Sorry, there was an error initializing the SDK. {{ initializationError }}</p>
+  <h1>WIP</h1>
 </ion-content>
