@@ -7,6 +7,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
 import { LoginPage } from "../pages/login/login";
 import { IonicStorageModule } from "@ionic/storage";
+import { AuthProvider } from '../providers/auth/auth';
+import { AngularFireModule } from "angularfire2";
+import { AngularFireAuthModule } from "angularfire2/auth";
+import env from "../env";
 
 @NgModule({
   declarations: [
@@ -15,6 +19,8 @@ import { IonicStorageModule } from "@ionic/storage";
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(env.firebase),
+    AngularFireAuthModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -28,6 +34,7 @@ import { IonicStorageModule } from "@ionic/storage";
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AuthProvider
   ]
 })
 export class AppModule { }
