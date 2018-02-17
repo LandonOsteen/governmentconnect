@@ -20,7 +20,7 @@ export class LoginPage {
 
   async login() {
     try {
-      const user = await this.firebaseAuth.auth.signInAndRetrieveDataWithEmailAndPassword(this.email, this.password)
+      await this.firebaseAuth.auth.signInAndRetrieveDataWithEmailAndPassword(this.email, this.password)
 
       const alert = this.alertCtrl.create({
         title: 'Success!',
