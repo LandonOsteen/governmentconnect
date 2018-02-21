@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ContactsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ContactsProvider } from '../../providers/contacts/contacts';
 
 @IonicPage()
 @Component({
@@ -15,11 +9,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ContactsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  contacts = []
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public contactsProvider: ContactsProvider
+  ) { }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactsPage');
+    this.contactsProvider.getContacts().first().subscribe((val) => {
+      this.contacts = Object['values'](val)
+    });
   }
 
 }
