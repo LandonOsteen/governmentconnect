@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { APP_PAGES } from "../../enums";
 
 @IonicPage()
 @Component({
@@ -22,12 +23,7 @@ export class LoginPage {
     try {
       await this.firebaseAuth.auth.signInAndRetrieveDataWithEmailAndPassword(this.email, this.password)
 
-      const alert = this.alertCtrl.create({
-        title: 'Success!',
-        message: 'Those credentials are valid!'
-      })
-
-      alert.present()
+      this.navCtrl.push(APP_PAGES.TABS_PAGE) 
     } catch (err) {
       const alert = this.alertCtrl.create({
         title: 'Hmm...',
