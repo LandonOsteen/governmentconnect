@@ -1,3 +1,59 @@
-page-contact {
+@import "../../theme/variables.scss";
 
+.contact-page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.contact-page-header-inner {
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.contact-page-header-image {
+  margin-right: 20px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.contact-page-header-title {
+  font-size: 16px;
+  font-weight: $font-weight-bold;
+}
+
+.contact-page-header-subtitle-primary,
+.contact-page-header-subtitle-secondary {
+  font-size: 14px;
+}
+
+.contact-page-header-subtitle-secondary {
+  font-weight: $font-weight-light;
+}
+
+.contact-page-body {
+  padding: 20px 40px;
+  min-height: 200px;
+  background-color: #FAFAFA;
+}
+
+.contact-page-body-item {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+  height: 35px;
+  line-height: 35px;
+}
+
+.contact-page-body-item-title {
+  font-weight: $font-weight-light;
+  color: #8392A7;
+}
+
+.contact-page-body-item-content {
+  color: #3B4859;
 }

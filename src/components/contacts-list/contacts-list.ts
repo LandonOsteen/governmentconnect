@@ -8,9 +8,12 @@ export class ContactsListComponent {
 
   @Input('contacts') contacts: any[] = [];
 
+  getNavParams(contact) {
+    return { contactId: contact.uid }; 
+  }
+
   constructor() {
     console.log('Hello ContactsListComponent Component');
-    console.log(this.contacts)
   }
 
 }

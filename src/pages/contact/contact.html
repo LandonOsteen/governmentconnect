@@ -1,12 +1,44 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>contact</ion-title>
+    <ion-title>Contact</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-
+<ion-content>
+  <div class="contact-page-header">
+    <div class="contact-page-header-inner">
+      <img class="contact-page-header-image" [src]="contact.photoUrl" />
+      <div class="contact-page-header-body">
+        <div class="contact-page-header-title">{{ contact.firstName }} {{ contact.lastName }}</div>
+        <div class="contact-page-header-subtitle-primary">{{ contact.title }}</div>
+        <div class="contact-page-header-subtitle-secondary">{{ contact.stafferFor }}</div> 
+      </div>
+    </div>
+  </div>
+  <div class="contact-page-body">
+    <div class="contact-page-body-item">
+      <div class="contact-page-body-item-title">First Name</div>
+      <div class="contact-page-body-item-content">{{ contact.firstName }}</div>
+    </div>
+    <div class="contact-page-body-item">
+      <div class="contact-page-body-item-title">Last Name</div>
+      <div class="contact-page-body-item-content">{{ contact.lastName }}</div>
+    </div>
+    <div class="contact-page-body-item">
+      <div class="contact-page-body-item-title">Email</div>
+      <div class="contact-page-body-item-content">{{ contact.email }}</div>
+    </div>
+    <div class="contact-page-body-item">
+      <div class="contact-page-body-item-title">Agency</div>
+      <div class="contact-page-body-item-content">{{ contact.agency }}</div>
+    </div>
+    <div class="contact-page-body-item">
+      <div class="contact-page-body-item-title">Title</div>
+      <div class="contact-page-body-item-content">{{ contact.title }}</div>
+    </div>
+  </div>
+  <div class="contact-page-actions" padding>
+    <button ion-button block color="primary" *ngIf="!contact.pending && !contact.established">Send Request</button>
+    <button ion-button block color="primary" *ngIf="contact.established">Start Chatting</button>
+    <button ion-button block outline color="primary" *ngIf="contact.established">Remove Contact</button>
+  </div>
 </ion-content>
