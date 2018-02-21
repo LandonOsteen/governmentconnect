@@ -8,7 +8,9 @@ import { MyApp } from './app.component';
 
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireDatabaseModule } from "angularfire2/database";
 import env from "../env";
+import { ContactsProvider } from '../providers/contacts/contacts';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import env from "../env";
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(env.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,7 +31,8 @@ import env from "../env";
     AndroidPermissions,
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ContactsProvider
   ]
 })
 export class AppModule { }
