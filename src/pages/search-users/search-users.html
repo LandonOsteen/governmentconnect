@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Search</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="query"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onQuery($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <users-list [users]="users"></users-list>
+</ion-content>

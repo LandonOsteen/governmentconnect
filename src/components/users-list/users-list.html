@@ -1,0 +1,8 @@
+<div class="users-list">
+  <div class="user" *ngFor="let user of users" navPush="UserPage" [navParams]="getNavParams(user)">
+    <img class="user-image" [src]="user.photoUrl" />
+    <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
+    <div class="user-subtitle">{{user.title}}</div>
+  </div>
+</div>
+  

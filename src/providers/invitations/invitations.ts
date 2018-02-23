@@ -10,10 +10,22 @@ export class InvitationsProvider {
     public firebaseDatabase: AngularFireDatabase
   ) { }
 
+  acceptInvitation(invitorId: string) {
+    // Transaction with three components:
+    // 1. Create my own connection.
+    // 2. Set the other connection to ACCEPTED.
+    // 3. Set invite to ACCEPTED.
+  }
+
+  rejectInvitation(invitorId: string) {
+    // Transaction with three components:
+    // 1. Set the other connection to REJECTED.
+    // 2. Set invite to REJECTED.
+  }
+
   getInvitations() {
     const user = this.firebaseAuth.auth.currentUser
 
-    console.log(user)
     return this.firebaseDatabase
       .object(`invitations/${user.uid}`)
       .valueChanges()

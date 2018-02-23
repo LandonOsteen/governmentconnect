@@ -7,3 +7,10 @@ interface Contact {
   pending: boolean,
   accepted: boolean
 }
+
+interface User {
+  firstName: string,
+  lastName: string,
+  title: string,
+  stafferFor: string
+}
