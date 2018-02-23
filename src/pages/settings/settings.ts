@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { APP_PAGES } from '../../enums';
 
 @IonicPage()
 @Component({
@@ -8,11 +10,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(
+    public navCtrl: NavController, 
+    public firebaseAuth: AngularFireAuth
+  ) { }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsPage');
+  async logout() {
+    await this.firebaseAuth.auth.signOut()
+
+    this.navCtrl.popTo(APP_PAGES.WELCOME_PAGE)
   }
 
 }

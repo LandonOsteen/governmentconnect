@@ -31,4 +31,29 @@ export class ContactsProvider {
     }
   }
 
+  // To initiate a connection, you simply need to write to the "connections" hash for your user the 
+  // following:
+  // [$uid]: {
+  //   uid: ' ... '
+  // }
+  //
+  // A Firebase cloud function will be trigger by your doing so, and the remainder of the connection
+  // will be fleshed out. Additionally, a connection object will be created for the receiving user...
+  initiateConnection(contactId: string) {
+    const user = this.firebaseAuth.auth.currentUser
+    
+    if (user) {
+      this.firebaseDatabase.object(`connections/${contactId}/${user.uid}/initiated`).set(true)
+
+      this.firebaseDatabase.object(`connections/${user.uid}/${contactId}/established`).set(true)
+      this.firebaseDatabase.object(`connections/${user.uid}/${contactId}/initiated`).set(true)
+    }
+  }
+
+  revokeConnectionRequest(contactId: string) {
+    const user = this.firebaseAuth.auth.currentUser
+
+    this.firebaseDatabase.object(`connections/${user.uid}/${contactId}`).remove()
+    this.firebaseDatabase.object(`invites/${contactId}/${user.uid}`).remove()
+  }
 }

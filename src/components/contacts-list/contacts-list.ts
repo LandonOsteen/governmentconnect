@@ -9,7 +9,7 @@ export class ContactsListComponent {
   @Input('contacts') contacts: any[] = [];
 
   getNavParams(contact) {
-    return { contactId: contact.uid }; 
+    return { userId: contact.uid }; 
   }
 
   constructor() {

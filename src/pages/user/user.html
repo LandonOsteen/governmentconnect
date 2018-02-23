@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Contact</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="user-page-header">
+    <div class="user-page-header-inner">
+      <img class="user-page-header-image" [src]="user.photoUrl" />
+      <div class="user-page-header-body">
+        <div class="user-page-header-title">{{ user.firstName }} {{ user.lastName }}</div>
+        <div class="user-page-header-subtitle-primary">{{ user.title }}</div>
+        <div class="user-page-header-subtitle-secondary">{{ user.stafferFor }}</div> 
+      </div>
+    </div>
+  </div>
+  <div class="user-page-body">
+    <div class="user-page-body-item">
+      <div class="user-page-body-item-title">First Name</div>
+      <div class="user-page-body-item-content">{{ user.firstName }}</div>
+    </div>
+    <div class="user-page-body-item">
+      <div class="user-page-body-item-title">Last Name</div>
+      <div class="user-page-body-item-content">{{ user.lastName }}</div>
+    </div>
+    <div class="user-page-body-item">
+      <div class="user-page-body-item-title">Email</div>
+      <div class="user-page-body-item-content">{{ user.email }}</div>
+    </div>
+    <div class="user-page-body-item">
+      <div class="user-page-body-item-title">Agency</div>
+      <div class="user-page-body-item-content">{{ user.agency }}</div>
+    </div>
+    <div class="user-page-body-item">
+      <div class="user-page-body-item-title">Title</div>
+      <div class="user-page-body-item-content">{{ user.title }}</div>
+    </div>
+  </div>
+  <div class="user-page-actions" padding>
+    <button ion-button block color="primary" *ngIf="!contact">Send Request</button>
+    <button ion-button block color="primary" *ngIf="contact && contact.status === 'REQUESTED'" (click)="revokeConnectionRequest()">Revoke Connection Request</button>
+    <button ion-button block color="primary" *ngIf="contact && contact.status === 'ACTIVE'">Start Chatting</button>
+    <button ion-button block outline color="semidark" *ngIf="contact && contact.status === 'ACTIVE'">Remove user</button>
+  </div>
+</ion-content>

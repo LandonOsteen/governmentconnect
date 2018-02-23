@@ -19,7 +19,7 @@ export class ContactsPage {
 
   ionViewDidLoad() {
     this.contactsProvider.getContacts().first().subscribe((val) => {
-      this.contacts = Object['values'](val)
+      this.contacts = Object['values'](val || {})
     });
   }
 
