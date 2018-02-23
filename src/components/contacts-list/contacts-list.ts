@@ -12,8 +12,4 @@ export class ContactsListComponent {
     return { userId: contact.uid }; 
   }
 
-  constructor() {
-    console.log('Hello ContactsListComponent Component');
-  }
-
 }

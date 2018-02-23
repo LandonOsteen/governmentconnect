@@ -12,6 +12,7 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 import env from "../env";
 import { ContactsProvider } from '../providers/contacts/contacts';
 import { UserProvider } from '../providers/user/user';
+import { InvitationsProvider } from '../providers/invitations/invitations';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UserProvider } from '../providers/user/user';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ContactsProvider,
-    UserProvider
+    UserProvider,
+    InvitationsProvider
   ]
 })
 export class AppModule { }

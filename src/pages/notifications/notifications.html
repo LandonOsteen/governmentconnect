@@ -4,4 +4,8 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+  <h1>Invitations</h1>
+  <div *ngFor="let invite of invites">
+    <div>{{ invite.firstName }} {{ invite.lastName }}</div>
+  </div>
 </ion-content>
