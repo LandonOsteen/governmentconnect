@@ -11,6 +11,8 @@ interface Contact {
 interface User {
   firstName: string,
   lastName: string,
+  photoUrl: string,
+  stafferFor: string,
   title: string,
-  stafferFor: string
+  uid: string
 }

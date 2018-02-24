@@ -18,8 +18,8 @@ export class ContactsPage {
   ) { }
 
   ionViewDidLoad() {
-    this.contactsProvider.getContacts().first().subscribe((val) => {
-      this.contacts = Object['values'](val || {})
+    this.contactsProvider.getContacts().subscribe((val) => {
+      this.contacts = Object['values'](val || {}).filter(c => c.active)
     });
   }
 

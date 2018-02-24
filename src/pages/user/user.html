@@ -36,10 +36,12 @@
       <div class="user-page-body-item-content">{{ user.title }}</div>
     </div>
   </div>
-  <div class="user-page-actions" padding>
-    <button ion-button block color="primary" *ngIf="!contact">Send Request</button>
-    <button ion-button block color="primary" *ngIf="contact && contact.status === 'REQUESTED'" (click)="revokeConnectionRequest()">Revoke Connection Request</button>
-    <button ion-button block color="primary" *ngIf="contact && contact.status === 'ACTIVE'">Start Chatting</button>
-    <button ion-button block outline color="semidark" *ngIf="contact && contact.status === 'ACTIVE'">Remove user</button>
+  <div *ngIf="loaded" class="user-page-actions" padding>
+    <button *ngIf="!isConnected && !hasInvited && !invitedBy" ion-button block color="primary" (click)="sendInvitation()">Send Request</button>
+    <button *ngIf="!isConnected && hasInvited && !invitedBy" ion-button block color="primary" (click)="revokeInvitation()">Revoke Connection Request</button>
+    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block color="primary" (click)="acceptInvitation()">Accept Connection Request</button> 
+    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block outline color="semidark" (click)="rejectInvitation()">Reject Connection Request</button>
+    <button *ngIf="isConnected" ion-button block color="primary">Start Chatting</button>
+    <button *ngIf="isConnected" ion-button block outline color="semidark">Remove user</button>
   </div>
 </ion-content>

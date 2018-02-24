@@ -13,6 +13,7 @@ import env from "../env";
 import { ContactsProvider } from '../providers/contacts/contacts';
 import { UserProvider } from '../providers/user/user';
 import { InvitationsProvider } from '../providers/invitations/invitations';
+import { ConnectionProvider } from '../providers/connection/connection';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { InvitationsProvider } from '../providers/invitations/invitations';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ContactsProvider,
     UserProvider,
-    InvitationsProvider
+    InvitationsProvider,
+    ConnectionProvider
   ]
 })
 export class AppModule { }
