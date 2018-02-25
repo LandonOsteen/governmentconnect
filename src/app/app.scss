@@ -225,3 +225,54 @@ ion-spinner[color="light"] {
 .swiper-slide {
   font-size: 1.5rem;
 }
+
+@mixin generateCustomTabIcon($name) {
+  .ion-ios-gc-#{$name}:before,
+  .ion-android-gc-#{$name}:before,
+  .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-fill-active.svg);
+    position: relative;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .ion-ios-gc-#{$name}-outline:before,
+  .ion-android-gc-#{$name}-outline:before,
+  .ion-md-gc-#{$name}-outline:before {
+    content: url(../assets/svg/#{$name}-outline.svg);
+    position: relative;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+  }
+
+  [aria-selected="false"] .ion-android-gc-#{$name}:before,
+  [aria-selected="false"] .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-outline.svg);
+    top: 2px;
+  }
+  
+  [aria-selected="true"] .ion-android-gc-#{$name}:before,
+  [aria-selected="true"] .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-fill-active.svg);
+    top: 2px;
+  }
+}
+
+@include generateCustomTabIcon(bell);
+@include generateCustomTabIcon(message);
+@include generateCustomTabIcon(person);
+@include generateCustomTabIcon(settings);
+
+.tab-button[aria-selected="true"] {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.enable-hover a:hover {
+  opacity: 1;
+}
+
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  transform: translateY(0);
+}

@@ -5,27 +5,12 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-
 @import "ionic.globals";
-
-
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-$font-size-base: 1.5rem;
-
-$h4-font-size: 1.8rem;
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -36,6 +21,7 @@ $h4-font-size: 1.8rem;
 // The "primary" color is the only required color in the map.
 
 $colors: (
+  white:    #ffffff,
   primary:    #4a90e2,
   secondary:  #32db64,
   danger:     #f53d3d,
@@ -49,12 +35,24 @@ $colors: (
   semidark:   #9B9B9B
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+$font-size-base: 1.5rem;
+
+$h4-font-size: 1.8rem;
+
+$tabs-background: map-get($map: $colors, $key: white);
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
 $item-ios-padding-left: 0;
-$spinner-ios-ios-color: map-get($colors, 'light');
 
 $button-ios-border-radius: 6px;
 $button-ios-font-size: 15px;
@@ -64,6 +62,11 @@ $button-ios-margin-end: 0;
 $button-ios-margin-bottom: 10px;
 $button-ios-margin-start: 10px;
 $button-ios-outline-border-width: 2px;
+
+$spinner-ios-ios-color: map-get($colors, 'light');
+
+$tabs-ios-border: 0;
+$tabs-ios-tab-min-height: 2.8rem;
 
 $text-input-ios-background-color: map-get($colors, 'primary');
 $text-input-ios-margin-right: 0;
@@ -93,12 +96,7 @@ $button-md-outline-border-width: 2px;
 $button-md-outline-box-shadow-activated: unset;
 $button-md-text-transform: unset;
 
-// App Windows Variables
-// --------------------------------------------------
-// Windows only Sass variables can go here
-
-
-
+$tabs-md-tab-min-height: 2.8rem;
 
 // App Theme
 // --------------------------------------------------
