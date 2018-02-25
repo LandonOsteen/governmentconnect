@@ -37,14 +37,17 @@
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
+    "lodash": "^4.17.5",
     "lunr": "^2.1.5",
-    "rxjs": "5.5.2",
+    "luxon": "^0.5.3",
+    "rxjs": "^5.5.6",
     "sw-toolbox": "3.6.0",
     "uuid": "^3.2.1",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
+    "@types/lodash": "^4.14.104",
     "typescript": "2.4.2"
   },
   "description": "An Ionic project",
