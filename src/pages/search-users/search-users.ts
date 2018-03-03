@@ -22,13 +22,13 @@ export class SearchUsersPage {
   async ionViewDidEnter() {
     const users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*')
 
-    this.users = users.slice(0,10)
+    this.users = users
   }
 
   async onQuery(ev) {
     const users = await this.userProvider.searchUsers(this.query + '*')
 
-    this.users = users.slice(0,10)
+    this.users = users
   }
 
   dismiss() {
