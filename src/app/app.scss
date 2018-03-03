@@ -232,7 +232,8 @@ ion-spinner[color="light"] {
   width: 30px;
 }
 
-.ion-ios-gc-back-arrow:before {
+.ion-ios-gc-back-arrow:before,
+.back-button-icon.ion-ios-arrow-back:before {
   content: url(../assets/svg/back-arrow.svg);
   position: relative;
   top: -2px;

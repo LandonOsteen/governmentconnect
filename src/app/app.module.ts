@@ -22,6 +22,7 @@ import { ConnectionProvider } from '../providers/connection/connection';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
+      backButtonText: '',
       mode: 'ios'
     }),
     AngularFireModule.initializeApp(env.firebase),
