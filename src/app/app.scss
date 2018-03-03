@@ -226,10 +226,14 @@ ion-spinner[color="light"] {
   font-size: 1.5rem;
 }
 
-.ion-ios-gc-magnifying-glass:before,
-.ion-android-gc-magnifying-glass:before,
-.ion-md-gc-magnifying-glass:before {
+.ion-ios-gc-magnifying-glass:before {
   content: url(../assets/svg/magnifying-glass.svg);
+  position: relative;
+  width: 30px;
+}
+
+.ion-ios-gc-back-arrow:before {
+  content: url(../assets/svg/back-arrow.svg);
   position: relative;
   width: 30px;
 }

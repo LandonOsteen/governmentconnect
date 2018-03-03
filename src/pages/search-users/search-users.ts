@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
@@ -15,7 +15,8 @@ export class SearchUsersPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public viewController: ViewController
   ) { }
 
   async ionViewDidEnter() {
@@ -30,4 +31,7 @@ export class SearchUsersPage {
     this.users = users.slice(0,10)
   }
 
+  dismiss() {
+    this.viewController.dismiss()
+  }
 }

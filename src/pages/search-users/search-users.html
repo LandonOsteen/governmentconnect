@@ -1,14 +1,18 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Search</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only clear (click)="dismiss()">
+        <ion-icon name="gc-back-arrow"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar
+      [(ngModel)]="query"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onQuery($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar
-    [(ngModel)]="query"
-    [showCancelButton]="shouldShowCancel"
-    (ionInput)="onQuery($event)"
-    (ionCancel)="onCancel($event)">
-  </ion-searchbar>
   <users-list [users]="users"></users-list>
 </ion-content>

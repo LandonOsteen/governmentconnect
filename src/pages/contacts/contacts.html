@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only clear navPush="SearchUsersPage">
+      <button ion-button icon-only clear (click)="openSearchUsersPage()">
         <ion-icon name="gc-magnifying-glass"></ion-icon>
       </button>
     </ion-buttons>
@@ -9,5 +9,5 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <contacts-list [contacts]="contacts"></contacts-list>
+  <contacts-list [contacts]="contacts | async"></contacts-list>
 </ion-content>
