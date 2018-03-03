@@ -15,10 +15,19 @@ export class UserProvider {
     public firebaseDatabase: AngularFireDatabase
   ) { }
 
-  async getUser(userId: string) {
+  async getUser(userId: string, isConnected?: boolean) {
     const users = await this.getUsers() 
+    let privateData = {}
 
-    return users[userId]
+    if (isConnected) {
+      privateData = await this.firebaseDatabase
+        .object(`users_private/${userId}`)
+        .valueChanges()
+        .take(1)
+        .toPromise()
+    }
+
+    return Object.assign({}, users[userId], privateData)
   }
 
   async getUsers() {

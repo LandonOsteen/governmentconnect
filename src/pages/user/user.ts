@@ -16,7 +16,7 @@ export class UserPage {
   contact = {}
   user: any = {}
   isConnected = false
-  hasInvited = false
+  hasInvited: any
 
   constructor(
     public navCtrl: NavController, 
@@ -30,7 +30,10 @@ export class UserPage {
   async ionViewDidLoad() {
     const userId = this.navParams.get('userId')
 
-    const user = await this.userProvider.getUser(userId)
+    this.isConnected = await this.connectionProvider.isUserConnectedTo(userId)
+    this.hasInvited = await this.invitationProvider.haveInvitedUser(userId)
+
+    const user = await this.userProvider.getUser(userId, this.isConnected)
 
     this.user = user
 
@@ -38,19 +41,20 @@ export class UserPage {
 
     this.contact = contact
 
-    this.isConnected = await this.connectionProvider.isUserConnectedTo(userId)
-
-    this.hasInvited = await this.invitationProvider.haveInvitedUser(user)
-
     this.loaded = true
   }
 
-  revokeInvitation() {
-    this.invitationProvider.revokeInvitation(this.user)
+  async revokeInvitation() {
+    await this.invitationProvider.revokeInvitation(this.user)
+
+    this.hasInvited = false
   }
 
-  sendInvitation() {
-    this.invitationProvider.sendInvitation(this.user)
+  async sendInvitation() {
+    console.log(this.user)
+    await this.invitationProvider.sendInvitation(this.user)
+
+    this.hasInvited = true
   }
 
 }

@@ -23,7 +23,7 @@
       <div class="user-page-body-item-title">Last Name</div>
       <div class="user-page-body-item-content">{{ user.lastName }}</div>
     </div>
-    <div class="user-page-body-item">
+    <div class="user-page-body-item" *ngIf="user.email">
       <div class="user-page-body-item-title">Email</div>
       <div class="user-page-body-item-content">{{ user.email }}</div>
     </div>
