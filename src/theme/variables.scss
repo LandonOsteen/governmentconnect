@@ -83,25 +83,9 @@ $text-input-ios-margin-left: 0;
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-$item-md-padding-left: 0;
-$spinner-ios-ios-color: map-get($colors, 'light');
-
-$button-md-border-radius: 6px;
-$button-md-box-shadow: unset;
-$button-md-box-shadow-activated: unset;
-$button-md-clear-box-shadow-activated: unset;
-$button-md-font-size: 15px;
-$button-md-font-weight: 500;
-$button-md-height: 50px;
-$button-md-margin-top: 0;
-$button-md-margin-end: 0;
-$button-md-margin-bottom: 10px;
-$button-md-margin-start: 10px;
-$button-md-outline-border-width: 2px;
-$button-md-outline-box-shadow-activated: unset;
-$button-md-text-transform: unset;
-
-$tabs-md-tab-min-height: 2.8rem;
+// *** We force the "iOS" mode in the app config,
+// thus ensuring that the design is consistent across
+// iOS and Android.
 
 // App Theme
 // --------------------------------------------------
@@ -122,14 +106,11 @@ $text-input-ios-margin-bottom: 15px;
 
 @import "ionic.ionicons";
 
-
 // Fonts
 // --------------------------------------------------
 
 $font-family-base: 'Montserrat';
 $font-family-ios-base: 'Montserrat';
-$font-family-md-base: 'Montserrat';
-$font-family-wp-base: 'Montserrat';
 
 $font-weight-light: 200;
 $font-weight-bold: 600;
