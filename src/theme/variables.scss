@@ -63,10 +63,12 @@ $button-ios-margin-bottom: 10px;
 $button-ios-margin-start: 10px;
 $button-ios-outline-border-width: 2px;
 
-$toolbar-ios-height: 60px;
+$toolbar-ios-height: 70px;
 $toolbar-background: map-get($map: $colors, $key: white);
 $toolbar-ios-title-font-size: 1.5rem;
 $toolbar-ios-title-font-weight: 500;
+
+$searchbar-ios-toolbar-input-background: map-get($map: $colors, $key: white);
 
 $spinner-ios-ios-color: map-get($colors, 'light');
 

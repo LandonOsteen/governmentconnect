@@ -235,6 +235,7 @@ ion-spinner[color="light"] {
 .ion-ios-gc-back-arrow:before {
   content: url(../assets/svg/back-arrow.svg);
   position: relative;
+  top: -2px;
   width: 30px;
 }
 
@@ -287,4 +288,18 @@ ion-spinner[color="light"] {
 
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
   transform: translateY(0);
+}
+
+.searchbar-search-icon { 
+  display: none; 
+  width:0; 
+  height:0; 
+}
+
+.toolbar .searchbar-ios .searchbar-input {
+  padding: 0 20px;
+  height: 4rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
 }
