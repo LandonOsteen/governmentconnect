@@ -6,6 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { APP_PAGES } from '../enums';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import 'rxjs/add/operator/first';
+import { PushProvider } from '../providers/push/push';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,8 +25,8 @@ export class MyApp {
       }
     });
 
-    pushObject.on('registration').subscribe(async (registration: any) => {
-      // Registered!
+    pushObject.on('registration').subscribe(async (registration) => {
+      this.pushProvider.savePushRegistrationToken(registration.registrationId)
     });
 
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
@@ -36,23 +37,24 @@ export class MyApp {
     public push: Push,
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    public firebaseAuth: AngularFireAuth
+    public firebaseAuth: AngularFireAuth,
+    public pushProvider: PushProvider
   ) {
-      this.firebaseAuth.authState.first().subscribe((user) => {
-        if (user) {
-          this.rootPage = APP_PAGES.TABS_PAGE
-        }
+    this.firebaseAuth.authState.first().subscribe((user) => {
+      if (user) {
+        this.rootPage = APP_PAGES.TABS_PAGE
+      }
 
-        this.loaded = true
+      this.loaded = true
 
-        this.initPush()
+      this.initPush()
 
-        this.platform.ready().then(() => {
-            
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
-        });
-      })
+      this.platform.ready().then(() => {
+          
+          this.statusBar.styleDefault();
+          this.splashScreen.hide();
+      });
+    })
   }
 }
 

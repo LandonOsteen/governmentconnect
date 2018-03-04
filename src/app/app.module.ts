@@ -14,6 +14,7 @@ import { UserProvider } from '../providers/user/user';
 import { InvitationsProvider } from '../providers/invitations/invitations';
 import { ConnectionProvider } from '../providers/connection/connection';
 import { Push } from '@ionic-native/push';
+import { PushProvider } from '../providers/push/push';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { Push } from '@ionic-native/push';
     ContactsProvider,
     UserProvider,
     InvitationsProvider,
-    ConnectionProvider
+    ConnectionProvider,
+    PushProvider
   ]
 })
 export class AppModule { }
