@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/toPromise';
+import _ from "lodash";
 
 @Injectable()
 export class ContactsProvider {
@@ -27,7 +28,10 @@ export class ContactsProvider {
     const user = this.firebaseAuth.auth.currentUser
     
     if (user) {
-      return this.firebaseDatabase.object(`connections/${user.uid}`).valueChanges()
+      return this.firebaseDatabase
+        .object<{ string: Contact }>(`connections/${user.uid}`)
+        .valueChanges()
+        .map(contacts => _.values(contacts))
     }
   }
 

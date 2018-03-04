@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { UserProvider } from '../user/user';
 
 @Injectable()
 export class InvitationsProvider {
 
   constructor(
     public firebaseAuth: AngularFireAuth,
-    public firebaseDatabase: AngularFireDatabase
+    public firebaseDatabase: AngularFireDatabase,
+    public userProvider: UserProvider
   ) { }
 
-  async acceptInvitation(inviter: User) {
+  async acceptInvitation(inviterId: string) {
     const me = this.firebaseAuth.auth.currentUser
 
     if (me) {
+      const inviter = await this.userProvider.getUser(inviterId)
+
       const result: any = await this.firebaseDatabase
-        .object(`/invitations/${me.uid}/${inviter.uid}`)
+        .object(`/invitations/${me.uid}/${inviterId}`)
         .update({
           active: false,
           accepted: true
         })
 
       const connResult: any = await this.firebaseDatabase
-        .object(`/connections/${me.uid}/${inviter.uid}`)
+        .object(`/connections/${me.uid}/${inviterId}`)
         .set({ 
           active: true,
           firstName: inviter.firstName, 
@@ -49,17 +53,14 @@ export class InvitationsProvider {
     }
   }
 
-  async haveInvitedUser(invitee: User) {
+  async haveInvitedUser(userId: string) {
     const me = this.firebaseAuth.auth.currentUser
 
-    if (me) {
-      const invitation: any = await this.firebaseDatabase.object(`/invitations/${invitee.uid}/${me.uid}`)
-        .valueChanges()
-        .take(1)
-        .toPromise()
-
-      return invitation && invitation.active
-    }
+    return this.firebaseDatabase
+      .object<boolean>(`/invitations/${userId}/${me.uid}/active`)
+      .valueChanges()
+      .take(1)
+      .toPromise()
   }
 
   async haveBeenInvitedByUser(inviter: User) {
@@ -108,22 +109,23 @@ export class InvitationsProvider {
 
   async sendInvitation(user: User) {
     const me = this.firebaseAuth.auth.currentUser
+    const meUser = await this.userProvider.getUser(me.uid)
 
     if (me) {
       const result: any = await this.firebaseDatabase
         .object(`/invitations/${user.uid}/${me.uid}`)
-        .set({ 
-          firstName: user.firstName,
-          lastName: user.lastName,
-          photoUrl: user.photoUrl,
-          uid: user.uid,
+        .update({ 
+          firstName: meUser.firstName,
+          lastName: meUser.lastName,
+          photoUrl: meUser.photoUrl,
+          uid: meUser.uid,
           active: true,
           accepted: false
         })
 
       const connResult: any = await this.firebaseDatabase
         .object(`/connections/${me.uid}/${user.uid}`)
-        .set({ 
+        .update({ 
           active: true,
           firstName: user.firstName, 
           lastName: user.lastName,

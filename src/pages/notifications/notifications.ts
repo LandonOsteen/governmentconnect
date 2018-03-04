@@ -9,20 +9,22 @@ import { InvitationsProvider } from '../../providers/invitations/invitations';
 })
 export class NotificationsPage {
 
-  invites = []
+  invitations = []
 
   constructor(
     public navCtrl: NavController,
     public invitationsProvider: InvitationsProvider
   ) { }
 
+  acceptInvitation(inviterId: string) {
+    this.invitationsProvider.acceptInvitation(inviterId)
+  }
+
   async ionViewDidLoad() {
-    const invites = await this.invitationsProvider.getInvitations()
+    const invitations = await this.invitationsProvider.getInvitations()
 
-    console.log(invites)
-
-    if (invites) {
-      this.invites = Object['values'](invites)
+    if (invitations) {
+      this.invitations = Object['values'](invitations)
     }
   }
 

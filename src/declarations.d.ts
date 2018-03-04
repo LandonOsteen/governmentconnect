@@ -1,11 +1,11 @@
 interface Contact {
+  active: boolean,
   firstName: string,
   lastName: string,
+  photoUrl: string,
+  stafferFor: string,
   title: string,
-  stafferFor: string
-  established: boolean,
-  pending: boolean,
-  accepted: boolean
+  uid: string
 }
 
 interface User {

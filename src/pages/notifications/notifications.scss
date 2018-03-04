@@ -1,3 +1,40 @@
-page-notifications {
+@import "../../theme/variables.scss";
 
+.notification-block {
+
+}
+
+.notification-block-title {
+  font-size: 1.2rem;
+  color: map-get($map: $colors, $key: primary);
+}
+
+.notification {
+  display: flex;
+}
+
+.notification-image {
+  margin-right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.notification-body {
+  font-size: 1.2rem;
+}
+
+.notification-message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+
+.notification-message-time {
+  color: map-get($map: $colors, $key: semidark)
+}
+
+.notification-actions button {
+  margin: 0 10px 0 0;
 }
