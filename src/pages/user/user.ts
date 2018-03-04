@@ -51,10 +51,15 @@ export class UserPage {
   }
 
   async sendInvitation() {
-    console.log(this.user)
     await this.invitationProvider.sendInvitation(this.user)
 
     this.hasInvited = true
+  }
+
+  async removeConnection() {
+    await this.connectionProvider.removeConnection(this.user.uid)
+
+    this.isConnected = false
   }
 
 }

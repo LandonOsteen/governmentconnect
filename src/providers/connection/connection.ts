@@ -32,4 +32,12 @@ export class ConnectionProvider {
     }
   }
 
+async removeConnection(connectionId: string) {
+  const user = this.firebaseAuth.auth.currentUser
+
+  if (user) {
+    await this.firebaseDatabase.object(`/connections/${user.uid}/${connectionId}/active`).set(false)
+  }
+}
+
 }
