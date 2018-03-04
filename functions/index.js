@@ -55,4 +55,52 @@ exports.onConnectionInvitationCreated = functions.database.ref('/invitations/{us
       return Promise.all(tokensToRemove);
     })
   }
+
+  if (event.data.previous.exists() && event.data.previous.child('accepted').val() === false && event.data.current.child('accepted').val() === true) {
+    const getDeviceTokensPromise = admin.database().ref(`/notification_tokens/${inviterId}`).once('value');
+    const getUserProfilePromise = admin.database().ref(`/users/${userId}`).once('value')
+
+    return Promise.all([getDeviceTokensPromise, getUserProfilePromise]).then((results) => {
+      const tokensSnapshot = results[0];
+      const user = results[1];
+  
+      // Check if there are any device tokens.
+      if (!tokensSnapshot.hasChildren()) {
+        return console.log('There are no notification tokens to send to.');
+      }
+
+      console.log('There are', tokensSnapshot.numChildren(), 'tokens to send notifications to.');
+      console.log('Fetched user profile', user);
+  
+      // Notification details.
+      const payload = {
+        notification: {
+          title: 'Connection request accepted!',
+          body: `${user.child('firstName').val()} ${user.child('lastName').val()} has accepted your request to connect on Government Connect.`
+        },
+      };
+  
+      // Listing all tokens.
+      const tokens = Object.keys(tokensSnapshot.val());
+  
+      // Send notifications to all tokens.
+      return admin.messaging().sendToDevice(tokens, payload);
+    }).then((response) => {
+      // For each message check if there was an error.
+      const tokensToRemove = [];
+
+      response.results.forEach((result, index) => {
+        const error = result.error;
+        if (error) {
+          console.error('Failure sending notification to', tokens[index], error);
+          // Cleanup the tokens who are not registered anymore.
+          if (error.code === 'messaging/invalid-registration-token' || error.code === 'messaging/registration-token-not-registered') {
+            tokensToRemove.push(tokensSnapshot.ref.child(tokens[index]).remove());
+          }
+        }
+      });
+
+      return Promise.all(tokensToRemove);
+    })
+  }
 })
