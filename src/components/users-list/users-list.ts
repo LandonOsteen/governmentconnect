@@ -7,6 +7,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 export class UsersListComponent {
 
   @Input('users') users: any[] = [];
+  @Input('loading') loading: boolean = false
 
   maxSlice = 20
 

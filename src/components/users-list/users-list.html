@@ -4,6 +4,12 @@
     <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
     <div class="user-subtitle">{{user.title}}</div>
   </div>
+  <div class="no-users-message" *ngIf="users.length === 0 && !loading">
+    <p><b>No users found</b>, don't be sad though. We're still growing. <b>Help us grow</b> by inviting your friends.</p>
+    <a href="sms:?&body=Join me on Government Connect!">
+      <button ion-button block color="primary">Invite colleagues</button>
+    </a>
+  </div>
   <ion-infinite-scroll [enabled]="users.length > maxSlice" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

@@ -11,6 +11,7 @@ export class SearchUsersPage {
 
   users = []
   query = ''
+  loading = true
 
   constructor(
     public navCtrl: NavController, 
@@ -20,15 +21,23 @@ export class SearchUsersPage {
   ) { }
 
   async ionViewDidEnter() {
+    this.loading = true
+
     const users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*')
 
     this.users = users
+
+    this.loading = false
   }
 
   async onQuery(ev) {
+    this.loading = true
+
     const users = await this.userProvider.searchUsers(this.query + '*')
 
     this.users = users
+
+    this.loading = false
   }
 
   dismiss() {
