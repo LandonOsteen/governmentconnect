@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
 
 import { AngularFireModule } from "angularfire2";
@@ -14,6 +13,7 @@ import { ContactsProvider } from '../providers/contacts/contacts';
 import { UserProvider } from '../providers/user/user';
 import { InvitationsProvider } from '../providers/invitations/invitations';
 import { ConnectionProvider } from '../providers/connection/connection';
+import { Push } from '@ionic-native/push';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { ConnectionProvider } from '../providers/connection/connection';
     MyApp
   ],
   providers: [
-    AndroidPermissions,
+    Push,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
