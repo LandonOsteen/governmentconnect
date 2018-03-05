@@ -16,25 +16,8 @@ export class MyApp {
   rootPage = APP_PAGES.WELCOME_PAGE
   loaded = false
 
-  async initPush() {
-    await this.platform.ready();
-
-    const pushObject = this.push.init({
-      android: {
-        senderID: '615052831647'
-      }
-    });
-
-    pushObject.on('registration').subscribe(async (registration) => {
-      this.pushProvider.savePushRegistrationToken(registration.registrationId)
-    });
-
-    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
-  }
-
   constructor(
     public platform: Platform, 
-    public push: Push,
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
     public firebaseAuth: AngularFireAuth,
@@ -43,14 +26,14 @@ export class MyApp {
     this.firebaseAuth.authState.first().subscribe((user) => {
       if (user) {
         this.rootPage = APP_PAGES.TABS_PAGE
+
+        this.pushProvider.requestNotificationPermissions()
       }
 
       this.loaded = true
 
-      this.initPush()
 
       this.platform.ready().then(() => {
-          
           this.statusBar.styleDefault();
           this.splashScreen.hide();
       });

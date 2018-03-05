@@ -16,16 +16,22 @@ export class NotificationsPage {
     public invitationsProvider: InvitationsProvider
   ) { }
 
-  acceptInvitation(inviterId: string) {
-    this.invitationsProvider.acceptInvitation(inviterId)
-  }
-
-  async ionViewDidLoad() {
+  async loadInvitations() {
     const invitations = await this.invitationsProvider.getInvitations()
 
     if (invitations) {
-      this.invitations = Object['values'](invitations)
+      this.invitations = Object['values'](invitations).filter(i => i.active)
     }
+  }
+
+  async acceptInvitation(inviterId: string) {
+    await this.invitationsProvider.acceptInvitation(inviterId)
+
+    this.loadInvitations()
+  }
+
+  ionViewDidLoad() {
+    this.loadInvitations()
   }
 
 }
