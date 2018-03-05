@@ -93,7 +93,7 @@ export class InvitationsProvider {
 
     if (me) {
       const result: any = await this.firebaseDatabase
-        .object(`/invitations/${invitee.uid}/${me.uid}/active`)
+        .object(`/invitations/${invitee.uid}/${me.uid}`)
         .update({
           accepted: false,
           active: false
