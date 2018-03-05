@@ -18,6 +18,7 @@ export class UserPage {
   userId: any = ''
   isConnected = false
   hasInvited: any
+  confirmConnectionRemoval = false
 
   constructor(
     public navCtrl: NavController, 
@@ -58,8 +59,13 @@ export class UserPage {
   }
 
   async removeConnection() {
-    await this.connectionProvider.removeConnection(this.userId)
+    try {
+      await this.connectionProvider.removeConnection(this.userId)
+    } catch (err) {
+      console.error(err)
+    }
 
+    this.confirmConnectionRemoval = false
     this.isConnected = false
   }
 
