@@ -1,0 +1,23 @@
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M4.3867802,6.88653309 L8.81986954,2.55383929 C9.38924086,1.99736244 9.41944788,1.06354486 8.88733882,0.468099347 C8.35522975,-0.127346167 7.46230348,-0.158936513 6.89293216,0.397540333 L0.745995496,6.4052682 C0.728429384,6.42255453 0.728429384,6.42255453 0.711090943,6.44009045 C-0.219471605,7.38771191 -0.239281589,8.94482704 0.666844105,9.91800443 L6.84544132,16.5538069 C7.38911674,17.1377133 8.28247474,17.1501437 8.84081227,16.5815708 C9.3991498,16.0129979 9.41103579,15.0787288 8.86736037,14.4948224 L4.53130087,9.83790215 L15.5889348,9.83790215 C16.3682446,9.83790215 17,9.17721568 17,8.36221762 C17,7.54721956 16.3682446,6.88653309 15.5889348,6.88653309 L4.3867802,6.88653309 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search-popup" transform="translate(-22.000000, -32.000000)">
+            <g id="Icons/Back" transform="translate(20.000000, 30.000000)">
+                <g id="icon" stroke-width="1" fill-rule="evenodd" transform="translate(2.000000, 2.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="back" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="Colors/Color-1-Fill" mask="url(#mask-2)" fill="#4A90E2">
+                        <g transform="translate(-2.000000, -2.000000)">
+                            <polygon points="4.55935124e-13 2.00261628e-15 21 5.48360999e-14 21 21 4.26240801e-13 21"></polygon>
+                        </g>
+                    </g>
+                </g>
+                <rect id="base" x="0" y="0" width="21" height="21"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

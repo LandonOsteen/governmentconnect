@@ -1,0 +1,77 @@
+@import "../../theme/variables.scss";
+
+.user-page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.user-page-header-inner {
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.user-page-header-image {
+  margin-right: 20px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.user-page-header-title {
+  font-size: 16px;
+  font-weight: $font-weight-bold;
+}
+
+.user-page-header-subtitle-primary,
+.user-page-header-subtitle-secondary {
+  font-size: 14px;
+}
+
+.user-page-header-subtitle-secondary {
+  font-weight: $font-weight-light;
+}
+
+.user-page-body {
+  padding: 20px 40px;
+  min-height: 200px;
+  background-color: #FAFAFA;
+}
+
+.user-page-body-item {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+  height: 35px;
+  line-height: 35px;
+}
+
+.user-page-body-item-title {
+  font-weight: $font-weight-light;
+  color: #8392A7;
+}
+
+.user-page-body-item-content {
+  color: #3B4859;
+}
+
+.remove-connection-confirmation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  button {
+    width: 275px;
+  }
+}

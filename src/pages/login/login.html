@@ -1,36 +1,17 @@
-<ion-content padding>
-  <div class="spacer-vertical-4"></div>
-  <img src="assets/imgs/text-logo-white.png" />
-  <div class="spacer-vertical-2"></div>
-  <div class="login-init-message" *ngIf="initializing">
-    <div class="spacer-vertical-2"></div>
-    <h4>Setting things up...</h4>
-    <div class="spacer-vertical"></div>
-    <ion-spinner color="light"></ion-spinner>
-  </div>
-  <div class="login-launch-message" *ngIf="launching">
-    <div class="spacer-vertical-2"></div>
-    <h4>Launching...</h4>
-    <div class="spacer-vertical"></div>
-    <ion-spinner color="light"></ion-spinner>
-  </div>
-  <div *ngIf="initialized && !launching">
-    <div class="login-launch-message" *ngIf="loggedIn">
-      <button ion-button block color="light-primary" (click)="launch()">Relaunch</button>
-      <button ion-button block color="primary" (click)="logout()">Logout</button>
-    </div>
-    <div *ngIf="!loggedIn">
-      <ion-list class="login-item-list">
+<ion-content>
+  <div class="login-form-container">
+    <form class="login-form" #f="ngForm" (ngSubmit)="login()">
+      <img src="assets/imgs/text-logo-dark.svg" />
+      <div class="spacer-vertical-4"></div>
+      <ion-list>
         <ion-item>
-          <ion-input color="light" type="text" placeholder="Your username" [(ngModel)]="username"></ion-input>
+          <ion-input type="email" name="email" [(ngModel)]="email" placeholder="E-mail" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input color="light" type="password" placeholder="Your password" [(ngModel)]="password"></ion-input>
+          <ion-input type="password" name="password" [(ngModel)]="password" placeholder="Password" required></ion-input>
         </ion-item>
-        <button ion-button block color="light-primary" (click)="login()">Login</button>
-        <button ion-button block color="primary" (click)="recover()">I forgot my password</button>
+        <button class="no-border-radius" ion-button block color="primary" [disabled]="f.invalid">Log In</button>
       </ion-list>
-    </div>
+    </form>
   </div>
-  <p *ngIf="initializationError">Sorry, there was an error initializing the SDK. {{ initializationError }}</p>
 </ion-content>

@@ -3,33 +3,47 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { MyApp } from './app.component';
-import { LoginPage } from "../pages/login/login";
-import { CometChatProvider } from '../providers/comet-chat/comet-chat';
-import { IonicStorageModule } from "@ionic/storage";
+
+import { AngularFireModule } from "angularfire2";
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireDatabaseModule } from "angularfire2/database";
+import env from "../env";
+import { ContactsProvider } from '../providers/contacts/contacts';
+import { UserProvider } from '../providers/user/user';
+import { InvitationsProvider } from '../providers/invitations/invitations';
+import { ConnectionProvider } from '../providers/connection/connection';
+import { Push } from '@ionic-native/push';
+import { PushProvider } from '../providers/push/push';
 
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicModule.forRoot(MyApp, {
+      backButtonText: '',
+      mode: 'ios'
+    }),
+    AngularFireModule.initializeApp(env.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    LoginPage
+    MyApp
   ],
   providers: [
-    AndroidPermissions,
+    Push,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    CometChatProvider
+    ContactsProvider,
+    UserProvider,
+    InvitationsProvider,
+    ConnectionProvider,
+    PushProvider
   ]
 })
 export class AppModule { }

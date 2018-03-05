@@ -5,25 +5,12 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-
 @import "ionic.globals";
-
-
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -34,37 +21,73 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #75B1D8,
+  white:    #ffffff,
+  primary:    #4a90e2,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
+  fade:       #ebeced,
   dark:       #222,
   light-primary: (
     base:     #f4f4f4,
-    contrast: #75B1D8
+    contrast: #4a90e2
   ),
+  semidark:   #9B9B9B
 );
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+$font-size-base: 1.5rem;
+
+$h4-font-size: 1.8rem;
+
+$tabs-background: map-get($map: $colors, $key: white);
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
 $item-ios-padding-left: 0;
+
+$button-ios-border-radius: 6px;
+$button-ios-font-size: 15px;
+$button-ios-height: 50px;
+$button-ios-margin-top: 0;
+$button-ios-margin-end: 0;
+$button-ios-margin-bottom: 10px;
+$button-ios-margin-start: 10px;
+$button-ios-outline-border-width: 2px;
+
+$toolbar-ios-height: 70px;
+$toolbar-background: map-get($map: $colors, $key: white);
+$toolbar-ios-title-font-size: 1.5rem;
+$toolbar-ios-title-font-weight: 500;
+
+$searchbar-ios-toolbar-input-background: map-get($map: $colors, $key: white);
+
 $spinner-ios-ios-color: map-get($colors, 'light');
+
+$tabs-ios-border: 0;
+$tabs-ios-tab-min-height: 2.8rem;
+
+$text-input-ios-background-color: map-get($colors, 'primary');
+$text-input-ios-margin-right: 0;
+$text-input-ios-margin-end: 0;
+$text-input-ios-margin-start: 0;
+$text-input-ios-margin-left: 0;
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-$item-md-padding-left: 0;
-$spinner-ios-ios-color: map-get($colors, 'light');
-
-// App Windows Variables
-// --------------------------------------------------
-// Windows only Sass variables can go here
-
-
-
+// *** We force the "iOS" mode in the app config,
+// thus ensuring that the design is consistent across
+// iOS and Android.
 
 // App Theme
 // --------------------------------------------------
@@ -76,7 +99,7 @@ $spinner-ios-ios-color: map-get($colors, 'light');
 @import "ionic.theme.default";
 
 $text-input-ios-margin-top: 0;
-$text-input-ios-margin-bottom: 10px;
+$text-input-ios-margin-bottom: 15px;
 
 // Ionicons
 // --------------------------------------------------
@@ -85,11 +108,11 @@ $text-input-ios-margin-bottom: 10px;
 
 @import "ionic.ionicons";
 
-
 // Fonts
 // --------------------------------------------------
 
 $font-family-base: 'Montserrat';
 $font-family-ios-base: 'Montserrat';
-$font-family-md-base: 'Montserrat';
-$font-family-wp-base: 'Montserrat';
+
+$font-weight-light: 200;
+$font-weight-bold: 600;

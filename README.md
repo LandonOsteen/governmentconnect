@@ -5,35 +5,55 @@ Welcome to the application repository for [Government Connect](https://governmen
 
 # Getting Started 
 
-To get started, ensure that you have the latest Ionic CLI installed, then add a folder at the root of the app directory titled `comet_chat`. Paste your CometChat mobile SDK files into this folder. 
+Make sure you have the Ionic CLI installed, which you can do by running: `npm install -g ionic@latest`.
 
-You'll also need to create a `credentials.ts` file within the `src` directory, and it should have the following format:
+Then, within this repository, run `npm install`. This will install all needed Node.js dependencies.
 
-```javascript
-export default {
-  'cometchat_domain': 'YOUR_COMET_CHAT_DOMAIN',
-  'cometchat_api_key': 'YOUR_COMET_CHAT_API_KEY',
-  'cometchat_license_key': 'YOUR_COMET_CHAT_LICENSE_KEY' 
+Once everything is set up, you can run `ionic serve` to interact with the app in the browser.
+
+# Backend Architecture
+
+Government Connect uses [Firebase](https://firebase.com) to host data, send notifications, and manage user authentication. Below are some breakdowns of how we handle various business logic through the Firebase backend.
+
+## Requesting Connections
+
+When a user requests a connection, he or she writes to the `/invitations` object of the user they wish to connect with. Our Firebase database rules dictate that any user may write to the invitations object of any other user, but only may do so under their own UID. For example, user `foo` wishes to send a connection request to user `bar`. After sending the request, the `invitations` object in our database looks as follows: 
+
+```json
+{
+  "invitations": {
+    "bar": {
+      "foo": {
+        "active": true,
+        "accepted": false
+      }
+    }
+  }
 }
 ```
 
-Then run the following commands:
+User `foo` may only read from the path `/invitations/bar/foo`, but user `bar` may read from the top-level path, `/invitations/bar`, and thus enumerate any pending invitations. __Note__, a user's acceptance of an invitation does not automatically enforce the connection. A corresponding `connection` entry must exist at `/connections/bar/foo` (to follow the previous example) in order for the two users to be truly "connected". Connections may only be created by a user, and that process is covered in the next section.
 
-```bash
-npm install
-ionic serve
+## Adding Connections
+
+If a user receiving a connection request, they may cement the relationship by creating an active connection within their `connections` object. Per our Firebase database rules, the `connections` key may only be written to authenticated users, and users may only write to their own keys. So should `bar` wish to accept `foo`'s connection request, he may do so by creating a corresponding connection object, resulting in the `connections` object being formed thusly:
+
+```json
+{
+  "connections": {
+    "bar": {
+      "foo": {
+        "active": true
+      }
+    },
+    "foo": {
+      "bar": {
+        "active": true
+      }
+    }
+  }
+}
 ```
 
-This should load the app into your browser for local testing. The native CometChat UI will not be available in this context, but it's useful for smoketesting.
+Notice the denormalization of connection state - both users must possess `active` connection objects for each other in order for the connection to be considered established. Should a user switch a connection's `active` state to `false`, the connection will be severed.
 
-To prepare for on-device deployment, run `ionic cordova prepare`.
-
-To test on-device, you may run `ionic run ios` to fire up an iOS simulator, or `ionic run android` to deploy to a real Android device. In the latter case, you must have a Android device connected to your computer in order to successfully deploy.
-
-To test on iOS, you will need to be using an Apple laptop, though any operating system will work fine for testing with Android.
-
-# Tips & Pitfalls
-
-### ITMS-90535 Error When Uploading To iOS
-
-When uploading to iTunes Connect, you may receive an error that says "missing or invalid CFBundleExecutable in its info.plist", citing error number ITMS-90535, and referring to the CometChat MessageSDK. The solution to this issue is simply to open the MessageSDK framework `plist` and delete the `CFBundleExecutable` key and re-upload. 

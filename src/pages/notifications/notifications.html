@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Notifications</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <div class="notification-block" *ngIf="invitations.length > 0">
+    <div class="notification-block-title">Connection Requests</div>
+    <div class="spacer-vertical-2"></div>
+    <div class="notification" *ngFor="let invitation of invitations">
+      <img class="notification-image" width="40" height="40" [src]="invitation.photoUrl" />
+      <div class="notification-body">
+        <div class="notification-message">
+          <span>
+            <b>{{ invitation.firstName }} {{ invitation.lastName }}</b> 
+            <span>sent you an invitation to connect</span> 
+            <span class="notification-message-time">{{ invitation.sentAt | since }}</span>
+          </span>
+        </div>
+        <div class="notification-actions">
+          <button ion-button small color="primary" (click)="acceptInvitation(invitation.uid)">Accept</button>
+          <button ion-button outline small color="semidark" (click)="rejectInvitation(invitation.uid)">Deny</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

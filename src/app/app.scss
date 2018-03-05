@@ -18,14 +18,16 @@
 // Input Overrides
 
 ion-input.input {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   input {
     margin: 0;
+    padding: 10px;
+    background-color: map-get($colors, 'fade');
     width: 100%;
     font-family: 'Montserrat';
-    font-size: 1.6rem;
-    line-height: 2.8rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
   }
 
   &[color="light"] {
@@ -58,7 +60,6 @@ ion-input.input {
 }
 
 // Item Overrides
-
 
 .item-ios,
 .item-md,
@@ -115,8 +116,31 @@ ion-thumbnail img {
   }
 }
 
+// Utilities
+
+.marginless {
+  margin: 0 !important;
+}
+
+.no-border-radius {
+  border-radius: 0 !important;
+}
+
 // Fonts
 
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 200; 
+  src: url('../assets/fonts/Montserrat-Light.ttf')  format('truetype')
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 200; 
+  src: url('../assets/fonts/Montserrat-LightItalic.ttf')  format('truetype')
+}
 
 @font-face {
   font-family: 'Montserrat';
@@ -188,8 +212,95 @@ ion-thumbnail img {
   src: url('../assets/fonts/Montserrat-ExtraBoldItalic.ttf')  format('truetype')
 }
 
-// Spinner Overrides
+// Overrides
+
+button {
+  font-weight: 500;
+}
 
 ion-spinner[color="light"] {
   stroke: map-get($colors, "light");
+}
+
+.swiper-slide {
+  font-size: 1.5rem;
+}
+
+.ion-ios-gc-magnifying-glass:before {
+  content: url(../assets/svg/magnifying-glass.svg);
+  position: relative;
+  width: 30px;
+}
+
+.ion-ios-gc-back-arrow:before,
+.back-button-icon.ion-ios-arrow-back:before {
+  content: url(../assets/svg/back-arrow.svg);
+  position: relative;
+  top: -2px;
+  width: 30px;
+}
+
+@mixin generateCustomTabIcon($name) {
+  .ion-ios-gc-#{$name}:before,
+  .ion-android-gc-#{$name}:before,
+  .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-fill-active.svg);
+    position: relative;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .ion-ios-gc-#{$name}-outline:before,
+  .ion-android-gc-#{$name}-outline:before,
+  .ion-md-gc-#{$name}-outline:before {
+    content: url(../assets/svg/#{$name}-outline.svg);
+    position: relative;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+  }
+
+  [aria-selected="false"] .ion-android-gc-#{$name}:before,
+  [aria-selected="false"] .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-outline.svg);
+    top: 2px;
+  }
+  
+  [aria-selected="true"] .ion-android-gc-#{$name}:before,
+  [aria-selected="true"] .ion-md-gc-#{$name}:before {
+    content: url(../assets/svg/#{$name}-fill-active.svg);
+    top: 2px;
+  }
+}
+
+@include generateCustomTabIcon(bell);
+@include generateCustomTabIcon(message);
+@include generateCustomTabIcon(person);
+@include generateCustomTabIcon(settings);
+
+.tab-button[aria-selected="true"] {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.enable-hover a:hover {
+  opacity: 1;
+}
+
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  transform: translateY(0);
+}
+
+.searchbar-search-icon { 
+  display: none; 
+  width:0; 
+  height:0; 
+}
+
+.toolbar .searchbar-ios .searchbar-input {
+  padding: 0 20px;
+  height: 4rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  font-size: 12px;
 }
