@@ -20,7 +20,7 @@ export class SearchUsersPage {
     public viewController: ViewController
   ) { }
 
-  async ionViewDidEnter() {
+  async ionViewDidLoad() {
     this.loading = true
 
     const users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*')

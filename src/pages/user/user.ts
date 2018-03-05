@@ -15,6 +15,7 @@ export class UserPage {
   loaded = false
   contact = {}
   user: any = {}
+  userId: any = ''
   isConnected = false
   hasInvited: any
 
@@ -28,7 +29,7 @@ export class UserPage {
   ) { }
 
   async ionViewDidLoad() {
-    const userId = this.navParams.get('userId')
+    const userId = this.userId = this.navParams.get('userId')
 
     this.isConnected = await this.connectionProvider.isUserConnectedTo(userId)
     this.hasInvited = await this.invitationProvider.haveInvitedUser(userId)
@@ -57,7 +58,7 @@ export class UserPage {
   }
 
   async removeConnection() {
-    await this.connectionProvider.removeConnection(this.user.uid)
+    await this.connectionProvider.removeConnection(this.userId)
 
     this.isConnected = false
   }
