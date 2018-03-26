@@ -108,6 +108,7 @@
         <variable name="FCM_VERSION" value="11.6.2" />
         <variable name="SENDER_ID" value="615052831647" />
     </plugin>
-    <engine name="ios" spec="4.5.4" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
+    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="7.1.0" />
 </widget>

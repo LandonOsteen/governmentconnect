@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit profile</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <div class="user" *ngIf="user">
+    <img class="user-image" [src]="user.photoUrl"/>
+    <button (click)="updateUserPhoto()" color="primary">
+      change
+    </button>
+    <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
+    <div class="user-subtitle">{{user.title}}</div>
+  </div>
+
+  <button (click)="editUser()" color="primary">
+    Edit info
+  </button>
+
+
+  <ion-list *ngIf="user">
+    <ion-item>
+      <ion-label color="primary">First Name</ion-label>
+      <ion-input placeholder="First name" [value]="user.firstName" [disabled]="readonly"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Last Name</ion-label>
+      <ion-input placeholder="First name" [value]="user.lastName" [disabled]="readonly"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Agency</ion-label>
+      <ion-input placeholder="Agency" [value]="user.stafferFor" [disabled]="readonly"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Title</ion-label>
+      <ion-input placeholder="Title" [value]="user.title" [disabled]="readonly"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button (click)="updateUserDetails()" color="primary">
+    Save changes
+  </button>
+
+
+</ion-content>

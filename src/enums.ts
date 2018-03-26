@@ -6,5 +6,6 @@ export enum APP_PAGES {
   SETTINGS_PAGE = 'SettingsPage',
   TABS_PAGE = 'TabsPage',
   USER_PAGe = 'UserPage',
-  WELCOME_PAGE = 'WelcomePage'
+  WELCOME_PAGE = 'WelcomePage',
+  USER_PROFILE_PAGE ='UserProfilePage'
 }

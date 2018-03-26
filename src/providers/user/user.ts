@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase} from 'angularfire2/database';
 import lunr from "lunr";
+import {AngularFireStorage} from 'angularfire2/storage';
+import {Camera} from '@ionic-native/camera';
 
 @Injectable()
 export class UserProvider {
@@ -10,13 +12,14 @@ export class UserProvider {
   usersIndex = null
   usersWatcher = null
 
-  constructor(
-    public firebaseAuth: AngularFireAuth,
-    public firebaseDatabase: AngularFireDatabase
-  ) { }
+  constructor(public firebaseAuth: AngularFireAuth,
+              public firebaseDatabase: AngularFireDatabase,
+              public firebaseStorage: AngularFireStorage,
+              public camera: Camera) {
+  }
 
   async getUser(userId: string, isConnected?: boolean) {
-    const users = await this.getUsers() 
+    const users = await this.getUsers()
     let privateData = {}
 
     if (isConnected) {
@@ -44,6 +47,38 @@ export class UserProvider {
     return this.usersCache
   }
 
+
+  async updateUser(user: User) {
+    console.log(user);
+    return await this.firebaseDatabase
+      .object(`users_private/${user.uid}`)
+      .update(user);
+  }
+
+  async uploadUserProfilePicture(user: User) {
+
+    const imageURI = await this.camera.getPicture({
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    });
+
+    // const fileTransfer: FileTransferObject = this.transfer.create();
+    const result = await this.firebaseStorage.upload('image', imageURI);
+    console.log(result);
+
+    // let options: FileUploadOptions = {
+    //   fileKey: 'ionicfile',
+    //   fileName: 'ionicfile',
+    //   chunkedMode: false,
+    //   mimeType: "image/jpeg",
+    //   headers: {}
+    // };
+    //
+    // let result = await fileTransfer.upload(imageURI, 'http://192.168.0.7:8080/api/uploadImage', options);
+
+  }
+
   async searchUsers(query?: string) {
     if (!this.usersIndex) {
       const users = await this.getUsers()
@@ -52,7 +87,7 @@ export class UserProvider {
         this.ref('uid')
 
         this.field('firstName'),
-        this.field('lastName')
+          this.field('lastName')
         this.field('stafferFor')
 
         this.pipeline.remove(lunr.stemmer)
@@ -70,8 +105,8 @@ export class UserProvider {
     return results
       .map(r => this.usersCache[r.ref])
       .sort((a, b) => {
-        if(a.firstName < b.firstName) return -1;
-        if(a.firstName > b.firstName) return 1;
+        if (a.firstName < b.firstName) return -1;
+        if (a.firstName > b.firstName) return 1;
         return 0;
       })
   }
