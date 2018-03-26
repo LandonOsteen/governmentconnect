@@ -4,5 +4,33 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <button ion-button block color="primary" (click)="logout()">Logout</button>
+
+
+
+  <ion-list>
+    <button ion-item>
+      <ion-icon name="lock"></ion-icon> Privacy
+    </button>
+
+    <button ion-item>
+      <ion-icon name="browsers-outline"></ion-icon> Edit profile
+    </button>
+
+    <button ion-item>
+      <ion-icon name="briefcase"></ion-icon> Privacy Policy
+    </button>
+
+    <button ion-item>
+      <ion-icon name="contact-outline"></ion-icon> Account
+    </button>
+
+    <button ion-item>
+      <ion-icon name="mail"></ion-icon> Send feedback
+    </button>
+
+    <button ion-item (click)="logout()">
+      <ion-icon name="exit"></ion-icon> Logout
+    </button>
+  </ion-list>
+
 </ion-content>
