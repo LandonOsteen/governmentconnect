@@ -1,3 +1,21 @@
 page-privacy {
+  .header {
+    box-shadow: 0 32px 44px 0 rgba(131, 146, 167, 0.2);
+  }
 
+  .header-ios .toolbar-background-ios,
+  .footer-ios .toolbar-background-ios {
+    border: 0;
+  }
+
+  h1 {
+    color: #3B4859;
+    font-size: 12px;
+    margin: 0 0 25px;
+  }
+
+  p {
+    color: #8392A7;
+    font-size: 12px;
+  }
 }
