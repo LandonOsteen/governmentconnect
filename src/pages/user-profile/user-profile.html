@@ -4,47 +4,71 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-spinner name="bubbles" *ngIf="!user"></ion-spinner>
 
-  <div class="user" *ngIf="user">
-    <img class="user-image" [src]="user.photoUrl"/>
-    <button (click)="updateUserPhoto()" color="primary">
-      change
-    </button>
-    <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
-    <div class="user-subtitle">{{user.title}}</div>
-  </div>
+  <ng-container *ngIf="user">
 
-  <button (click)="editUser()" color="primary">
-    Edit info
-  </button>
+    <div class="user">
+      <div class="user-page-header">
+        <div class="user-page-header-inner">
+          <div class="user-page-header-image-container">
+            <img class="user-page-header-image" [src]="user.photoUrl"/>
 
-  <ion-list *ngIf="user">
-    <ion-item>
-      <ion-label color="primary">First Name</ion-label>
-      <ion-input placeholder="First name" [value]="user.firstName" [disabled]="readonly"></ion-input>
-    </ion-item>
+            <button (click)="updateUserPhoto()" class="button-change-image">
+              change
+            </button>
+          </div>
 
-    <ion-item>
-      <ion-label color="primary">Last Name</ion-label>
-      <ion-input placeholder="First name" [value]="user.lastName" [disabled]="readonly"></ion-input>
-    </ion-item>
+          <div class="user-page-header-body">
+            <div class="user-page-header-title">{{ user.firstName }} {{ user.lastName }}</div>
+            <div class="user-page-header-subtitle-primary">{{ user.title }}</div>
+            <div class="user-page-header-subtitle-secondary">{{ user.agency }}</div>
+          </div>
+        </div>
+      </div>
 
-    <ion-item>
-      <ion-label color="primary">Agency</ion-label>
-      <ion-input placeholder="Agency" [value]="user.stafferFor" [disabled]="readonly"></ion-input>
-    </ion-item>
+      <button ion-button clear (click)="editUser()">
+        Edit info
+      </button>
+    </div>
 
-    <ion-item>
-      <ion-label color="primary">Title</ion-label>
-      <ion-input placeholder="Title" [value]="user.title" [disabled]="readonly"></ion-input>
-    </ion-item>
+    <div class="edit-user-form">
+      <ion-list>
+        <ion-item>
+          <ion-label>First Name</ion-label>
+          <ion-input placeholder="First name" [value]="user.firstName" [disabled]="readonly"></ion-input>
+        </ion-item>
 
-  </ion-list>
+        <ion-item>
+          <ion-label>Last Name</ion-label>
+          <ion-input placeholder="First name" [value]="user.lastName" [disabled]="readonly"></ion-input>
+        </ion-item>
 
-  <button (click)="updateUserDetails()" color="primary">
-    Save changes
-  </button>
+        <ion-item>
+          <ion-label>Email</ion-label>
+          <ion-input placeholder="Email" [value]="user.email" [disabled]="readonly"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Agency</ion-label>
+          <ion-input placeholder="Agency" [value]="user.agency" [disabled]="readonly"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Title</ion-label>
+          <ion-input placeholder="Title" [value]="user.title" [disabled]="readonly"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </div>
+
+    <div class="button-wrapper" *ngIf="!readonly">
+      <button (click)="updateUserDetails()" ion-button block>
+        Save changes
+      </button>
+    </div>
+  </ng-container>
 
 
 </ion-content>

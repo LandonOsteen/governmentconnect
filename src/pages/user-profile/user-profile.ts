@@ -10,7 +10,6 @@ import {UserProvider} from '../../providers/user/user';
 })
 export class UserProfilePage {
 
-
   protected user: User;
   protected readonly = true;
 
@@ -36,9 +35,7 @@ export class UserProfilePage {
     this.userProvider.uploadUserProfilePicture(this.user);
   }
 
-  async editUser() {
+  editUser() {
     this.readonly = false;
   }
-
-
 }
