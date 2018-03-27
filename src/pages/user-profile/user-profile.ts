@@ -27,8 +27,12 @@ export class UserProfilePage {
   }
 
   async updateUserDetails() {
-    this.userProvider.updateUser(this.user);
-
+    try {
+      this.userProvider.updateUser(this.user);
+      this.readonly = true;
+    } catch (err) {
+      console.log('update failed', err);
+    }
   }
 
   async updateUserPhoto() {

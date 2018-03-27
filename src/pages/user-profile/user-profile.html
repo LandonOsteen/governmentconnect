@@ -37,27 +37,27 @@
       <ion-list>
         <ion-item>
           <ion-label>First Name</ion-label>
-          <ion-input placeholder="First name" [value]="user.firstName" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="First name" [(ngModel)]="user.firstName" [disabled]="readonly"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Last Name</ion-label>
-          <ion-input placeholder="First name" [value]="user.lastName" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="First name" [(ngModel)]="user.lastName" [disabled]="readonly"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Email</ion-label>
-          <ion-input placeholder="Email" [value]="user.email" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="Email" [(ngModel)]="user.email" [disabled]="readonly"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Agency</ion-label>
-          <ion-input placeholder="Agency" [value]="user.agency" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="Agency" [(ngModel)]="user.agency" [disabled]="readonly"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label>Title</ion-label>
-          <ion-input placeholder="Title" [value]="user.title" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="Title" [(ngModel)]="user.title" [disabled]="readonly"></ion-input>
         </ion-item>
 
       </ion-list>

@@ -49,19 +49,9 @@ export class UserProvider {
 
 
   async updateUser(user: User) {
-    console.log('current user: ', user);
-    // return await this.firebaseDatabase
-    //   .object(`users_private/${user.uid}`)
-    //   .update(user);
-    //
-    const result: any = await this.firebaseDatabase
+    return await this.firebaseDatabase
       .object(`users_private/${user.uid}`)
-      .update({
-        active: false,
-        accepted: true
-      });
-
-    return result;
+      .update(user);
   }
 
   async uploadUserProfilePicture(user: User) {
