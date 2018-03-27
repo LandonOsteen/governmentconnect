@@ -3,6 +3,7 @@
     <ion-title>Edit profile</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content padding>
 
   <div class="user" *ngIf="user">
@@ -17,7 +18,6 @@
   <button (click)="editUser()" color="primary">
     Edit info
   </button>
-
 
   <ion-list *ngIf="user">
     <ion-item>

@@ -17,8 +17,8 @@ export class MyApp {
   loaded = false
 
   constructor(
-    public platform: Platform, 
-    public statusBar: StatusBar, 
+    public platform: Platform,
+    public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public firebaseAuth: AngularFireAuth,
     public pushProvider: PushProvider

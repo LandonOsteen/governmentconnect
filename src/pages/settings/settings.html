@@ -3,19 +3,19 @@
     <ion-title>Settings</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
 
+<ion-content padding>
 
   <ion-list>
     <button ion-item>
       <ion-icon name="lock"></ion-icon> Privacy
     </button>
 
-    <button ion-item (click)="editUserSettings()">
+    <button ion-item navPush="UserProfilePage">
       <ion-icon name="browsers-outline"></ion-icon> Edit profile
     </button>
 
-    <button ion-item>
+    <button ion-item navPush="PrivacyPage">
       <ion-icon name="briefcase"></ion-icon> Privacy Policy
     </button>
 

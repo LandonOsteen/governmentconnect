@@ -22,9 +22,4 @@ export class SettingsPage {
 
     await this.app.getRootNav().setRoot(APP_PAGES.WELCOME_PAGE);
   }
-
-  async editUserSettings() {
-    await this.app.getRootNav().setRoot(APP_PAGES.USER_PROFILE_PAGE);
-  }
-
 }

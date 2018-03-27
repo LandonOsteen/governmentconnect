@@ -8,12 +8,10 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class TabsPage {
 
-  contactsRoot = 'ContactsPage'
-  chatsRoot = 'ChatsPage'
-  notificationsRoot = 'NotificationsPage'
-  settingsRoot = 'SettingsPage'
-
+  contactsRoot = 'ContactsPage';
+  chatsRoot = 'ChatsPage';
+  notificationsRoot = 'NotificationsPage';
+  settingsRoot = 'SettingsPage';
 
   constructor(public navCtrl: NavController) {}
-
 }
