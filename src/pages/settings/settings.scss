@@ -1,3 +1,39 @@
-page-settings {
+// Settings List
+//
 
+.list.avatar-list {
+  .item {
+    border: 0;
+
+    .item-inner {
+      border-bottom: 1px solid #ddd !important;
+      background-image: url(../assets/svg/arrow-right-dark.svg);
+      -webkit-background-size: 7px 13px;
+      background-size: 7px 13px;
+    }
+
+    ion-avatar {
+      justify-content: flex-start;
+
+      &,
+      .icon {
+        display: flex;
+      }
+
+      .icon {
+        align-items: center;
+      }
+
+      img {
+        border-radius: 0;
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    h2 {
+      color: #262628;
+      font-size: 15px;
+    }
+  }
 }

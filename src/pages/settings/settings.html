@@ -6,29 +6,53 @@
 
 <ion-content padding>
 
-  <ion-list>
+  <ion-list class="avatar-list">
     <button ion-item>
-      <ion-icon name="lock"></ion-icon> Privacy
+      <ion-avatar item-start>
+        <img width="14" height="19" src="../assets/svg/lock.svg">
+      </ion-avatar>
+
+      <h2>Privacy</h2>
     </button>
 
     <button ion-item navPush="UserProfilePage">
-      <ion-icon name="browsers-outline"></ion-icon> Edit profile
+      <ion-avatar item-start>
+        <img width="21" height="21" src="../assets/svg/cube.svg">
+      </ion-avatar>
+
+      <h2>Edit profile</h2>
     </button>
 
     <button ion-item navPush="PrivacyPage">
-      <ion-icon name="briefcase"></ion-icon> Privacy Policy
+      <ion-avatar item-start>
+        <img width="24" height="24" src="../assets/svg/list-alt.svg">
+      </ion-avatar>
+
+      <h2>Privacy Policy</h2>
     </button>
 
     <button ion-item>
-      <ion-icon name="contact-outline"></ion-icon> Account
+      <ion-avatar item-start>
+        <img width="21" height="16" src="../assets/svg/grid.svg">
+      </ion-avatar>
+
+      <h2>Account</h2>
     </button>
 
     <button ion-item>
-      <ion-icon name="mail"></ion-icon> Send feedback
+      <ion-avatar item-start>
+        <img width="26" height="16" src="../assets/svg/mail.svg">
+      </ion-avatar>
+
+      <h2>Send feedback</h2>
     </button>
 
     <button ion-item (click)="logout()">
-      <ion-icon name="exit"></ion-icon> Logout
+      <ion-avatar item-start>
+        <ion-icon name="log-out"></ion-icon>
+      </ion-avatar>
+
+      <h2>Logout</h2>
     </button>
   </ion-list>
 
