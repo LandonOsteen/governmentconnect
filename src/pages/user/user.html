@@ -1,8 +1,20 @@
-<div class="remove-connection-confirmation" *ngIf="confirmConnectionRemoval">
+<div class="page-modal remove-connection-confirmation" *ngIf="confirmConnectionRemoval">
   <h3>Are you sure?</h3>
   <div class="spacer-vertical-2"></div>
   <button ion-button color="primary" (click)="removeConnection()">Yes, remove user</button>
   <button ion-button outline color="semidark" (click)="confirmConnectionRemoval = false">No, take me back</button>
+</div>
+
+<div class="page-modal request-connection" *ngIf="requestConnection">
+  <h3>Request <br>Connection</h3>
+
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Include a short message"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button color="primary" (click)="sendInvitation()">Send Request</button>
 </div>
 
 <ion-header>
@@ -12,9 +24,11 @@
 </ion-header>
 
 <ion-content>
-  <div class="user-page-header">
+  <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
+
+  <div class="user-page-header" *ngIf="!loading">
     <div class="user-page-header-inner">
-      <img class="user-page-header-image" [src]="user.photoUrl" />
+      <img class="user-page-header-image" [src]="user.photoUrl"/>
 
       <div class="user-page-header-body">
         <div class="user-page-header-title">{{ user.firstName }} {{ user.lastName }}</div>
@@ -24,7 +38,7 @@
     </div>
   </div>
 
-  <div class="user-page-body">
+  <div class="user-page-body" *ngIf="!loading">
     <div class="user-page-body-item">
       <div class="user-page-body-item-title">First Name</div>
       <div class="user-page-body-item-content">{{ user.firstName }}</div>
@@ -46,12 +60,23 @@
       <div class="user-page-body-item-content">{{ user.title }}</div>
     </div>
   </div>
+
   <div *ngIf="loaded" class="user-page-actions" padding>
-    <button *ngIf="!isConnected && !hasInvited && !invitedBy" ion-button block color="primary" (click)="sendInvitation()">Send Request</button>
-    <button *ngIf="!isConnected && hasInvited && !invitedBy" ion-button block color="primary" (click)="revokeInvitation()">Revoke Connection Request</button>
-    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block color="primary" (click)="acceptInvitation()">Accept Connection Request</button>
-    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block outline color="semidark" (click)="rejectInvitation()">Reject Connection Request</button>
+    <button *ngIf="!isConnected && !hasInvited && !invitedBy" ion-button full color="primary"
+            (click)="openRequest()">Send Request
+    </button>
+    <button *ngIf="!isConnected && hasInvited && !invitedBy" ion-button block color="primary"
+            (click)="revokeInvitation()">Revoke Connection Request
+    </button>
+    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block color="primary"
+            (click)="acceptInvitation()">Accept Connection Request
+    </button>
+    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block outline color="semidark"
+            (click)="rejectInvitation()">Reject Connection Request
+    </button>
     <button *ngIf="isConnected" ion-button block color="primary">Start Chatting</button>
-    <button *ngIf="isConnected" ion-button block outline color="semidark" (click)="confirmConnectionRemoval = true">Remove user</button>
+    <button *ngIf="isConnected" ion-button block outline color="semidark" (click)="confirmConnectionRemoval = true">
+      Remove user
+    </button>
   </div>
 </ion-content>

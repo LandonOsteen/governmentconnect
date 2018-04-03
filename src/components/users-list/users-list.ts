@@ -7,22 +7,22 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 export class UsersListComponent {
 
   @Input('users') users: any[] = [];
-  @Input('loading') loading: boolean = false
+  @Input('loading') loading: boolean = false;
 
-  maxSlice = 20
+  maxSlice = 20;
 
   getNavParams(user) {
-    return { userId: user.uid }; 
+    return { userId: user.uid };
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.users) {
-      this.maxSlice = 20
+      this.maxSlice = 20;
     }
   }
 
   doInfinite(infiniteScroll) {
-    this.maxSlice = this.maxSlice + 20
+    this.maxSlice = this.maxSlice + 20;
 
     infiniteScroll.complete();
   }

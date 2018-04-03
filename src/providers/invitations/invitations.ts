@@ -27,9 +27,9 @@ export class InvitationsProvider {
 
       const connResult: any = await this.firebaseDatabase
         .object(`/connections/${me.uid}/${inviterId}`)
-        .set({ 
+        .set({
           active: true,
-          firstName: inviter.firstName, 
+          firstName: inviter.firstName,
           lastName: inviter.lastName,
           photoUrl: inviter.photoUrl,
           stafferFor: inviter.stafferFor,
@@ -114,25 +114,25 @@ export class InvitationsProvider {
     if (me) {
       const result: any = await this.firebaseDatabase
         .object(`/invitations/${user.uid}/${me.uid}`)
-        .update({ 
+        .update({
           firstName: meUser.firstName,
           lastName: meUser.lastName,
           photoUrl: meUser.photoUrl,
           uid: meUser.uid,
           active: true,
           accepted: false
-        })
+        });
 
       const connResult: any = await this.firebaseDatabase
         .object(`/connections/${me.uid}/${user.uid}`)
-        .update({ 
+        .update({
           active: true,
-          firstName: user.firstName, 
+          firstName: user.firstName,
           lastName: user.lastName,
           photoUrl: user.photoUrl,
           stafferFor: user.stafferFor,
           uid: user.uid
-        })
+        });
 
       return result
     }

@@ -1,10 +1,22 @@
 @import "../../theme/variables.scss";
 
+page-user {
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .user-page-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 130px;
+  margin: 0 0 29px;
 }
 
 .user-page-header-inner {
@@ -28,8 +40,9 @@
 
 .user-page-header-subtitle-primary,
 .user-page-header-subtitle-secondary {
-  font-size: 14px;
   color: #8392A7;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .user-page-header-subtitle-secondary {
@@ -38,7 +51,7 @@
 
 .user-page-body {
   padding: 20px 40px;
-  min-height: 200px;
+  min-height: 160px;
   background-color: #FAFAFA;
 }
 
@@ -47,12 +60,17 @@
   justify-content: space-between;
   border-top: 1px solid #F5F5F5;
   border-bottom: 1px solid #F5F5F5;
-  height: 35px;
-  line-height: 35px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.user-page-body-item-title,
+.user-page-body-item-content {
+  font-weight: $font-weight-light;
+  font-size: 14px;
 }
 
 .user-page-body-item-title {
-  font-weight: $font-weight-light;
   color: #8392A7;
 }
 
@@ -60,7 +78,7 @@
   color: #3B4859;
 }
 
-.remove-connection-confirmation {
+.page-modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -73,8 +91,36 @@
   flex-direction: column;
   background-color: rgba(255, 255, 255, 0.9);
 
+  h3 {
+    font-size: 20px;
+    margin: 0 0 40px;
+    text-align: center;
+  }
+
   button {
     width: 275px;
+    margin: 0 0 9px;
+  }
+}
+
+.request-connection {
+  .list {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.04);
+    margin: 0 0 35px;
+  }
+
+  .input {
+    background: #FFFFFF;
+
+    .text-input {
+      font-size: 14px;
+      color: #828393;
+      line-height: 22px;
+      margin: 0;
+      width: 276px;
+      height: 121px;
+      padding: 8px 15px;
+    }
   }
 }
 

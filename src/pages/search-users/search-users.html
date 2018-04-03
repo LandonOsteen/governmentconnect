@@ -6,6 +6,7 @@
       </button>
     </ion-buttons>
     <ion-searchbar
+      placeholder="Type name, office, or job title"
       [(ngModel)]="query"
       [showCancelButton]="shouldShowCancel"
       (ionInput)="onQuery($event)"

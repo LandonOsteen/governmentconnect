@@ -9,38 +9,31 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class SearchUsersPage {
 
-  users = []
-  query = ''
-  loading = true
+  public users = [];
+  public query = '';
+  public loading = true;
 
-  constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams,
-    public userProvider: UserProvider,
-    public viewController: ViewController
-  ) { }
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public userProvider: UserProvider,
+              public viewController: ViewController) {
+  }
 
   async ionViewDidLoad() {
-    this.loading = true
-
-    const users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*')
-
-    this.users = users
-
-    this.loading = false
+    this.loading = true;
+    this.users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*');
+    this.loading = false;
   }
 
   async onQuery(ev) {
-    this.loading = true
+    this.loading = true;
 
-    const users = await this.userProvider.searchUsers(this.query + '*')
+    this.users = await this.userProvider.searchUsers(this.query + '*');
 
-    this.users = users
-
-    this.loading = false
+    this.loading = false;
   }
 
   dismiss() {
-    this.viewController.dismiss()
+    this.viewController.dismiss();
   }
 }

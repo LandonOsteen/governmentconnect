@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase} from 'angularfire2/database';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 import lunr from "lunr";
-import {AngularFireStorage} from 'angularfire2/storage';
-import {Camera} from '@ionic-native/camera';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { Camera } from '@ionic-native/camera';
 
 @Injectable()
 export class UserProvider {
 
-  usersCache = null
-  usersIndex = null
-  usersWatcher = null
+  usersCache = null;
+  usersIndex = null;
+  usersWatcher = null;
 
   constructor(public firebaseAuth: AngularFireAuth,
               public firebaseDatabase: AngularFireDatabase,
@@ -19,18 +19,18 @@ export class UserProvider {
   }
 
   async getUser(userId: string, isConnected?: boolean) {
-    const users = await this.getUsers()
-    let privateData = {}
+    const users = await this.getUsers();
+    let privateData = {};
 
     if (isConnected) {
       privateData = await this.firebaseDatabase
         .object(`users_private/${userId}`)
         .valueChanges()
         .take(1)
-        .toPromise()
+        .toPromise();
     }
 
-    return Object.assign({}, users[userId], privateData)
+    return Object.assign({}, users[userId], privateData);
   }
 
   async getUsers() {
@@ -80,26 +80,26 @@ export class UserProvider {
 
   async searchUsers(query?: string) {
     if (!this.usersIndex) {
-      const users = await this.getUsers()
+      const users = await this.getUsers();
 
       this.usersIndex = lunr(function () {
-        this.ref('uid')
+        this.ref('uid');
 
-        this.field('firstName'),
-          this.field('lastName')
-        this.field('stafferFor')
+        this.field('firstName');
+        this.field('lastName');
+        this.field('stafferFor');
 
-        this.pipeline.remove(lunr.stemmer)
-        this.searchPipeline.remove(lunr.stemmer)
+        this.pipeline.remove(lunr.stemmer);
+        this.searchPipeline.remove(lunr.stemmer);
 
         Object['values'](users).forEach((user) => {
-          this.add(user)
+          this.add(user);
         })
       })
 
     }
 
-    const results = this.usersIndex.search(query)
+    const results = this.usersIndex.search(query);
 
     return results
       .map(r => this.usersCache[r.ref])

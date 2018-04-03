@@ -12,61 +12,64 @@ import { InvitationsProvider } from '../../providers/invitations/invitations';
 })
 export class UserPage {
 
-  loaded = false
-  contact = {}
-  user: any = {}
-  userId: any = ''
-  isConnected = false
-  hasInvited: any
-  confirmConnectionRemoval = false
+  loaded = false;
+  loading = false;
+  contact = {};
+  user: any = {};
+  userId: any = '';
+  isConnected = false;
+  hasInvited: any;
+  public confirmConnectionRemoval = false;
+  public requestConnection = false;
 
-  constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams,
-    public connectionProvider: ConnectionProvider,
-    public contactsProvider: ContactsProvider,
-    public invitationProvider: InvitationsProvider,
-    public userProvider: UserProvider
-  ) { }
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public connectionProvider: ConnectionProvider,
+              public contactsProvider: ContactsProvider,
+              public invitationProvider: InvitationsProvider,
+              public userProvider: UserProvider) {
+  }
 
   async ionViewDidLoad() {
-    const userId = this.userId = this.navParams.get('userId')
+    this.loading = true;
+    const userId = this.userId = this.navParams.get('userId');
 
-    this.isConnected = await this.connectionProvider.isUserConnectedTo(userId)
-    this.hasInvited = await this.invitationProvider.haveInvitedUser(userId)
+    this.isConnected = await this.connectionProvider.isUserConnectedTo(userId);
+    this.hasInvited = await this.invitationProvider.haveInvitedUser(userId);
 
-    const user = await this.userProvider.getUser(userId, this.isConnected)
+    this.user = await this.userProvider.getUser(userId, this.isConnected);
 
-    this.user = user
+    this.contact = await this.contactsProvider.getContact(userId);
 
-    const contact = await this.contactsProvider.getContact(userId)
-
-    this.contact = contact
-
-    this.loaded = true
+    this.loaded = true;
+    this.loading = false;
   }
 
   async revokeInvitation() {
-    await this.invitationProvider.revokeInvitation(this.user)
+    await this.invitationProvider.revokeInvitation(this.user);
 
-    this.hasInvited = false
+    this.hasInvited = false;
   }
 
   async sendInvitation() {
-    await this.invitationProvider.sendInvitation(this.user)
+    this.requestConnection = false;
+    await this.invitationProvider.sendInvitation(this.user);
 
-    this.hasInvited = true
+    this.hasInvited = true;
   }
 
   async removeConnection() {
     try {
-      await this.connectionProvider.removeConnection(this.userId)
+      await this.connectionProvider.removeConnection(this.userId);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
 
-    this.confirmConnectionRemoval = false
-    this.isConnected = false
+    this.confirmConnectionRemoval = false;
+    this.isConnected = false;
   }
 
+  openRequest() {
+    this.requestConnection = true;
+  }
 }
