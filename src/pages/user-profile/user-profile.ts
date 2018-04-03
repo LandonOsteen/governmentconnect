@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, App, NavParams} from 'ionic-angular';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {UserProvider} from '../../providers/user/user';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, App, NavParams } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -36,7 +36,12 @@ export class UserProfilePage {
   }
 
   async updateUserPhoto() {
-    this.userProvider.uploadUserProfilePicture(this.user);
+    try {
+      this.user.photoUrl = await this.userProvider.uploadUserProfilePicture(this.user);
+      await this.updateUserDetails();
+    } catch (err) {
+      console.log('upload failed', err);
+    }
   }
 
   editUser() {

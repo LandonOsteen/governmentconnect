@@ -58,24 +58,18 @@ export class UserProvider {
 
     const imageURI = await this.camera.getPicture({
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     });
 
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    const result = await this.firebaseStorage.upload('image', imageURI);
-    console.log(result);
+    const filePath = `profile_image_${ new Date().getTime() }.jpg`;
 
-    // let options: FileUploadOptions = {
-    //   fileKey: 'ionicfile',
-    //   fileName: 'ionicfile',
-    //   chunkedMode: false,
-    //   mimeType: "image/jpeg",
-    //   headers: {}
-    // };
-    //
-    // let result = await fileTransfer.upload(imageURI, 'http://192.168.0.7:8080/api/uploadImage', options);
+    const image = 'data:image/jpg;base64,' + imageURI;
+    const result = await this.firebaseStorage.ref(filePath).putString(image, 'data_url');
 
+    return result.downloadURL
   }
 
   async searchUsers(query?: string) {
