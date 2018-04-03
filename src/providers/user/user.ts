@@ -101,12 +101,18 @@ export class UserProvider {
 
     const imageURI = await this.camera.getPicture({
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     });
 
-    return await this.firebaseStorage.upload('image', imageURI);
+    const filePath = `profile_image_${ new Date().getTime() }.jpg`;
 
+    const image = 'data:image/jpg;base64,' + imageURI;
+    const result = await this.firebaseStorage.ref(filePath).putString(image, 'data_url');
+
+    return result.downloadURL
   }
 
   async searchUsers(query?: string) {

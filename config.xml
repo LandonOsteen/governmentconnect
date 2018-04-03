@@ -109,6 +109,8 @@
         <variable name="SENDER_ID" value="615052831647" />
     </plugin>
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
+    <allow-navigation href="http://192.168.1.114:8101" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="~4.5.4" />
 </widget>
