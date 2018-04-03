@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {Component, Input, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'users-list',
@@ -12,7 +12,7 @@ export class UsersListComponent {
   maxSlice = 20;
 
   getNavParams(user) {
-    return { userId: user.uid };
+    return {userId: user.uid};
   }
 
   ngOnChanges(changes: SimpleChanges) {

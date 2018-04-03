@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase} from 'angularfire2/database';
 import lunr from "lunr";
-import { AngularFireStorage } from 'angularfire2/storage';
-import { Camera } from '@ionic-native/camera';
+import {AngularFireStorage} from 'angularfire2/storage';
+import {Camera} from '@ionic-native/camera';
 
 @Injectable()
 export class UserProvider {
@@ -18,40 +18,83 @@ export class UserProvider {
               public camera: Camera) {
   }
 
-  async getUser(userId: string, isConnected?: boolean) {
-    const users = await this.getUsers();
-    let privateData = {};
+  /**
+   * Get user profile information it combines the public and private
+   * @param {string} userId
+   * @param {boolean} includePrivateData
+   * @returns {Promise<{} & any & {}>}
+   */
+  async getUser(userId: string, includePrivateData?: boolean, forceReload?: boolean) {
 
-    if (isConnected) {
-      privateData = await this.firebaseDatabase
+    // Get user public data
+    const users = await this.getUsers(forceReload);
+    let user: User = users[userId];
+
+    // Get user private data
+    if (includePrivateData) {
+      const privateData = await this.firebaseDatabase
         .object(`users_private/${userId}`)
         .valueChanges()
         .take(1)
-        .toPromise();
+        .toPromise() as UserPrivate;
+      user.privateData = privateData;
     }
 
-    return Object.assign({}, users[userId], privateData);
+    return user;
   }
 
-  async getUsers() {
+  /**
+   * Get all users
+   * @returns {Promise<any>}
+   */
+  async getUsers(forceReload?: boolean) {
+
+    if (forceReload) {
+      this.usersCache = null;
+    }
+
     if (!this.usersCache) {
-      const users = await this.firebaseDatabase
+      this.usersCache = await this.firebaseDatabase
         .object(`users`)
         .valueChanges()
         .take(1)
-        .toPromise()
+        .toPromise();
 
-      this.usersCache = users
+      if (this.usersCache) {
+        // Correct uids
+        Object.keys(this.usersCache).map((uid, index) => {
+          this.usersCache[uid].uid = uid;
+        });
+      }
+
     }
 
-    return this.usersCache
+    return this.usersCache;
   }
 
 
+  /**
+   * Update user profile
+   * @param {User} user
+   * @returns {Promise<{} & void & void>}
+   */
   async updateUser(user: User) {
-    return await this.firebaseDatabase
-      .object(`users_private/${user.uid}`)
+
+    const hasPrivateData = user.privateData != null;
+    if (hasPrivateData) {
+      await this.firebaseDatabase
+        .object(`users_private/${user.uid}`)
+        .update(user.privateData);
+      user.privateData = null;
+    }
+
+
+    await this.firebaseDatabase
+      .object(`users/${user.uid}`)
       .update(user);
+
+    return await this.getUser(user.uid, hasPrivateData);
+
   }
 
   async uploadUserProfilePicture(user: User) {
@@ -62,19 +105,7 @@ export class UserProvider {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     });
 
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    const result = await this.firebaseStorage.upload('image', imageURI);
-    console.log(result);
-
-    // let options: FileUploadOptions = {
-    //   fileKey: 'ionicfile',
-    //   fileName: 'ionicfile',
-    //   chunkedMode: false,
-    //   mimeType: "image/jpeg",
-    //   headers: {}
-    // };
-    //
-    // let result = await fileTransfer.upload(imageURI, 'http://192.168.0.7:8080/api/uploadImage', options);
+    return await this.firebaseStorage.upload('image', imageURI);
 
   }
 

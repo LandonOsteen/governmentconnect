@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { ContactsProvider } from '../../providers/contacts/contacts';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import {ContactsProvider} from '../../providers/contacts/contacts';
 import * as _ from "lodash";
-import { APP_PAGES } from '../../enums';
+import {APP_PAGES} from '../../enums';
 
 @IonicPage()
 @Component({
@@ -13,20 +13,18 @@ export class ContactsPage {
 
   contacts = null
 
-  constructor(
-    public modalCtrl: ModalController,
-    public navCtrl: NavController, 
-    public navParams: NavParams,
-    public contactsProvider: ContactsProvider
-  ) { }
+  constructor(public modalCtrl: ModalController,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public contactsProvider: ContactsProvider) {
+  }
 
   ionViewWillEnter() {
-    this.contacts = this.contactsProvider.getContacts().map(cs => cs.filter(c => c.active)).take(1)
+    this.contacts = this.contactsProvider.getContacts().map(contact => contact.filter(c => c.active)).take(1)
   }
 
   openSearchUsersPage() {
-    const modal = this.modalCtrl.create(APP_PAGES.SEARCH_USERS_PAGE)
-
+    const modal = this.modalCtrl.create(APP_PAGES.SEARCH_USERS_PAGE);
     modal.present()
   }
 }

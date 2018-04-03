@@ -1,140 +1,166 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { UserProvider } from '../user/user';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {UserProvider} from '../user/user';
+
+export class InvitationStatus {
+  static NONE = "NONE";
+  static INVITEE = "INVITEE";
+  static INVITED = "INVITED";
+}
 
 @Injectable()
 export class InvitationsProvider {
 
-  constructor(
-    public firebaseAuth: AngularFireAuth,
-    public firebaseDatabase: AngularFireDatabase,
-    public userProvider: UserProvider
-  ) { }
+  constructor(public firebaseAuth: AngularFireAuth,
+              public firebaseDatabase: AngularFireDatabase,
+              public userProvider: UserProvider) {
+  }
 
   async acceptInvitation(inviterId: string) {
-    const me = this.firebaseAuth.auth.currentUser
 
-    if (me) {
-      const inviter = await this.userProvider.getUser(inviterId)
-
-      const result: any = await this.firebaseDatabase
-        .object(`/invitations/${me.uid}/${inviterId}`)
-        .update({
-          active: false,
-          accepted: true
-        })
-
-      const connResult: any = await this.firebaseDatabase
-        .object(`/connections/${me.uid}/${inviterId}`)
-        .set({
-          active: true,
-          firstName: inviter.firstName,
-          lastName: inviter.lastName,
-          photoUrl: inviter.photoUrl,
-          stafferFor: inviter.stafferFor,
-          uid: inviter.uid
-        })
-
-      return result
+    const authUser = this.firebaseAuth.auth.currentUser;
+    if (!authUser) {
+      return;
     }
+
+    let inviteeId = authUser.uid;
+
+    // Remove invitation
+    await this.firebaseDatabase
+      .object(`/invitations/${inviteeId}/${inviterId}`)
+      .remove();
+
+    // Direct connection
+    await this.firebaseDatabase
+      .object(`/connections/${inviteeId}/${inviterId}`)
+      .set({
+        active: true,
+        inviteeId: inviteeId,
+        inviterId: inviterId,
+      });
+
+    // Inverse connection
+    await this.firebaseDatabase
+      .object(`/connections/${inviterId}/${inviteeId}`)
+      .set({
+        active: true,
+        inviterId: inviteeId,
+        inviteeId: inviterId,
+      });
+
+
   }
 
-  async rejectInvitation(inviter: User) {
-    const me = this.firebaseAuth.auth.currentUser
-
-    if (me) {
-      const result: any = await this.firebaseDatabase
-        .object(`/invitations/${me.uid}/${inviter.uid}`)
-        .update({
-          active: false,
-          accepted: false
-        })
+  /**
+   *
+   * @param {string} userId
+   * @returns {Promise<InvitationStatus>}
+   */
+  async getInvitationStatus(userId: string) {
+    const authUser = this.firebaseAuth.auth.currentUser;
+    if (!authUser) {
+      return false;
     }
-  }
 
-  async haveInvitedUser(userId: string) {
-    const me = this.firebaseAuth.auth.currentUser
+    let inviterId = authUser.uid;
 
-    return this.firebaseDatabase
-      .object<boolean>(`/invitations/${userId}/${me.uid}/active`)
+    let _invited = await this.firebaseDatabase
+      .object<boolean>(`/invitations/${userId}/${inviterId}`)
       .valueChanges()
       .take(1)
-      .toPromise()
-  }
-
-  async haveBeenInvitedByUser(inviter: User) {
-    const me = this.firebaseAuth.auth.currentUser
-
-    if (me) {
-      const invitation: any = await this.firebaseDatabase.object(`/invitations/${me.uid}/${inviter.uid}`)
-        .valueChanges()
-        .take(1)
-        .toPromise()
-
-      return invitation && invitation.active
+      .toPromise();
+    if (_invited) {
+      return InvitationStatus.INVITED
     }
+
+    let _invitee = await this.firebaseDatabase
+      .object<boolean>(`/invitations/${inviterId}/${userId}`)
+      .valueChanges()
+      .take(1)
+      .toPromise();
+    if (_invitee) {
+      return InvitationStatus.INVITEE
+    }
+
+    return InvitationStatus.NONE;
   }
 
+
+  /**
+   * Get all invitations
+   * @returns {Promise<any>}
+   */
   async getInvitations() {
-    const user = this.firebaseAuth.auth.currentUser
+    const authUser = this.firebaseAuth.auth.currentUser;
 
-    const invitations = await this.firebaseDatabase
-      .object(`invitations/${user.uid}`)
+    let inviteeId = authUser.uid;
+    let invitations = await this.firebaseDatabase
+      .object(`invitations/${inviteeId}`)
       .valueChanges()
       .take(1)
-      .toPromise()
+      .toPromise();
 
-    return invitations
+    let result = [];
+    if (invitations) {
+
+      Object.keys(invitations).map(async (uid, index) => {
+        invitations[uid].inviteeUser = await this.userProvider.getUser(invitations[uid].inviteeId);
+        invitations[uid].inviterUser = await this.userProvider.getUser(invitations[uid].inviterId);
+        result.push(invitations[uid]);
+      });
+    }
+
+    return result;
+
   }
 
-  async revokeInvitation(invitee: User) {
-    const me = this.firebaseAuth.auth.currentUser
+  /**
+   * Revoke invitation
+   * @returns {Promise<void>}
+   * @param inviteeId
+   */
+  async revokeInvitation(inviteeId: string) {
 
-    if (me) {
-      const result: any = await this.firebaseDatabase
-        .object(`/invitations/${invitee.uid}/${me.uid}/active`)
-        .update({
-          accepted: false,
-          active: false
-        })
-
-      const connResult: any = await this.firebaseDatabase
-        .object(`/connections/${me.uid}/${invitee.uid}/active`)
-        .set(false)
-
-      return result
+    const authUser = this.firebaseAuth.auth.currentUser;
+    if (!authUser) {
+      return;
     }
+
+    let inviterId = authUser.uid;
+    await this.firebaseDatabase
+      .object(`/invitations/${inviteeId}/${inviterId}`)
+      .remove();
+
+
+    await this.firebaseDatabase
+      .object(`/invitations/${inviterId}/${inviteeId}`)
+      .remove();
   }
 
-  async sendInvitation(user: User) {
-    const me = this.firebaseAuth.auth.currentUser
-    const meUser = await this.userProvider.getUser(me.uid)
 
-    if (me) {
-      const result: any = await this.firebaseDatabase
-        .object(`/invitations/${user.uid}/${me.uid}`)
-        .update({
-          firstName: meUser.firstName,
-          lastName: meUser.lastName,
-          photoUrl: meUser.photoUrl,
-          uid: meUser.uid,
-          active: true,
-          accepted: false
-        });
-
-      const connResult: any = await this.firebaseDatabase
-        .object(`/connections/${me.uid}/${user.uid}`)
-        .update({
-          active: true,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          photoUrl: user.photoUrl,
-          stafferFor: user.stafferFor,
-          uid: user.uid
-        });
-
-      return result
+  /**
+   * Send user invitation
+   * @param inviteeId
+   * @param message
+   * @returns {Promise<void>}
+   */
+  async sendInvitation(inviteeId: string, message: string) {
+    const authUser = this.firebaseAuth.auth.currentUser;
+    if (!authUser) {
+      return;
     }
+
+    let inviterId = authUser.uid;
+
+    await this.firebaseDatabase
+      .object(`/invitations/${inviteeId}/${inviterId}`)
+      .update({
+        inviteeId: inviteeId,
+        inviterId: inviterId,
+        message: message,
+        createdAt: new Date(),
+      });
+
   }
 }

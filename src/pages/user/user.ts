@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ContactsProvider } from '../../providers/contacts/contacts';
-import { UserProvider } from '../../providers/user/user';
-import { ConnectionProvider } from '../../providers/connection/connection';
-import { InvitationsProvider } from '../../providers/invitations/invitations';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ContactsProvider} from '../../providers/contacts/contacts';
+import {UserProvider} from '../../providers/user/user';
+import {ConnectionProvider} from '../../providers/connection/connection';
+import {InvitationsProvider, InvitationStatus} from '../../providers/invitations/invitations';
 
 @IonicPage()
 @Component({
@@ -12,15 +12,14 @@ import { InvitationsProvider } from '../../providers/invitations/invitations';
 })
 export class UserPage {
 
-  loaded = false;
-  loading = false;
-  contact = {};
-  user: any = {};
-  userId: any = '';
+  user: User = null;
+  userId: string = '';
   isConnected = false;
-  hasInvited: any;
-  public confirmConnectionRemoval = false;
-  public requestConnection = false;
+  invitationStatus: InvitationStatus = InvitationStatus.NONE;
+
+  confirmConnectionRemoval = false;
+  requestConnection = false;
+  invitationMessage: string = "";
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -31,31 +30,25 @@ export class UserPage {
   }
 
   async ionViewDidLoad() {
-    this.loading = true;
-    const userId = this.userId = this.navParams.get('userId');
 
-    this.isConnected = await this.connectionProvider.isUserConnectedTo(userId);
-    this.hasInvited = await this.invitationProvider.haveInvitedUser(userId);
+    this.userId = this.navParams.get('userId');
+    this.user = await this.userProvider.getUser(this.userId, false);
 
-    this.user = await this.userProvider.getUser(userId, this.isConnected);
+    this.isConnected = await this.connectionProvider.isUserConnectedTo(this.userId);
+    this.invitationStatus = await this.invitationProvider.getInvitationStatus(this.userId) as InvitationStatus;
 
-    this.contact = await this.contactsProvider.getContact(userId);
-
-    this.loaded = true;
-    this.loading = false;
   }
 
   async revokeInvitation() {
-    await this.invitationProvider.revokeInvitation(this.user);
-
-    this.hasInvited = false;
+    await this.invitationProvider.revokeInvitation(this.user.uid);
+    this.invitationStatus = InvitationStatus.NONE;
   }
 
   async sendInvitation() {
     this.requestConnection = false;
-    await this.invitationProvider.sendInvitation(this.user);
-
-    this.hasInvited = true;
+    await this.invitationProvider.sendInvitation(this.user.uid, this.invitationMessage);
+    this.invitationMessage = '';
+    this.invitationStatus = InvitationStatus.INVITED;
   }
 
   async removeConnection() {

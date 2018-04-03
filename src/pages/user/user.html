@@ -10,7 +10,7 @@
 
   <ion-list>
     <ion-item>
-      <ion-textarea placeholder="Include a short message"></ion-textarea>
+      <ion-textarea placeholder="Include a short message" [(ngModel)]="invitationMessage"></ion-textarea>
     </ion-item>
   </ion-list>
 
@@ -24,59 +24,72 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
+  <ion-spinner name="bubbles" *ngIf="!user"></ion-spinner>
 
-  <div class="user-page-header" *ngIf="!loading">
-    <div class="user-page-header-inner">
-      <img class="user-page-header-image" [src]="user.photoUrl"/>
+  <ng-container *ngIf="user">
+    <div class="user-page-header">
+      <div class="user-page-header-inner">
+        <img class="user-page-header-image" [src]="user.photoUrl"/>
 
-      <div class="user-page-header-body">
-        <div class="user-page-header-title">{{ user.firstName }} {{ user.lastName }}</div>
-        <div class="user-page-header-subtitle-primary">{{ user.title }}</div>
-        <div class="user-page-header-subtitle-secondary">{{ user.stafferFor }}</div>
+        <div class="user-page-header-body">
+          <div class="user-page-header-title">{{ user.firstName }} {{ user.lastName }}</div>
+          <div class="user-page-header-subtitle-primary">{{ user.title }}</div>
+          <div class="user-page-header-subtitle-secondary">{{ user.stafferFor }}</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="user-page-body" *ngIf="!loading">
-    <div class="user-page-body-item">
-      <div class="user-page-body-item-title">First Name</div>
-      <div class="user-page-body-item-content">{{ user.firstName }}</div>
+    <div class="user-page-body">
+      <div class="user-page-body-item">
+        <div class="user-page-body-item-title">First Name</div>
+        <div class="user-page-body-item-content">{{ user.firstName }}</div>
+      </div>
+      <div class="user-page-body-item">
+        <div class="user-page-body-item-title">Last Name</div>
+        <div class="user-page-body-item-content">{{ user.lastName }}</div>
+      </div>
+      <div class="user-page-body-item" *ngIf="user.email">
+        <div class="user-page-body-item-title">Email</div>
+        <div class="user-page-body-item-content">{{ user.privateData.email }}</div>
+      </div>
+      <div class="user-page-body-item">
+        <div class="user-page-body-item-title">Agency</div>
+        <div class="user-page-body-item-content">{{ user.stafferFor }}</div>
+      </div>
+      <div class="user-page-body-item">
+        <div class="user-page-body-item-title">Title</div>
+        <div class="user-page-body-item-content">{{ user.title }}</div>
+      </div>
     </div>
-    <div class="user-page-body-item">
-      <div class="user-page-body-item-title">Last Name</div>
-      <div class="user-page-body-item-content">{{ user.lastName }}</div>
-    </div>
-    <div class="user-page-body-item" *ngIf="user.email">
-      <div class="user-page-body-item-title">Email</div>
-      <div class="user-page-body-item-content">{{ user.email }}</div>
-    </div>
-    <div class="user-page-body-item">
-      <div class="user-page-body-item-title">Agency</div>
-      <div class="user-page-body-item-content">{{ user.agency }}</div>
-    </div>
-    <div class="user-page-body-item">
-      <div class="user-page-body-item-title">Title</div>
-      <div class="user-page-body-item-content">{{ user.title }}</div>
-    </div>
-  </div>
 
-  <div *ngIf="loaded" class="user-page-actions" padding>
-    <button *ngIf="!isConnected && !hasInvited && !invitedBy" ion-button full color="primary"
-            (click)="openRequest()">Send Request
-    </button>
-    <button *ngIf="!isConnected && hasInvited && !invitedBy" ion-button block color="primary"
-            (click)="revokeInvitation()">Revoke Connection Request
-    </button>
-    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block color="primary"
-            (click)="acceptInvitation()">Accept Connection Request
-    </button>
-    <button *ngIf="!isConnected && !hasInvited && invitedBy" ion-button block outline color="semidark"
-            (click)="rejectInvitation()">Reject Connection Request
-    </button>
-    <button *ngIf="isConnected" ion-button block color="primary">Start Chatting</button>
-    <button *ngIf="isConnected" ion-button block outline color="semidark" (click)="confirmConnectionRemoval = true">
-      Remove user
-    </button>
-  </div>
+    <div class="user-page-actions" padding>
+
+      <ng-container *ngIf="!isConnected">
+        <button ion-button full color="primary" *ngIf="invitationStatus=='NONE'"
+                (click)="openRequest()">Send Connection Request
+        </button>
+
+        <button ion-button block outline color="semidark" *ngIf="invitationStatus=='INVITED'"
+                (click)="revokeInvitation()">Cancel Connection Request
+        </button>
+
+        <button ion-button block color="primary" *ngIf="invitationStatus=='INVITEE'"
+                (click)="acceptInvitation()">Accept Connection Request
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="isConnected">
+        <button *ngIf="isConnected" ion-button block color="primary">
+          Start Chatting
+        </button>
+        <button *ngIf="isConnected" ion-button block outline color="semidark" (click)="confirmConnectionRemoval = true">
+          Remove user
+        </button>
+      </ng-container>
+
+
+    </div>
+
+
+  </ng-container>
 </ion-content>

@@ -45,9 +45,9 @@
           <ion-input placeholder="First name" [(ngModel)]="user.lastName" [disabled]="readonly"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="user.privateData">
           <ion-label>Email</ion-label>
-          <ion-input placeholder="Email" [(ngModel)]="user.email" [disabled]="readonly"></ion-input>
+          <ion-input placeholder="Email" [(ngModel)]="user.privateData.email" [disabled]="readonly"></ion-input>
         </ion-item>
 
         <ion-item>

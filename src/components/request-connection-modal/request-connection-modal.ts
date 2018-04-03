@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ViewController} from 'ionic-angular';
 
 @Component({
   templateUrl: 'request-connection-modal.html'

@@ -23,7 +23,7 @@ export class UserProfilePage {
 
   async ionViewDidLoad() {
     const me = this.firebaseAuth.auth.currentUser;
-    this.user = await this.userProvider.getUser(me.uid, true);
+    this.user = await this.userProvider.getUser(me.uid, true, true);
   }
 
   async updateUserDetails() {

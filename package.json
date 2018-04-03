@@ -29,7 +29,6 @@
     "angularfire2": "^5.0.0-rc.6",
     "chance": "^1.0.13",
     "cordova-android": "7.1.0",
-    "cordova-ios": "^4.5.4",
     "cordova-plugin-camera": "^4.0.2",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-ionic-webview": "^1.1.16",
@@ -47,7 +46,8 @@
     "rxjs": "^5.5.6",
     "sw-toolbox": "3.6.0",
     "uuid": "^3.2.1",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "cordova-ios": "~4.5.4"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
@@ -70,8 +70,8 @@
       "cordova-plugin-camera": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
