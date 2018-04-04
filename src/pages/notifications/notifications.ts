@@ -32,5 +32,10 @@ export class NotificationsPage {
     this.loadInvitations();
   }
 
+  async rejectInvitation(inviterId: string) {
+    await this.invitationsProvider.revokeInvitation(inviterId);
+    this.loadInvitations();
+  }
+
 
 }
