@@ -37,3 +37,12 @@ interface Connection {
   inviterId: string,
   createdAt: Date,
 }
+
+interface Notification {
+  message: string,
+  actorId: string,
+  actorType: string,
+  createdAt: Date,
+
+  actor?: User | any,
+}

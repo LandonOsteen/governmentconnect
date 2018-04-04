@@ -4,6 +4,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {UserProvider} from '../user/user';
 import 'rxjs/add/operator/take';
 import {ConnectionProvider} from '../connection/connection';
+import {NotificationsProvider} from '../notifications/notifications';
 
 export class InvitationStatus {
   static NONE = "NONE";
@@ -16,6 +17,7 @@ export class InvitationsProvider {
 
   constructor(public firebaseAuth: AngularFireAuth,
               public firebaseDatabase: AngularFireDatabase,
+              public notificationProvider: NotificationsProvider,
               public userProvider: UserProvider,
               public connectionProvider: ConnectionProvider) {
   }
@@ -32,12 +34,12 @@ export class InvitationsProvider {
     // Process invitation
     await this.firebaseDatabase
       .object(`/invitations/${inviteeId}/${inviterId}`)
-      .update({
-        processed: true,
-      });
+      .remove();
 
     await this.connectionProvider.createConnection(inviteeId, inviterId);
 
+    await this.notificationProvider.addNotification(inviteeId, inviteeId, " accepted connection request");
+    await this.notificationProvider.addNotification(inviterId, inviteeId, " accepted connection request");
 
   }
 
@@ -60,7 +62,7 @@ export class InvitationsProvider {
       .valueChanges()
       .take(1)
       .toPromise() as Invitation;
-    if (_invited && !_invited.processed) {
+    if (_invited) {
       return InvitationStatus.INVITED
     }
 
@@ -69,8 +71,8 @@ export class InvitationsProvider {
       .valueChanges()
       .take(1)
       .toPromise() as Invitation;
-    if (_invitee && !_invitee.processed) {
-      return InvitationStatus.INVITEE
+    if (_invitee) {
+      return InvitationStatus.INVITEE;
     }
 
     return InvitationStatus.NONE;
@@ -126,6 +128,9 @@ export class InvitationsProvider {
     await this.firebaseDatabase
       .object(`/invitations/${inviterId}/${inviteeId}`)
       .remove();
+
+    await this.notificationProvider.addNotification(inviteeId, inviterId, " revoked connection request");
+    await this.notificationProvider.addNotification(inviterId, inviterId, " revoked connection request");
   }
 
 
@@ -152,6 +157,9 @@ export class InvitationsProvider {
         message: message,
         createdAt: new Date(),
       });
+
+    await this.notificationProvider.addNotification(inviteeId, inviterId, " sent connection request");
+    await this.notificationProvider.addNotification(inviterId, inviterId, " sent connection request");
 
   }
 }

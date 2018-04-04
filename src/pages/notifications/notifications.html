@@ -4,7 +4,31 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div class="notification-block" *ngIf="invitations && invitations.length > 0; else noNotifications;">
+
+  <div class="notification-block" *ngIf="notifications && notifications.length > 0;">
+    <div class="notification-block-title">Notifications</div>
+    <div class="spacer-vertical-2"></div>
+
+    <div class="notification" *ngFor="let notification of notifications">
+      <div class="notification-inner">
+        <img class="notification-image" width="40" height="40" [src]="notification.actor.photoUrl"
+             *ngIf="notification.actorType=='user'"/>
+
+        <div class="notification-body">
+          <div class="notification-message">
+          <span>
+            <b *ngIf="notification.actorType=='user'">{{ notification.actor.firstName }} {{ notification.actor.lastName }}</b>
+            <span>{{ notification.message}}</span>
+            <span class="notification-message-time">{{ notification.createdAt | since }} ago</span>
+          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="notification-block" *ngIf="invitations && invitations.length > 0">
     <div class="notification-block-title">Connection Requests</div>
     <div class="spacer-vertical-2"></div>
 
@@ -12,7 +36,7 @@
       <div class="notification-inner">
         <img class="notification-image" width="40" height="40" [src]="invitation.inviterUser.photoUrl"/>
 
-        <div class="notification-body">
+        <div class="notification-body" *ngIf="invitation.inviterUser">
           <div class="notification-message">
           <span>
             <b>{{ invitation.inviterUser.firstName }} {{ invitation.inviterUser.lastName }}</b>
@@ -37,10 +61,10 @@
 
   </div>
 
-  <ng-template #noNotifications>
+  <ng-container *ngIf="(notifications && notifications.length > 0) || !(invitations && invitations.length > 0)">
     <div class="notification-block no-notifications">
       <p>You have no new notifications <br> at this time...</p>
     </div>
-  </ng-template>
+  </ng-container>
 
 </ion-content>
