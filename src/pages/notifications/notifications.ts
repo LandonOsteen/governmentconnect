@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {InvitationsProvider} from '../../providers/invitations/invitations';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { InvitationsProvider } from '../../providers/invitations/invitations';
 
 @IonicPage()
 @Component({
@@ -9,14 +9,14 @@ import {InvitationsProvider} from '../../providers/invitations/invitations';
 })
 export class NotificationsPage {
 
-  invitations: Invitation[];
+  public invitations: Invitation[];
 
   constructor(public navCtrl: NavController,
               public invitationsProvider: InvitationsProvider) {
   }
 
   ionViewDidLoad() {
-    this.loadInvitations()
+    this.loadInvitations();
   }
 
   async loadInvitations() {
@@ -27,6 +27,4 @@ export class NotificationsPage {
     await this.invitationsProvider.acceptInvitation(inviterId);
     this.loadInvitations();
   }
-
-
 }

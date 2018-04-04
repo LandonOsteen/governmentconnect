@@ -4,25 +4,43 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div class="notification-block" *ngIf="invitations">
+  <div class="notification-block" *ngIf="invitations && invitations.length > 0; else noNotifications;">
     <div class="notification-block-title">Connection Requests</div>
     <div class="spacer-vertical-2"></div>
+
     <div class="notification" *ngFor="let invitation of invitations">
-      <img class="notification-image" width="40" height="40" [src]="invitation.inviterUser.photoUrl" />
-      <div class="notification-body">
-        <div class="notification-message">
+      <div class="notification-inner">
+        <img class="notification-image" width="40" height="40" [src]="invitation.inviterUser.photoUrl"/>
+
+        <div class="notification-body">
+          <div class="notification-message">
           <span>
             <b>{{ invitation.inviterUser.firstName }} {{ invitation.inviterUser.lastName }}</b>
             <span>sent you an invitation to connect</span>
             <span>{{ invitation.message}}</span>
             <span class="notification-message-time">{{ invitation.createdAt | since }} ago</span>
           </span>
-        </div>
-        <div class="notification-actions" *ngIf="!invitation.processed">
-          <button ion-button small color="primary" (click)="acceptInvitation(invitation.inviterId)">Accept</button>
-          <button ion-button outline small color="semidark" (click)="rejectInvitation(invitation.inviterId)">Deny</button>
+          </div>
         </div>
       </div>
+
+      <div class="notification-actions">
+        <button ion-button small color="primary" (click)="acceptInvitation(invitation.inviterId)">
+          Accept
+        </button>
+
+        <button ion-button outline small color="semidark" (click)="rejectInvitation(invitation.inviterId)">
+          Deny
+        </button>
+      </div>
     </div>
+
   </div>
+
+  <ng-template #noNotifications>
+    <div class="notification-block no-notifications">
+      <p>You have no new notifications <br> at this time...</p>
+    </div>
+  </ng-template>
+
 </ion-content>
