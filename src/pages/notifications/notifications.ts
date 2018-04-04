@@ -16,7 +16,10 @@ export class NotificationsPage {
   }
 
   ionViewDidLoad() {
-    this.loadInvitations();
+  }
+
+  async ionViewWillEnter() {
+    await this.loadInvitations();
   }
 
   async loadInvitations() {

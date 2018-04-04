@@ -4,6 +4,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import lunr from "lunr";
 import {AngularFireStorage} from 'angularfire2/storage';
 import {Camera} from '@ionic-native/camera';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class UserProvider {

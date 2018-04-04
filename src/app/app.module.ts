@@ -9,7 +9,6 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import env from "../env";
-import { ContactsProvider } from '../providers/contacts/contacts';
 import { UserProvider } from '../providers/user/user';
 import { InvitationsProvider } from '../providers/invitations/invitations';
 import { ConnectionProvider } from '../providers/connection/connection';
@@ -45,7 +44,6 @@ import { RequestConnectionModal } from "../components/request-connection-modal/r
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ContactsProvider,
     UserProvider,
     InvitationsProvider,
     ConnectionProvider,
