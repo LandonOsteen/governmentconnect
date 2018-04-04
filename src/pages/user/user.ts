@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ContactsProvider} from '../../providers/contacts/contacts';
 import {UserProvider} from '../../providers/user/user';
 import {ConnectionProvider} from '../../providers/connection/connection';
 import {InvitationsProvider, InvitationStatus} from '../../providers/invitations/invitations';
@@ -24,7 +23,6 @@ export class UserPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public connectionProvider: ConnectionProvider,
-              public contactsProvider: ContactsProvider,
               public invitationProvider: InvitationsProvider,
               public userProvider: UserProvider) {
   }
@@ -49,6 +47,11 @@ export class UserPage {
     await this.invitationProvider.sendInvitation(this.user.uid, this.invitationMessage);
     this.invitationMessage = '';
     this.invitationStatus = InvitationStatus.INVITED;
+  }
+
+  async acceptInvitation() {
+    await this.invitationProvider.acceptInvitation(this.userId);
+    this.isConnected = true;
   }
 
   async removeConnection() {

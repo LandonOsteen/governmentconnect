@@ -1,11 +1,7 @@
-interface Contact {
+interface Connection {
   active: boolean,
-  firstName: string,
-  lastName: string,
-  photoUrl: string,
-  stafferFor: string,
-  title: string,
-  uid: string
+  userId: string,
+  user?: User,
 }
 
 interface User {

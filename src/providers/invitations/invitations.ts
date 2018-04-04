@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {UserProvider} from '../user/user';
+import 'rxjs/add/operator/take';
+import {ConnectionProvider} from '../connection/connection';
 
 export class InvitationStatus {
   static NONE = "NONE";
@@ -14,7 +16,8 @@ export class InvitationsProvider {
 
   constructor(public firebaseAuth: AngularFireAuth,
               public firebaseDatabase: AngularFireDatabase,
-              public userProvider: UserProvider) {
+              public userProvider: UserProvider,
+              public connectionProvider: ConnectionProvider) {
   }
 
   async acceptInvitation(inviterId: string) {
@@ -33,26 +36,11 @@ export class InvitationsProvider {
         processed: true,
       });
 
-    // Direct connection
-    await this.firebaseDatabase
-      .object(`/connections/${inviteeId}/${inviterId}`)
-      .set({
-        active: true,
-        inviteeId: inviteeId,
-        inviterId: inviterId,
-      });
-
-    // Inverse connection
-    await this.firebaseDatabase
-      .object(`/connections/${inviterId}/${inviteeId}`)
-      .set({
-        active: true,
-        inviterId: inviteeId,
-        inviteeId: inviterId,
-      });
+    await this.connectionProvider.createConnection(inviteeId, inviterId);
 
 
   }
+
 
   /**
    *
@@ -68,20 +56,20 @@ export class InvitationsProvider {
     let inviterId = authUser.uid;
 
     let _invited = await this.firebaseDatabase
-      .object<boolean>(`/invitations/${userId}/${inviterId}`)
+      .object(`/invitations/${userId}/${inviterId}`)
       .valueChanges()
       .take(1)
-      .toPromise();
-    if (_invited) {
+      .toPromise() as Invitation;
+    if (_invited && !_invited.processed) {
       return InvitationStatus.INVITED
     }
 
     let _invitee = await this.firebaseDatabase
-      .object<boolean>(`/invitations/${inviterId}/${userId}`)
+      .object(`/invitations/${inviterId}/${userId}`)
       .valueChanges()
       .take(1)
-      .toPromise();
-    if (_invitee) {
+      .toPromise() as Invitation;
+    if (_invitee && !_invitee.processed) {
       return InvitationStatus.INVITEE
     }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'contacts-list',
@@ -6,10 +6,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ContactsListComponent {
 
-  @Input('contacts') contacts: any[] = [];
+  @Input('contacts') contacts: Connection[] = [];
 
   getNavParams(contact) {
-    return { userId: contact.uid }; 
+    return {userId: contact.userId};
   }
 
 }
