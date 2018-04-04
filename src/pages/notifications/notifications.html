@@ -61,7 +61,7 @@
 
   </div>
 
-  <ng-container *ngIf="(notifications && notifications.length > 0) || !(invitations && invitations.length > 0)">
+  <ng-container *ngIf="!(notifications && notifications.length > 0) && !(invitations && invitations.length > 0)">
     <div class="notification-block no-notifications">
       <p>You have no new notifications <br> at this time...</p>
     </div>
