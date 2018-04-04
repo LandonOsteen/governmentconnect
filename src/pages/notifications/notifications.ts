@@ -9,18 +9,17 @@ import {InvitationsProvider} from '../../providers/invitations/invitations';
 })
 export class NotificationsPage {
 
-  invitations: Invitation[];
+  public invitations: Invitation[];
 
   constructor(public navCtrl: NavController,
               public invitationsProvider: InvitationsProvider) {
   }
 
   ionViewDidLoad() {
-
   }
 
   async ionViewWillEnter() {
-    await this.loadInvitations()
+    await this.loadInvitations();
   }
 
   async loadInvitations() {
@@ -36,6 +35,5 @@ export class NotificationsPage {
     await this.invitationsProvider.revokeInvitation(inviterId);
     this.loadInvitations();
   }
-
 
 }

@@ -29,7 +29,6 @@
     "angularfire2": "^5.0.0-rc.6",
     "chance": "^1.0.13",
     "cordova-android": "7.1.0",
-    "cordova-ios": "~4.5.4",
     "cordova-plugin-camera": "^4.0.2",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-ionic-webview": "^1.1.16",
