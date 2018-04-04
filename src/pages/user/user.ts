@@ -32,7 +32,7 @@ export class UserPage {
   async ionViewDidLoad() {
 
     this.userId = this.navParams.get('userId');
-    this.user = await this.userProvider.getUser(this.userId, false);
+    this.user = await this.userProvider.getUser(this.userId, false, true);
 
     this.isConnected = await this.connectionProvider.isUserConnectedTo(this.userId);
     this.invitationStatus = await this.invitationProvider.getInvitationStatus(this.userId) as InvitationStatus;

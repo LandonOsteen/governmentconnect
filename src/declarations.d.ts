@@ -29,6 +29,7 @@ interface Invitation {
   inviterId: string,
   message: string,
   createdAt: Date,
+  processed: boolean,
 
   inviteeUser?: User,
   inviterUser?: User,

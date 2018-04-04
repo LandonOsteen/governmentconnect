@@ -26,10 +26,12 @@ export class InvitationsProvider {
 
     let inviteeId = authUser.uid;
 
-    // Remove invitation
+    // Process invitation
     await this.firebaseDatabase
       .object(`/invitations/${inviteeId}/${inviterId}`)
-      .remove();
+      .update({
+        processed: true,
+      });
 
     // Direct connection
     await this.firebaseDatabase
@@ -158,6 +160,7 @@ export class InvitationsProvider {
       .update({
         inviteeId: inviteeId,
         inviterId: inviterId,
+        processed: false,
         message: message,
         createdAt: new Date(),
       });
