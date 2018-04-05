@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="9px" viewBox="0 0 12 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Tail</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Chat-Screen" transform="translate(-353.000000, -318.000000)" fill="#4A90E2">
+            <g id="Bubble-2" transform="translate(138.000000, 285.000000)">
+                <g id="Group-3-Copy">
+                    <path d="M215,33 C215,37.9634915 219.083109,42 224.11988,42 C225.126383,42 226.094733,41.8394182 227,41.5428435 C223.374452,40.3548285 220.759924,36.9837769 220.759924,33 L215,33 Z" id="Tail"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

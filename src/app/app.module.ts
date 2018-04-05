@@ -26,7 +26,8 @@ import {NotificationsProvider} from '../providers/notifications/notifications';
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
-      mode: 'ios'
+      mode: 'ios',
+      tabsHideOnSubPages: true
     }),
     AngularFireModule.initializeApp(env.firebase),
     AngularFireAuthModule,

@@ -7,12 +7,114 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>chat-user</ion-title>
+    <ion-title>
+      Albert Mitchel
+      <span class="sub-title">Cybersecurity Bill Work</span>
+    </ion-title>
+
+    <ion-buttons end>
+      <span class="chat-avatar">
+      <img src="../../assets/imgs/temp-avatar.png">
+    </span>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list no-lines class="chat-messages">
+    <ion-item text-wrap>
+      <div class="chat-bubble you">
+        <div class="chat-bubble-inner">
+          <h3>This is Government Connect chat. Use this to communicate with each</h3>
+          <ion-note>10:03</ion-note>
+        </div>
+        <span class="tail"></span>
+      </div>
+    </ion-item>
+
+    <ion-list-header>
+      28 Oct 2017
+    </ion-list-header>
+
+    <ion-item text-wrap>
+      <div class="chat-bubble me">
+        <div class="chat-bubble-inner">
+          <h3>I am looking forward to collaborating on this project with you.</h3>
+          <ion-note>12:02</ion-note>
+        </div>
+
+        <span class="tail"></span>
+      </div>
+    </ion-item>
+
+    <ion-item text-wrap>
+      <div class="chat-bubble me small">
+        <div class="chat-bubble-inner">
+          <h3>Panda panda 🐼</h3>
+          <ion-note>
+            12:02
+
+            <span class="check-icons">
+              <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                   xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-333.000000, -303.000000)" stroke="#FFFFFF">
+                  <g transform="translate(138.000000, 285.000000)">
+                    <g>
+                      <g transform="translate(154.000000, 15.000000)">
+                        <polyline points="42 7 45 10 52 3"></polyline>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+              <svg class="second" width="12px" height="7px" viewBox="0 0 12 7" version="1.1"
+                   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-333.000000, -303.000000)" stroke="#FFFFFF">
+                  <g transform="translate(138.000000, 285.000000)">
+                    <g>
+                      <g transform="translate(154.000000, 15.000000)">
+                        <polyline points="42 7 45 10 52 3"></polyline>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            </span>
+
+          </ion-note>
+        </div>
+
+        <span class="tail"></span>
+      </div>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+
+<ion-footer ion-fixed>
+  <ion-toolbar class="no-border chat-toolbar" color="white">
+    <ion-input [(ngModel)]="newMessage" placeholder="Your message..."></ion-input>
+
+    <ion-buttons start>
+      <button ion-button (click)="addPhoto()">
+        <img src="../../assets/svg/photo.svg">
+      </button>
+
+      <button ion-button (click)="addFile()">
+        <img src="../../assets/svg/attach-file.svg">
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button (click)="addMessage()">
+        <img src="../../assets/svg/send.svg">
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>
