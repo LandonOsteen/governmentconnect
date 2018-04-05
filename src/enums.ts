@@ -1,5 +1,6 @@
 export enum APP_PAGES {
   CHATS_PAGE = 'ChatsPage',
+  CHAT_USER_PAGE = 'ChatUserPage',
   CONTACTS_PAGE = 'ContactsPage',
   LOGIN_PAGE = 'LoginPage',
   SEARCH_USERS_PAGE = 'SearchUsersPage',
