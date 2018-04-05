@@ -21,18 +21,18 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  white:    #ffffff,
-  primary:    #4a90e2,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  fade:       #ebeced,
-  dark:       #222,
+  white: #ffffff,
+  primary: #4a90e2,
+  secondary: #32db64,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  fade: #ebeced,
+  dark: #222,
   light-primary: (
-    base:     #f4f4f4,
+    base: #f4f4f4,
     contrast: #4a90e2
   ),
-  semidark:   #9B9B9B
+  semidark: #9B9B9B
 );
 
 // Shared Variables
@@ -47,6 +47,8 @@ $font-size-base: 1.5rem;
 $h4-font-size: 1.8rem;
 
 $tabs-background: map-get($map: $colors, $key: white);
+
+$list-border: rgba(0, 0, 0, 0.1);
 
 // App iOS Variables
 // --------------------------------------------------

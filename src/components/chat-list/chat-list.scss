@@ -1,0 +1,56 @@
+@import "../../theme/variables";
+
+chat-list {
+  .list {
+    margin: 0;
+    border: 0;
+
+    > .item {
+      &:first-child {
+        border-top: 0;
+      }
+
+      &,
+      &:last-child {
+        border-bottom: 1px solid $list-border;
+      }
+
+      ion-avatar {
+        &[item-start] {
+          margin: 18px 11px 18px 0;
+        }
+
+        &,
+        img {
+          width: 44px;
+          height: 44px;
+        }
+      }
+
+      ion-label {
+        margin: 18px 70px 18px 0;
+
+        h2 {
+          font-size: 1.5rem;
+          color: #262628;
+          font-weight: 500;
+          margin: 0;
+        }
+
+        p {
+          color: #9B9B9B;
+          font-weight: 300;
+          line-height: 16px;
+        }
+      }
+
+      .note {
+        color: #9B9B9B;
+        font-size: 1.2rem;
+        position: absolute;
+        top: 18px;
+        right: 15px;
+      }
+    }
+  }
+}

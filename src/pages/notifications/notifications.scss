@@ -1,12 +1,26 @@
 @import "../../theme/variables.scss";
 
+page-notifications {
+  .content[padding] {
+    .scroll-content {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
 .notification-block {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-right: 16px;
+  padding-left: 16px;
+
   &.no-notifications {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     height: 100%;
+    border: 0;
 
     p {
       margin: -35px 0 0;
@@ -24,6 +38,7 @@
 .notification {
   display: flex;
   flex-direction: column;
+  margin: 0 0 25px;
 
   &-inner {
     display: flex;

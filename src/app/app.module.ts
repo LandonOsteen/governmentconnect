@@ -16,13 +16,11 @@ import {Push} from '@ionic-native/push';
 import {PushProvider} from '../providers/push/push';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {Camera} from '@ionic-native/camera';
-import {RequestConnectionModal} from "../components/request-connection-modal/request-connection-modal";
 import {NotificationsProvider} from '../providers/notifications/notifications';
 
 @NgModule({
   declarations: [
-    MyApp,
-    RequestConnectionModal
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -37,8 +35,7 @@ import {NotificationsProvider} from '../providers/notifications/notifications';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    RequestConnectionModal
+    MyApp
   ],
   providers: [
     Push,
