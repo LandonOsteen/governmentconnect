@@ -79,10 +79,11 @@
       </ng-container>
 
       <ng-container *ngIf="isConnected">
-        <button *ngIf="isConnected" ion-button block color="primary">
+        <button *ngIf="isConnected" ion-button block color="primary" (click)="startChat()" >
           Start Chatting
         </button>
-        <button *ngIf="isConnected" ion-button block outline color="semidark" (click)="confirmConnectionRemoval = true">
+        <button *ngIf="isConnected" ion-button block outline color="semidark"
+                (click)="confirmConnectionRemoval = true">
           Remove user
         </button>
       </ng-container>

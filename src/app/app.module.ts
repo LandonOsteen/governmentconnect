@@ -17,6 +17,8 @@ import {PushProvider} from '../providers/push/push';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {Camera} from '@ionic-native/camera';
 import {NotificationsProvider} from '../providers/notifications/notifications';
+import {ChatsProvider} from '../providers/chat/chats';
+import {Keyboard} from '@ionic-native/keyboard';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import {NotificationsProvider} from '../providers/notifications/notifications';
     ConnectionProvider,
     PushProvider,
     NotificationsProvider,
+    ChatsProvider,
+    Keyboard,
     Camera
   ]
 })

@@ -5,10 +5,10 @@
       <div class="spacer-vertical-4"></div>
       <ion-list>
         <ion-item>
-          <ion-input type="email" name="email" [(ngModel)]="email" placeholder="E-mail" required></ion-input>
+          <ion-input type="email" name="email" [(ngModel)]="email" placeholder="E-mail" required (focus)="keyboard.show()"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="password" name="password" [(ngModel)]="password" placeholder="Password" required></ion-input>
+          <ion-input type="password" name="password" [(ngModel)]="password" placeholder="Password" required (focus)="keyboard.show()"></ion-input>
         </ion-item>
         <button class="no-border-radius" ion-button block color="primary" [disabled]="f.invalid">Log In</button>
       </ion-list>

@@ -3,6 +3,9 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {UserProvider} from '../../providers/user/user';
 import {ConnectionProvider} from '../../providers/connection/connection';
 import {InvitationsProvider, InvitationStatus} from '../../providers/invitations/invitations';
+import {ChatsProvider} from '../../providers/chat/chats';
+import {NotificationsProvider} from '../../providers/notifications/notifications';
+import {AngularFireAuth} from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -20,11 +23,14 @@ export class UserPage {
   requestConnection = false;
   invitationMessage: string = "";
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public connectionProvider: ConnectionProvider,
-              public invitationProvider: InvitationsProvider,
-              public userProvider: UserProvider) {
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private connectionProvider: ConnectionProvider,
+              private invitationProvider: InvitationsProvider,
+              private chatsProvider: ChatsProvider,
+              private notificationsProvider: NotificationsProvider,
+              private firebaseAuth: AngularFireAuth,
+              private userProvider: UserProvider) {
   }
 
   async ionViewDidLoad() {
@@ -67,5 +73,15 @@ export class UserPage {
 
   openRequest() {
     this.requestConnection = true;
+  }
+
+  async startChat() {
+    let actorId = this.firebaseAuth.auth.currentUser.uid;
+    await this.notificationsProvider.addNotification(this.userId, actorId, " invited to chat")
+
+    let channelId = await  this.chatsProvider.createChannel();
+    await  this.chatsProvider.joinChannel(channelId, this.userId);
+
+
   }
 }

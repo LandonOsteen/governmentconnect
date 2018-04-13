@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ChatsProvider} from '../../providers/chat/chats';
 
 @IonicPage()
 @Component({
@@ -8,11 +9,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChatsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  channels: Channel[];
+
+  constructor(private navCtrl: NavController,
+              private chatsProvider: ChatsProvider,
+              private navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatsPage');
+  async ionViewDidLoad() {
+
+  }
+
+  async ionViewWillEnter() {
+    this.channels = await this.chatsProvider.getChannels();
   }
 
 }

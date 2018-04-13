@@ -10,9 +10,9 @@ import {UUID} from 'angular2-uuid';
 @Injectable()
 export class NotificationsProvider {
 
-  constructor(public firebaseAuth: AngularFireAuth,
-              public userProvider: UserProvider,
-              public firebaseDatabase: AngularFireDatabase) {
+  constructor(private firebaseAuth: AngularFireAuth,
+              private userProvider: UserProvider,
+              private firebaseDatabase: AngularFireDatabase) {
   }
 
   async addNotification(toUserId: string, actorId: string, message: string) {
@@ -32,9 +32,8 @@ export class NotificationsProvider {
 
 
   async getNotifications() {
-    const authUser = this.firebaseAuth.auth.currentUser;
+    let userId = this.firebaseAuth.auth.currentUser.uid;
 
-    let userId = authUser.uid;
     let notifications = await this.firebaseDatabase
       .object(`notifications/${userId}`)
       .valueChanges()
