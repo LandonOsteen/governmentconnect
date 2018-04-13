@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="16px" viewBox="0 0 19 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/Photo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13.8186777,2.05555556 L16.25,2.05555556 C17.7687831,2.05555556 19,3.28677249 19,4.80555556 L19,13.25 C19,14.7687831 17.7687831,16 16.25,16 L3.25,16 C1.73121694,16 0.5,14.7687831 0.5,13.25 L0.5,4.80555556 C0.5,3.28677249 1.73121694,2.05555556 3.25,2.05555556 L5.6813223,2.05555556 L7.1813223,0.5 L12.3186777,0.5 L13.8186777,2.05555556 Z M9.75,11.25 C11.1307119,11.25 12.25,10.1307119 12.25,8.75 C12.25,7.36928813 11.1307119,6.25 9.75,6.25 C8.36928813,6.25 7.25,7.36928813 7.25,8.75 C7.25,10.1307119 8.36928813,11.25 9.75,11.25 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Chat-Screen" transform="translate(-18.000000, -630.000000)">
+            <g id="Input" transform="translate(0.000000, 610.000000)">
+                <g id="Icons/Photo" transform="translate(17.000000, 18.000000)">
+                    <g id="icon" stroke-width="1" fill-rule="evenodd" transform="translate(1.000000, 2.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="photo" fill="#000000" xlink:href="#path-1"></use>
+                        <g id="Colors/Grey-Icons" mask="url(#mask-2)" fill="#BBBCCD">
+                            <g transform="translate(-1.000000, -2.000000)" id="Colors/Dark-Grey">
+                                <polygon points="4.55935124e-13 2.00261628e-15 21 5.48360999e-14 21 21 4.26240801e-13 21"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                    <rect id="base" x="0" y="0" width="21" height="21"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, App} from 'ionic-angular';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {APP_PAGES} from '../../enums';
-import {AngularFireDatabase} from 'angularfire2/database';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { APP_PAGES } from '../../enums';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @IonicPage()
 @Component({

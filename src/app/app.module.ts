@@ -28,7 +28,8 @@ import {Keyboard} from '@ionic-native/keyboard';
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
-      mode: 'ios'
+      mode: 'ios',
+      tabsHideOnSubPages: true
     }),
     AngularFireModule.initializeApp(env.firebase),
     AngularFireAuthModule,
