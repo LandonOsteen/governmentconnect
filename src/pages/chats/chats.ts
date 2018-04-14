@@ -7,12 +7,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
+  public showChatTypeModal = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatsPage');
   }
 
+  ionViewDidLeave() {
+    this.showChatTypeModal = false;
+  }
+
+  selectChatType() {
+    this.showChatTypeModal = true;
+  }
 }
