@@ -10,6 +10,7 @@ interface User {
   photoUrl: string,
   stafferFor: string,
   title: string,
+  status: string,
   uid: string,
   privateData?: UserPrivate,
 }
@@ -45,4 +46,29 @@ interface Notification {
   createdAt: Date,
 
   actor?: User | any,
+}
+
+interface Channel {
+  uid: string,
+  ownerId: string,
+  createdAt: Date,
+  participants: string[],
+  homologousUser: User,
+}
+
+
+interface Message {
+  uid: string,
+  userId: string,
+  message: string,
+  attachment: Attachment,
+  createdAt: Date,
+}
+
+interface Attachment {
+  uid: string,
+  path: string,
+  name: string[],
+  userId: string,
+  createdAt: Date,
 }
