@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Group Details</ion-title>
+
+    <ion-buttons end>
+      <span class="chat-avatar">
+      <img src="../../assets/imgs/temp-avatar.png">
+    </span>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Group Name</ion-label>
+      <ion-input [(ngModel)]="group.name" placeholder="Add group name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Group Photo</ion-label>
+
+      <button ion-button clear item-end>Upload Photo</button>
+    </ion-item>
+
+  </ion-list>
+
+  <div class="btn-wrapper">
+    <button ion-button block outline color="primary">
+      Add Users
+    </button>
+
+    <button ion-button block>
+      Save Group Details
+    </button>
+  </div>
+
+</ion-content>

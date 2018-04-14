@@ -103,7 +103,6 @@ export class ChatsProvider {
       let homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
       channel.homologousUser = await this.userProvider.getUser(homologousUserId);
       channels.push(channel);
-
     });
 
     console.log(channels);

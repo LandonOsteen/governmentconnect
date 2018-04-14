@@ -21,7 +21,8 @@ export class ChatsPage {
   }
 
   async ionViewWillEnter() {
-    this.channels = await this.chatsProvider.getChannels();
+    const results = await this.chatsProvider.getChannels();
+    this.channels = (results.length) ? results : [];
   }
 
   ionViewDidLeave() {
