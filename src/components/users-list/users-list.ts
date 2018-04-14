@@ -1,17 +1,20 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'users-list',
   templateUrl: 'users-list.html'
 })
 export class UsersListComponent {
-
   @Input('users') users: any[] = [];
   @Input('loading') loading: boolean = false;
+  @Input('pushPage') pushPage: any;
 
-  maxSlice = 20;
+  public maxSlice = 20;
 
-  getNavParams(user) {
+  constructor() {
+  }
+
+  public getNavParams(user) {
     return {userId: user.uid};
   }
 

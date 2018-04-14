@@ -10,6 +10,7 @@ import { ChatsProvider } from '../../providers/chat/chats';
 export class ChatsPage {
   public showChatTypeModal = false;
   public channels: Channel[];
+  public params = 'ChatUserPage';
 
   constructor(private navCtrl: NavController,
               private chatsProvider: ChatsProvider,
