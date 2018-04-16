@@ -1,18 +1,20 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
+import {PipesModule} from '../../pipes/pipes.module';
 
 @Component({
   selector: 'chat-list',
-  templateUrl: 'chat-list.html'
+  templateUrl: 'chat-list.html',
+  providers: [PipesModule]
 })
 export class ChatListComponent {
 
   @Input('channels') channels: Channel[] = [];
-  @Input('loading') loading: boolean = false;
+  @Input('loading') loading: boolean = true;
 
   maxSlice = 20;
 
   getNavParams(channel: Channel) {
-    return {userId: channel.uid};
+    return {'channel': channel};
   }
 
   ngOnChanges(changes: SimpleChanges) {

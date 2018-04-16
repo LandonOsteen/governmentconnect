@@ -9,7 +9,8 @@ import {ChatsProvider} from '../../providers/chat/chats';
 })
 export class ChatsPage {
 
-  channels: Channel[];
+  public channels: Channel[];
+  public loading = true;
 
   constructor(private navCtrl: NavController,
               private chatsProvider: ChatsProvider,
@@ -22,6 +23,7 @@ export class ChatsPage {
 
   async ionViewWillEnter() {
     this.channels = await this.chatsProvider.getChannels();
+    this.loading = false;
   }
 
 }

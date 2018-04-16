@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform, NgZone, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {Pipe, PipeTransform, NgZone, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import * as Luxon from "luxon";
 
-const second = 1000
-const minute = second * 60
-const hour = minute * 60
-const day = hour * 24
-const week = day * 7 
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+const day = hour * 24;
+const week = day * 7;
 
 @Pipe({
   name: 'since',
@@ -15,23 +15,22 @@ export class SincePipe implements PipeTransform, OnDestroy {
 
   timer: number;
 
-  constructor(
-    public changeDetectorRef: ChangeDetectorRef, 
-    public ngZone: NgZone
-  ) { }
+  constructor(public changeDetectorRef: ChangeDetectorRef,
+              public ngZone: NgZone) {
+  }
 
   transform(date: string, ...args) {
-    this.removeTimer()
+    this.removeTimer();
 
-    const sinceDate = Luxon.DateTime.fromISO(date)
-    const nowDate = Luxon.DateTime.local()
-    const duration = Luxon.Interval.fromDateTimes(sinceDate, nowDate).length()
+    const sinceDate = Luxon.DateTime.fromISO(date);
+    const nowDate = Luxon.DateTime.local();
+    const duration = Luxon.Interval.fromDateTimes(sinceDate, nowDate).length();
 
-		this.timer = this.ngZone.runOutsideAngular(() => {
+    this.timer = this.ngZone.runOutsideAngular(() => {
       return setTimeout(() => {
         this.ngZone.run(() => this.changeDetectorRef.markForCheck());
       }, this.timeTillUpdate(duration));
-		});
+    });
 
     if (duration >= week) {
       return `${Math.floor(duration / week)}w`
@@ -49,25 +48,25 @@ export class SincePipe implements PipeTransform, OnDestroy {
   }
 
   private removeTimer(): void {
-		if (this.timer) {
-			window.clearTimeout(this.timer);
-			this.timer = null;
-		}
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+      this.timer = null;
+    }
   }
-  
+
   ngOnDestroy() {
     this.removeTimer()
   }
 
-	private timeTillUpdate(duration: number) {
-		if (duration < minute) { 
-			return second;
-		} else if (duration < hour) { 
-			return minute;
-		} else if (duration < day) {
-			return hour;
-		} else { 
-			return hour;
-		}
-	}
+  private timeTillUpdate(duration: number) {
+    if (duration < minute) {
+      return 10 * second;
+    } else if (duration < hour) {
+      return minute;
+    } else if (duration < day) {
+      return hour;
+    } else {
+      return hour;
+    }
+  }
 }

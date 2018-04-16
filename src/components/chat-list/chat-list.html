@@ -1,24 +1,26 @@
-<ion-list class="chat-list">
+<ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
 
-  <ion-item navPush="ChatUserPage" *ngFor="let channel of channels">
-    <ion-avatar item-start>
+<ion-list class="chat-list" *ngIf="channels">
+
+  <ion-item *ngFor="let channel of channels.slice(0, maxSlice)"
+            navPush="ChatUserPage"
+            [navParams]="getNavParams(channel)">
+
+    <ion-avatar item-start *ngIf="channel.homologousUser">
       <img src="{{ channel.homologousUser.photoUrl }}">
     </ion-avatar>
-    <h2>{{ channel.homologousUser.firstName}} {{ channel.homologousUser.lastName}}</h2>
-    <p>{{ channel.homologousUser.status}}</p>
-    <ion-note item-end>3:43 pm</ion-note>
+    <h2 *ngIf="channel.homologousUser">
+      {{ channel.homologousUser.firstName}} {{ channel.homologousUser.lastName}}
+    </h2>
+    <p *ngIf="channel.homologousUser">
+      {{ channel.homologousUser.status}}
+    </p>
+    <ion-note item-end>{{channel.lastMessageAt | since}}</ion-note>
+
   </ion-item>
-
-
-  <ion-item navPush="ChatUserPage">
-    <ion-avatar item-start>
-      <img src="../../assets/imgs/temp-user.png">
-    </ion-avatar>
-    <h2>Eunice Burton</h2>
-    <p>My eyeballs could have been sucked from their sockets!</p>
-    <ion-note item-end>1:12 pm</ion-note>
-  </ion-item>
-
-
 
 </ion-list>
+
+<ion-infinite-scroll [enabled]="channels && channels.length > maxSlice" (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>

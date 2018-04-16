@@ -8,7 +8,7 @@ export class ContactsListComponent {
 
   @Input('contacts') contacts: Connection[] = [];
 
-  getNavParams(contact) {
+  getNavParams(contact: Connection) {
     return {userId: contact.userId};
   }
 

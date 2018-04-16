@@ -76,12 +76,14 @@ export class UserPage {
   }
 
   async startChat() {
+
     let actorId = this.firebaseAuth.auth.currentUser.uid;
-    await this.notificationsProvider.addNotification(this.userId, actorId, " invited to chat")
+    let inConversation = await  this.chatsProvider.isInConversationWithUser(this.userId);
 
-    let channelId = await  this.chatsProvider.createChannel();
-    await  this.chatsProvider.joinChannel(channelId, this.userId);
-
-
+    if (!inConversation) {
+      await this.notificationsProvider.addNotification(this.userId, actorId, " invited to chat");
+      let channelId = await  this.chatsProvider.createChannel();
+      await  this.chatsProvider.joinChannel(channelId, this.userId);
+    }
   }
 }

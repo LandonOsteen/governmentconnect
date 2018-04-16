@@ -52,15 +52,16 @@ interface Channel {
   uid: string,
   ownerId: string,
   createdAt: Date,
+  lastMessageAt: Date,
   participants: string[],
-  homologousUser: User,
+  homologousUser?: User,
 }
 
 
 interface Message {
   uid: string,
   userId: string,
-  message: string,
+  text: string,
   attachment: Attachment,
   createdAt: Date,
 }

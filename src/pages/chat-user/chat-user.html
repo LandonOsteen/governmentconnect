@@ -6,55 +6,56 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+
+  <ion-navbar *ngIf="user">
     <ion-title>
-      Albert Mitchel
-      <span class="sub-title">Cybersecurity Bill Work</span>
+      {{ user.firstName }} {{ user.lastName }}
+      <span class="sub-title">{{user.status}}</span>
     </ion-title>
 
     <ion-buttons end>
       <span class="chat-avatar">
-      <img src="../../assets/imgs/temp-avatar.png">
+      <img src="{{user.photoUrl}}">
     </span>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding #content>
   <ion-list no-lines class="chat-messages">
-    <ion-item text-wrap>
-      <div class="chat-bubble you">
+
+    <!--<ion-item text-wrap>-->
+      <!--<div class="chat-bubble you">-->
+        <!--<div class="chat-bubble-inner">-->
+          <!--<h3>This is Government Connect chat. Use this to communicate with each</h3>-->
+          <!--<ion-note>10:03</ion-note>-->
+        <!--</div>-->
+        <!--<span class="tail"></span>-->
+      <!--</div>-->
+    <!--</ion-item>-->
+
+    <!--<ion-list-header>-->
+      <!--28 Oct 2017-->
+    <!--</ion-list-header>-->
+
+    <!--<ion-item text-wrap>-->
+      <!--<div class="chat-bubble me">-->
+        <!--<div class="chat-bubble-inner">-->
+          <!--<h3>I am looking forward to collaborating on this project with you.</h3>-->
+          <!--<ion-note>12:02</ion-note>-->
+        <!--</div>-->
+
+        <!--<span class="tail"></span>-->
+      <!--</div>-->
+    <!--</ion-item>-->
+
+    <ion-item text-wrap *ngFor="let message  of messages | async">
+      <div class="chat-bubble small" [ngClass]="getClass(message)">
         <div class="chat-bubble-inner">
-          <h3>This is Government Connect chat. Use this to communicate with each</h3>
-          <ion-note>10:03</ion-note>
-        </div>
-        <span class="tail"></span>
-      </div>
-    </ion-item>
-
-    <ion-list-header>
-      28 Oct 2017
-    </ion-list-header>
-
-    <ion-item text-wrap>
-      <div class="chat-bubble me">
-        <div class="chat-bubble-inner">
-          <h3>I am looking forward to collaborating on this project with you.</h3>
-          <ion-note>12:02</ion-note>
-        </div>
-
-        <span class="tail"></span>
-      </div>
-    </ion-item>
-
-    <ion-item text-wrap>
-      <div class="chat-bubble me small">
-        <div class="chat-bubble-inner">
-          <h3>Panda panda 🐼</h3>
+          <h3>{{message.text}}</h3>
           <ion-note>
-            12:02
-
+            {{message.createdAt | since}}
             <span class="check-icons">
               <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -98,7 +99,7 @@
 
 <ion-footer ion-fixed>
   <ion-toolbar class="no-border chat-toolbar" color="white">
-    <ion-input [(ngModel)]="newMessage" placeholder="Your message..."></ion-input>
+    <ion-input [(ngModel)]="message" placeholder="Your message..."></ion-input>
 
     <ion-buttons start>
       <button ion-button (click)="addPhoto()">

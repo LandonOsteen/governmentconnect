@@ -6,7 +6,7 @@ import 'rxjs/add/operator/take';
 import {UserProvider} from '../user/user';
 import 'rxjs/add/operator/take';
 import {UUID} from 'angular2-uuid';
-
+import * as firebase from 'firebase';
 
 
 @Injectable()
@@ -32,8 +32,10 @@ export class ChatsProvider {
     await this.firebaseDatabase
       .object(`conversations/channels/${channelId}`)
       .update({
+        uid: channelId,
         ownerId: userId,
         createdAt: new Date(),
+        lastMessageAt: new Date(),
         participants: [userId]
       });
 
@@ -93,98 +95,110 @@ export class ChatsProvider {
       .toPromise();
 
     let channels: Channel[] = [];
-    Object.keys(userChannels).map(async (uid, index) => {
 
-      let channelId = userChannels[uid].channelId;
-      console.log(`conversations/channels/${channelId}`);
+    if (userChannels) {
 
-      let channel = await this.firebaseDatabase
-        .object(`conversations/channels/${channelId}`)
-        .valueChanges()
-        .take(1)
-        .toPromise() as Channel;
+      for (let uid in userChannels) {
 
-      let homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
-      channel.homologousUser = await this.userProvider.getUser(homologousUserId);
-      channels.push(channel);
+        let channelId = userChannels[uid].channelId;
+        let channel = await this.firebaseDatabase
+          .object(`conversations/channels/${channelId}`)
+          .valueChanges()
+          .take(1)
+          .toPromise() as Channel;
 
-    });
+        let homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
+        channel.homologousUser = await this.userProvider.getUser(homologousUserId);
+        channels.push(channel);
+      }
+    }
 
-    console.log(channels);
     return channels;
-
   }
 
 
-  async addMessage(message: Message, channelId: string, userId?: string) {
+  /**
+   *Find conversation with specified user
+   * @param {string} userId
+   * @returns {Promise<boolean>}
+   */
+  async findConversationWithUser(userId?: string) {
+
+    let channels = await this.getChannels();
+
+    for (let i in channels) {
+      let participants = channels[i].participants;
+      if (participants.indexOf(userId) !== -1) {
+        return channels[i];
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Check if current user has started a conversation with the specified user
+   * @param {string} userId
+   * @returns {Promise<boolean>}
+   */
+  async isInConversationWithUser(userId?: string) {
+    let channel = await this.findConversationWithUser(userId);
+    return channel != null;
+  }
+
+
+  /**
+   * Add message
+   * @param {string} messageText
+   * @param {string} channelId
+   * @param {string} userId
+   * @returns {Promise<void>}
+   */
+  async addMessage(messageText: string, channelId: string, userId?: string) {
 
     if (!userId) {
       userId = this.firebaseAuth.auth.currentUser.uid;
     }
 
     let messageId = UUID.UUID();
-    message.uid = messageId;
-    message.userId = userId;
+    let message = {
+      uid: UUID.UUID(),
+      userId: userId,
+      createdAt: new Date(),
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+      text: messageText,
+    };
 
     await this.firebaseDatabase
       .object(`/conversations/messages/${channelId}/${messageId}`)
       .update(message);
 
-    await this.joinChannel(userId, channelId);
   }
 
+  /**
+   *
+   * @param {string} channelId
+   * @param {number} page
+   * @returns {Promise<any[]>}
+   */
+  async getMessages(channelId: string, page?: number) {
 
-  // async getUserChannels(userId: string) {
-  //
-  //   let users = await this.firebaseDatabase
-  //     .object(`/conversations/users/${userId}`)
-  //     .valueChanges()
-  //     .take(1)
-  //     .toPromise();
-  //
-  //   Object.keys(notifications).map(async (uid, index) => {
-  //     if (notifications[uid].actorType === 'user') {
-  //       notifications[uid].actor = await this.userProvider.getUser(notifications[uid].actorId);
-  //     }
-  //     result.push(notifications[uid]);
-  //   });
-  //
-  // }
+    if (!page) {
+      page = 0;
+    }
 
-
-  // async getConversations() {
-  //   const user = this.firebaseAuth.auth.currentUser;
-  //   const userId = user.uid;
-  //
-  //   const converations = await this.firebaseDatabase
-  //     .object(`conversations/${userId}`)
-  //     .valueChanges()
-  //     .take(1)
-  //     .toPromise();
-  //
-  //   let result = [];
-  //   if (converations) {
-  //     Object.keys(converations).map(async (uid, index) => {
-  //       converations[uid].owner = await this.userProvider.getUser(converations[uid].ownerId);
-  //
-  //
-  //       converations[uid].chats = [];
-  //       for (let i = 0; i < converations[uid].chatIds.length; i++) {
-  //
-  //         let
-  //
-  //           converations
-  //         [uid].chats.push();
-  //       }
-  //
-  //
-  //       result.push(converations[uid]);
-  //     });
-  //   }
-  //   return result;
-  //
-  //
-  // }
+    return await this.firebaseDatabase
+      .list(`/conversations/messages/${channelId}`,
+        ref => ref.orderByChild('timestamp')
+        //.startAt(page)
+        //.limitToFirst(10)
+      )
+      .valueChanges();
+    // .map((arr) => {
+    //   return arr.reverse();
+    // })
+    //;
+  }
 
 
 }
