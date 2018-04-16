@@ -25,6 +25,10 @@ export class SearchUsersPage {
     this.loading = false;
   }
 
+  getPushPage() {
+    return (this.navParams.data) ? this.navParams.data : 'UserPage';
+  }
+
   async onQuery(ev) {
     this.loading = true;
 

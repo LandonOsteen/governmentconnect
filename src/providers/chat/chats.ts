@@ -5,6 +5,7 @@ import _ from 'lodash';
 import 'rxjs/add/operator/take';
 import {UserProvider} from '../user/user';
 import 'rxjs/add/operator/take';
+
 import {UUID} from 'angular2-uuid';
 import * as firebase from 'firebase';
 
@@ -44,7 +45,6 @@ export class ChatsProvider {
     return channelId;
   }
 
-
   /**
    * Join user on channel
    * @param {string} userId
@@ -67,7 +67,6 @@ export class ChatsProvider {
     await this.firebaseDatabase
       .object(`conversations/channels/${channelId}/participants`)
       .update(_.uniq(participants));
-
 
     await this.firebaseDatabase
       .object(`conversations/users/${userId}/${channelId}`)
@@ -156,6 +155,7 @@ export class ChatsProvider {
    */
   async addMessage(messageText: string, channelId: string, userId?: string) {
 
+
     if (!userId) {
       userId = this.firebaseAuth.auth.currentUser.uid;
     }
@@ -174,6 +174,7 @@ export class ChatsProvider {
       .update(message);
 
   }
+
 
   /**
    *
@@ -199,6 +200,5 @@ export class ChatsProvider {
     // })
     //;
   }
-
 
 }

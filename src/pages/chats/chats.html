@@ -1,8 +1,28 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only clear navPush="SearchUsersPage" [navParams]="params">
+        <ion-icon name="gc-magnifying-glass"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="selectChatType($event)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Chats</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content padding>
   <chat-list [channels]="channels" [loading]="loading"></chat-list>
 </ion-content>
+
+<div class="chat-type-modal" *ngIf="showChatTypeModal">
+  <h3>Single or Group?</h3>
+
+  <button ion-button block outline color="primary" navPush="SearchUsersPage" [navParams]="params">Single Chat</button>
+  <button ion-button block color="primary" navPush="GroupChatSettingsPage">Group Chat</button>
+</div>

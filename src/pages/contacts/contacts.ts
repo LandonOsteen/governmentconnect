@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import * as _ from "lodash";
-import {APP_PAGES} from '../../enums';
-import {ConnectionProvider} from '../../providers/connection/connection';
+import { APP_PAGES } from '../../enums';
+import { ConnectionProvider } from '../../providers/connection/connection';
 
 @IonicPage()
 @Component({
@@ -11,7 +11,8 @@ import {ConnectionProvider} from '../../providers/connection/connection';
 })
 export class ContactsPage {
 
-  contacts: Connection[] = null;
+  public contacts: Connection[] = null;
+  public params = 'UserPage';
 
   constructor(public modalCtrl: ModalController,
               public navCtrl: NavController,

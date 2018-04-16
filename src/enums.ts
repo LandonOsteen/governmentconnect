@@ -1,4 +1,7 @@
+import { GroupChatSettingsPage } from "./pages/group-chat-settings/group-chat-settings";
+
 export enum APP_PAGES {
+  GROUP_CHAT_SETTINGS_PAGE = 'GroupChatSettingsPage',
   CHATS_PAGE = 'ChatsPage',
   CHAT_USER_PAGE = 'ChatUserPage',
   CONTACTS_PAGE = 'ContactsPage',

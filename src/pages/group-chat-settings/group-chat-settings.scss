@@ -1,0 +1,69 @@
+page-group-chat-settings {
+  .chat-avatar {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+  }
+
+  .scroll-content {
+    padding-top: 0;
+  }
+
+  .list-ios {
+    margin-bottom: 40px;
+
+    > .item-block {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+      .item-inner {
+        min-height: 54px;
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      .button,
+      .label,
+      .input {
+        font-size: 1.4rem;
+        font-weight: 200;
+      }
+
+      .label {
+        color: #8392A7;
+      }
+
+      .input {
+        margin: 0;
+
+        .text-input {
+          background: none;
+          text-align: right;
+          color: #3B4859;
+        }
+      }
+
+      .button {
+        text-decoration: underline;
+
+        &:hover,
+        &:focus {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .btn-wrapper {
+    .button {
+      margin-bottom: 16px;
+    }
+  }
+}

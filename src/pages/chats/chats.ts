@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ChatsProvider} from '../../providers/chat/chats';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ChatsProvider } from '../../providers/chat/chats';
 
 @IonicPage()
 @Component({
@@ -11,6 +11,8 @@ export class ChatsPage {
 
   public channels: Channel[];
   public loading = true;
+  public showChatTypeModal = false;
+  public params = 'ChatUserPage';
 
   constructor(private navCtrl: NavController,
               private chatsProvider: ChatsProvider,
@@ -18,7 +20,6 @@ export class ChatsPage {
   }
 
   async ionViewDidLoad() {
-
   }
 
   async ionViewWillEnter() {
@@ -26,4 +27,11 @@ export class ChatsPage {
     this.loading = false;
   }
 
+  ionViewDidLeave() {
+    this.showChatTypeModal = false;
+  }
+
+  selectChatType() {
+    this.showChatTypeModal = true;
+  }
 }
