@@ -19,6 +19,7 @@ import {Camera} from '@ionic-native/camera';
 import {NotificationsProvider} from '../providers/notifications/notifications';
 import {ChatsProvider} from '../providers/chat/chats';
 import {Keyboard} from '@ionic-native/keyboard';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {Keyboard} from '@ionic-native/keyboard';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { SincePipe } from './since/since';
+import {NgModule} from '@angular/core';
+
 @NgModule({
-	declarations: [SincePipe],
-	imports: [],
-	exports: [SincePipe]
+  declarations: [],
+  imports: [],
+  exports: []
 })
-export class PipesModule {}
+export class PipesModule {
+}

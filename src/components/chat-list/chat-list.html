@@ -15,7 +15,7 @@
     <p *ngIf="channel.homologousUser">
       {{ channel.homologousUser.status}}
     </p>
-    <ion-note item-end>{{channel.lastMessageAt | since}}</ion-note>
+    <ion-note item-end>{{channel.lastMessageAt | amTimeAgo}}</ion-note>
 
   </ion-item>
 

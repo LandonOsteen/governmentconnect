@@ -48,9 +48,20 @@ export class ChatUserPage {
     let channelId = this.channel.uid;
     this.chatsProviders.getMessages(channelId).then(messages => {
       this.messages = messages;
-      this.scrollToBottom();
+      messages.subscribe(() => this.scrollToBottom());
+
     });
 
+  }
+
+  private focusOnEnterMessage() {
+
+  }
+
+  private async handleTyping(keyCode) {
+    if (keyCode == 13) {
+      await this.addMessage();
+    }
   }
 
   private async addMessage() {

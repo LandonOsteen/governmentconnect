@@ -55,7 +55,7 @@
         <div class="chat-bubble-inner">
           <h3>{{message.text}}</h3>
           <ion-note>
-            {{message.createdAt | since}}
+            {{message.createdAt | amTimeAgo:true}}
             <span class="check-icons">
               <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -99,7 +99,10 @@
 
 <ion-footer ion-fixed>
   <ion-toolbar class="no-border chat-toolbar" color="white">
-    <ion-input [(ngModel)]="message" placeholder="Your message..."></ion-input>
+    <ion-input [(ngModel)]="message"
+               placeholder="Your message..."
+               (keypress)="handleTyping($event.keyCode)"
+               (ionFocus)="focusOnEnterMessage()"></ion-input>
 
     <ion-buttons start>
       <button ion-button (click)="addPhoto()">

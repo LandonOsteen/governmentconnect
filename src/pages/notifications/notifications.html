@@ -19,7 +19,7 @@
           <span>
             <b *ngIf="notification.actorType=='user'">{{ notification.actor.firstName }} {{ notification.actor.lastName }}</b>
             <span>{{ notification.message}}</span>
-            <span class="notification-message-time">{{ notification.createdAt | since }} ago</span>
+            <span class="notification-message-time">{{ notification.createdAt | amTimeAgo }} ago</span>
           </span>
           </div>
         </div>
@@ -42,7 +42,7 @@
             <b>{{ invitation.inviterUser.firstName }} {{ invitation.inviterUser.lastName }}</b>
             <span>sent you an invitation to connect</span>
             <span>{{ invitation.message}}</span>
-            <span class="notification-message-time">{{ invitation.createdAt | since }} ago</span>
+            <span class="notification-message-time">{{ invitation.createdAt | amTimeAgo }} ago</span>
           </span>
           </div>
         </div>

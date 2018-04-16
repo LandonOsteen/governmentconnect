@@ -4,6 +4,7 @@ import {IonicModule} from 'ionic-angular';
 import {UsersListComponent} from './users-list/users-list';
 import {ChatListComponent} from './chat-list/chat-list';
 import {PipesModule} from '../pipes/pipes.module';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {PipesModule} from '../pipes/pipes.module';
   ],
   imports: [
     IonicModule,
-    PipesModule
+    PipesModule,
+    MomentModule
   ],
   exports: [ContactsListComponent,
     UsersListComponent,
