@@ -1,12 +1,16 @@
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase} from 'angularfire2/database';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { Camera } from '@ionic-native/camera';
+import { IOSFilePicker } from '@ionic-native/file-picker';
+
 import _ from 'lodash';
 import 'rxjs/add/operator/take';
-import {UserProvider} from '../user/user';
+import { UserProvider } from '../user/user';
 import 'rxjs/add/operator/take';
 
-import {UUID} from 'angular2-uuid';
+import { UUID } from 'angular2-uuid';
 import * as firebase from 'firebase';
 
 
@@ -15,7 +19,10 @@ export class ChatsProvider {
 
   constructor(private firebaseAuth: AngularFireAuth,
               private firebaseDatabase: AngularFireDatabase,
-              private userProvider: UserProvider) {
+              public firebaseStorage: AngularFireStorage,
+              private userProvider: UserProvider,
+              public camera: Camera,
+              private filePicker: IOSFilePicker) {
   }
 
   /**
@@ -154,8 +161,6 @@ export class ChatsProvider {
    * @returns {Promise<void>}
    */
   async addMessage(messageText: string, channelId: string, userId?: string) {
-
-
     if (!userId) {
       userId = this.firebaseAuth.auth.currentUser.uid;
     }
@@ -174,7 +179,6 @@ export class ChatsProvider {
     await this.firebaseDatabase
       .object(`/conversations/messages/${channelId}/${messageId}`)
       .update(message);
-
   }
 
 
@@ -190,25 +194,25 @@ export class ChatsProvider {
       .valueChanges();
 
     // Mark message as seen
-    promise.subscribe(async (res: any) => {
-
+    promise.subscribe((res: any) => {
       if (!res) {
         return;
       }
 
       const message = res as Message;
-      console.log(message.uid, message);
-
       const userId = this.firebaseAuth.auth.currentUser.uid;
-      const isSeenByMe = message.seen && message.seen[userId];
-      if (!isSeenByMe) {
-        await this.markMessageAsSeen(channelId, message.uid, userId);
+
+      for (let i = 0; i < _.size(message); i++) {
+        // console.log(message[i].uid, message[i]);
+        const isSeenByMe = message[i].seen && message[i].seen[userId];
+
+        if (!isSeenByMe) {
+          // this.markMessageAsSeen(channelId, message[i].uid, userId);
+        }
       }
     });
 
     return promise;
-
-
   }
 
   /**
@@ -219,10 +223,34 @@ export class ChatsProvider {
    * @returns {Promise<void>}
    */
   async markMessageAsSeen(channelId: string, messageId: string, userId: string) {
-    console.log(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`);
     return await this.firebaseDatabase
       .object(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`)
-      .update(true);
+      .update({seenAt: new Date()});
   }
 
+  async uploadChatPicture() {
+    const imageURI = await this.camera.getPicture({
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    });
+
+    const filePath = `chat_image_${ new Date().getTime() }.jpg`;
+
+    const image = 'data:image/jpg;base64,' + imageURI;
+    const result = await this.firebaseStorage.ref(filePath).putString(image, 'data_url');
+    return result.downloadURL
+  }
+
+  async uploadChatFile() {
+    const fileUri = await this.filePicker.pickFile()
+      .then(uri => console.log(uri))
+      .catch(err => console.log('Error: ', err));
+
+    console.log('uri file:', fileUri);
+
+    return fileUri;
+  }
 }

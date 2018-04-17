@@ -6,14 +6,13 @@
 -->
 <ion-header>
 
-
-  <ion-navbar *ngIf="user">
-    <ion-title>
+  <ion-navbar>
+    <ion-title *ngIf="user">
       {{ user.firstName }} {{ user.lastName }}
       <span class="sub-title">{{user.status}}</span>
     </ion-title>
 
-    <ion-buttons end>
+    <ion-buttons end *ngIf="user">
       <span class="chat-avatar">
       <img src="{{user.photoUrl}}">
     </span>
@@ -25,37 +24,14 @@
 <ion-content padding #content>
   <ion-list no-lines class="chat-messages">
 
-    <!--<ion-item text-wrap>-->
-      <!--<div class="chat-bubble you">-->
-        <!--<div class="chat-bubble-inner">-->
-          <!--<h3>This is Government Connect chat. Use this to communicate with each</h3>-->
-          <!--<ion-note>10:03</ion-note>-->
-        <!--</div>-->
-        <!--<span class="tail"></span>-->
-      <!--</div>-->
-    <!--</ion-item>-->
-
-    <!--<ion-list-header>-->
-      <!--28 Oct 2017-->
-    <!--</ion-list-header>-->
-
-    <!--<ion-item text-wrap>-->
-      <!--<div class="chat-bubble me">-->
-        <!--<div class="chat-bubble-inner">-->
-          <!--<h3>I am looking forward to collaborating on this project with you.</h3>-->
-          <!--<ion-note>12:02</ion-note>-->
-        <!--</div>-->
-
-        <!--<span class="tail"></span>-->
-      <!--</div>-->
-    <!--</ion-item>-->
-
     <ion-item text-wrap *ngFor="let message  of messages | async">
       <div class="chat-bubble small" [ngClass]="getClass(message)">
         <div class="chat-bubble-inner">
-          <h3>{{message.text}}</h3>
+          <h3 [innerHTML]="message.text"></h3>
+
           <ion-note>
             {{message.createdAt | amTimeAgo:true}}
+
             <span class="check-icons">
               <svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -71,6 +47,7 @@
                 </g>
               </g>
             </svg>
+
               <svg class="second" width="12px" height="7px" viewBox="0 0 12 7" version="1.1"
                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -86,7 +63,6 @@
               </g>
             </svg>
             </span>
-
           </ion-note>
         </div>
 
@@ -106,17 +82,17 @@
 
     <ion-buttons start>
       <button ion-button (click)="addPhoto()">
-        <img src="../../assets/svg/photo.svg">
+        <img src="assets/svg/photo.svg">
       </button>
 
       <button ion-button (click)="addFile()">
-        <img src="../../assets/svg/attach-file.svg">
+        <img src="assets/svg/attach-file.svg">
       </button>
     </ion-buttons>
 
     <ion-buttons end>
       <button ion-button (click)="addMessage()">
-        <img src="../../assets/svg/send.svg">
+        <img src="assets/svg/send.svg">
       </button>
     </ion-buttons>
 

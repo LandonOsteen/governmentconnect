@@ -92,9 +92,6 @@ page-chat-user {
 
   &.small {
     .chat-bubble-inner {
-      padding-top: 10px;
-      padding-bottom: 10px;
-
       .note {
         bottom: 13px;
       }
@@ -104,7 +101,7 @@ page-chat-user {
   &-inner {
     min-width: 220px;
     background: #F2F4F8;
-    padding: 20px 74px 20px 20px;
+    padding: 20px 20px 25px 20px;
     border-radius: 10px;
 
     h3 {
@@ -115,6 +112,12 @@ page-chat-user {
       margin: 0;
       padding: 0;
       word-break: break-all;
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+      }
     }
 
     .note {
@@ -144,6 +147,13 @@ page-chat-user {
     position: absolute;
     bottom: 0;
     left: -6px;
+  }
+
+  .chat-message-image {
+    width: 180px;
+    max-height: 180px;
+    overflow: hidden;
+    margin: 0 0 5px;
   }
 }
 

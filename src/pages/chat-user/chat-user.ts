@@ -1,7 +1,7 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {ChatsProvider} from '../../providers/chat/chats';
-import {AngularFireAuth} from 'angularfire2/auth';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ChatsProvider } from '../../providers/chat/chats';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 /**
@@ -28,11 +28,11 @@ export class ChatUserPage {
   constructor(private chatsProviders: ChatsProvider,
               private firebaseAuth: AngularFireAuth,
               private navCtrl: NavController,
-              private navParams: NavParams) {
+              private navParams: NavParams,
+              private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
-
   }
 
   private scrollToBottom(): void {
@@ -49,34 +49,54 @@ export class ChatUserPage {
     this.chatsProviders.getMessages(channelId).then(messages => {
       this.messages = messages;
       messages.subscribe(() => this.scrollToBottom());
-
     });
-
   }
 
   private focusOnEnterMessage() {
 
   }
 
-  private async handleTyping(keyCode) {
+  public async handleTyping(keyCode) {
     if (keyCode == 13) {
       await this.addMessage();
     }
   }
 
-  private async addMessage() {
+  public async addMessage() {
     let channelId = this.channel.uid;
     await this.chatsProviders.addMessage(this.message, channelId);
 
     this.message = '';
     this.scrollToBottom();
-
   }
 
-  private getClass(message: any) {
-    const cssClass = (message.userId === this.firebaseAuth.auth.currentUser.uid) ? 'me' : 'you';
-    return cssClass;
+  public async addPhoto() {
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
+
+    try {
+      const imgUrl = await this.chatsProviders.uploadChatPicture();
+      const imgMsg = `<div class="chat-message-image"><img src="${imgUrl}" /></div>`;
+      this.message = imgMsg;
+      await this.addMessage();
+      loader.dismiss();
+    } catch (err) {
+      console.log('add photo failed', err);
+      loader.dismiss();
+    }
   }
 
+  public async addFile() {
+    try {
+      const fileUrl = await this.chatsProviders.uploadChatFile();
+    } catch (err) {
+      console.log('add file failed', err);
+    }
+  }
 
+  public getClass(message: any) {
+    return (message.userId === this.firebaseAuth.auth.currentUser.uid) ? 'me' : 'you';
+  }
 }

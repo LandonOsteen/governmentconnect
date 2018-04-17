@@ -87,3 +87,8 @@ All push notifications are generated via Firebase Cloud Messaging (FCM) via Fire
 Here's a non-exhaustive list of items worth addressing before shipping to production:
 
 1. User search is currently performed on device. This was done to avoid the expense of setting up a remote client like Algolia, but depending on the expected usage at launch it may be worth reevaluating that decision.
+
+## Ionic/Cordova cli 
+ionic cordova build ios
+
+

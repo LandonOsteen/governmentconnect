@@ -65,7 +65,7 @@ interface Message {
   attachment: Attachment,
   createdAt: Date,
   timestamp: number,
-  seen?: {},
+  seen?: any,
 }
 
 interface Attachment {
