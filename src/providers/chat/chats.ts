@@ -161,12 +161,14 @@ export class ChatsProvider {
     }
 
     let messageId = UUID.UUID();
+
     let message = {
-      uid: UUID.UUID(),
+      uid: messageId,
       userId: userId,
       createdAt: new Date(),
       timestamp: firebase.database.ServerValue.TIMESTAMP,
       text: messageText,
+      seen: {}
     };
 
     await this.firebaseDatabase
@@ -179,26 +181,48 @@ export class ChatsProvider {
   /**
    *
    * @param {string} channelId
-   * @param {number} page
    * @returns {Promise<any[]>}
    */
-  async getMessages(channelId: string, page?: number) {
+  async getMessages(channelId: string) {
 
-    if (!page) {
-      page = 0;
-    }
-
-    return await this.firebaseDatabase
-      .list(`/conversations/messages/${channelId}`,
-        ref => ref.orderByChild('timestamp')
-        //.startAt(page)
-        //.limitToFirst(10)
-      )
+    const promise = await this.firebaseDatabase
+      .list(`/conversations/messages/${channelId}`, ref => ref.orderByChild('timestamp'))
       .valueChanges();
-    // .map((arr) => {
-    //   return arr.reverse();
-    // })
-    //;
+
+    // Mark message as seen
+    promise.subscribe(async (res: any) => {
+
+      if (!res) {
+        return;
+      }
+
+      const message = res as Message;
+      console.log(message.uid, message);
+
+      const userId = this.firebaseAuth.auth.currentUser.uid;
+      const isSeenByMe = message.seen && message.seen[userId];
+      if (!isSeenByMe) {
+        await this.markMessageAsSeen(channelId, message.uid, userId);
+      }
+    });
+
+    return promise;
+
+
+  }
+
+  /**
+   * Mark message as seen
+   * @param {string} channelId
+   * @param {string} messageId
+   * @param {string} userId
+   * @returns {Promise<void>}
+   */
+  async markMessageAsSeen(channelId: string, messageId: string, userId: string) {
+    console.log(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`);
+    return await this.firebaseDatabase
+      .object(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`)
+      .update(true);
   }
 
 }
