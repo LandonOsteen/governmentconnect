@@ -229,6 +229,7 @@ export class ChatsProvider {
   }
 
   async uploadChatPicture() {
+    const fileUUID = UUID.UUID();
     const imageURI = await this.camera.getPicture({
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -237,20 +238,32 @@ export class ChatsProvider {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     });
 
-    const filePath = `chat_image_${ new Date().getTime() }.jpg`;
+    const filePath = `${ fileUUID }.jpg`;
 
     const image = 'data:image/jpg;base64,' + imageURI;
     const result = await this.firebaseStorage.ref(filePath).putString(image, 'data_url');
     return result.downloadURL
   }
 
-  async uploadChatFile() {
-    const fileUri = await this.filePicker.pickFile()
-      .then(uri => console.log(uri))
-      .catch(err => console.log('Error: ', err));
+  async uploadChatFile(file) {
+    try {
+      const fileUUID = UUID.UUID();
+      const fileExt = this.getFileExt(file.name);
+      const filePath = fileExt ? `${ fileUUID }.${ fileExt }` : `${ fileUUID }`;
+      const upload = await this.firebaseStorage.ref(filePath).put(file);
+      const result = {
+        url: upload.downloadURL,
+        name: file.name
+      };
 
-    console.log('uri file:', fileUri);
+      return result;
+    } catch (err) {
+      console.log('file upload to server failed', err);
+    }
+  }
 
-    return fileUri;
+  getFileExt(file) {
+    const pos = file.lastIndexOf('.');
+    return (pos !== -1) ? file.substr(file.lastIndexOf('.') + 1) : null;
   }
 }

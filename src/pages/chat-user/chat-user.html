@@ -22,7 +22,7 @@
 </ion-header>
 
 <ion-content padding #content>
-  <ion-list no-lines class="chat-messages">
+  <ion-list no-lines class="chat-messages" style="margin-bottom: 40px">
 
     <ion-item text-wrap *ngFor="let message  of messages | async">
       <div class="chat-bubble small" [ngClass]="getClass(message)">
@@ -70,9 +70,7 @@
       </div>
     </ion-item>
   </ion-list>
-
 </ion-content>
-
 <ion-footer ion-fixed>
   <ion-toolbar class="no-border chat-toolbar" color="white">
     <ion-input [(ngModel)]="message"
@@ -88,6 +86,7 @@
       <button ion-button (click)="addFile()">
         <img src="assets/svg/attach-file.svg">
       </button>
+      <input class="upload-file" type="file" (change)="onFileChange($event)" #file />
     </ion-buttons>
 
     <ion-buttons end>

@@ -35,6 +35,13 @@ page-chat-user {
       height: 33px;
     }
   }
+
+  .upload-file {
+    opacity: 0;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
 }
 
 .chat-messages {
@@ -154,6 +161,25 @@ page-chat-user {
     max-height: 180px;
     overflow: hidden;
     margin: 0 0 5px;
+  }
+
+  .chat-message-file {
+    position: relative;
+    padding-left: 30px;
+    min-height: 24px;
+
+    img {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
   }
 }
 

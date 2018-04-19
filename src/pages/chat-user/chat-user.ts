@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ChatsProvider } from '../../providers/chat/chats';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-
 /**
  * Generated class for the ChatUserPage page.
  *
@@ -24,6 +23,7 @@ export class ChatUserPage {
   public messages: any;
 
   @ViewChild('content') private content;
+  @ViewChild("file") public fileInput: ElementRef;
 
   constructor(private chatsProviders: ChatsProvider,
               private firebaseAuth: AngularFireAuth,
@@ -52,8 +52,24 @@ export class ChatUserPage {
     });
   }
 
-  private focusOnEnterMessage() {
+  public async onFileChange(event) {
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
 
+    try {
+      const file: File = event.target.files[0];
+      const res = await this.chatsProviders.uploadChatFile(file);
+
+      const fileMsg = `<div class="chat-message-file"><img src="assets/svg/document.svg" /><a href="${res.url}" target="_blank">${res.name}</a></div>`;
+      this.message = fileMsg;
+      await this.addMessage();
+      loader.dismiss();
+    } catch (err) {
+      console.log('add file failed', err);
+      loader.dismiss();
+    }
   }
 
   public async handleTyping(keyCode) {
@@ -89,11 +105,7 @@ export class ChatUserPage {
   }
 
   public async addFile() {
-    try {
-      const fileUrl = await this.chatsProviders.uploadChatFile();
-    } catch (err) {
-      console.log('add file failed', err);
-    }
+    this.fileInput.nativeElement.click();
   }
 
   public getClass(message: any) {
