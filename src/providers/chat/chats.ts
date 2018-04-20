@@ -228,7 +228,7 @@ export class ChatsProvider {
       }
     }
 
-    console.log(messageIdsToBeMarked);
+    // console.log(messageIdsToBeMarked);
 
     for (let i = 0; i < messageIdsToBeMarked.length; i++) {
       const messageId = messageIdsToBeMarked[i];
