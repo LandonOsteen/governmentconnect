@@ -105,6 +105,14 @@ page-chat-user {
         color: #fff;
       }
     }
+
+    .check-icons {
+      svg {
+        * {
+          stroke: #fff;
+        }
+      }
+    }
   }
 
   &.small {
@@ -152,8 +160,14 @@ page-chat-user {
     display: inline-block;
     margin-left: 4px;
 
-    svg.second {
-      margin-left: -6px;
+    svg {
+      &.second {
+        margin-left: -6px;
+      }
+
+      * {
+        stroke: #2A2A30;
+      }
     }
   }
 
