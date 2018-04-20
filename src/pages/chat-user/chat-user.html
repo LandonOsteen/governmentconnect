@@ -75,8 +75,7 @@
   <ion-toolbar class="no-border chat-toolbar" color="white">
     <ion-input [(ngModel)]="message"
                placeholder="Your message..."
-               (keypress)="handleTyping($event.keyCode)"
-               (ionFocus)="focusOnEnterMessage()"></ion-input>
+               (keypress)="handleTyping($event.keyCode)"></ion-input>
 
     <ion-buttons start>
       <button ion-button (click)="addPhoto()">

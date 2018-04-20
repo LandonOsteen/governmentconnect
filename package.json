@@ -76,9 +76,7 @@
         "SENDER_ID": "615052831647"
       },
       "cordova-plugin-camera": {},
-      "cordova-plugin-statusbar": {},
-      "cordova-plugin-file": {},
-      "cordova-plugin-filepicker": {}
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "android",

@@ -1,7 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ChatsProvider } from '../../providers/chat/chats';
-import { AngularFireAuth } from 'angularfire2/auth';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {ChatsProvider} from '../../providers/chat/chats';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FilesProvider} from '../../providers/file/files';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 
 /**
  * Generated class for the ChatUserPage page.
@@ -20,12 +23,16 @@ export class ChatUserPage {
   public channel: Channel;
   public user: User;
   public message: string = null;
-  public messages: any;
+  public messages: Observable<any>;
+
+  private subscriptionMessage: Subscription;
+  private subscriptionMarkAsSeen: Subscription;
 
   @ViewChild('content') private content;
   @ViewChild("file") public fileInput: ElementRef;
 
   constructor(private chatsProviders: ChatsProvider,
+              private filesProviders: FilesProvider,
               private firebaseAuth: AngularFireAuth,
               private navCtrl: NavController,
               private navParams: NavParams,
@@ -46,10 +53,17 @@ export class ChatUserPage {
     this.user = this.channel.homologousUser;
 
     let channelId = this.channel.uid;
-    this.chatsProviders.getMessages(channelId).then(messages => {
-      this.messages = messages;
-      messages.subscribe(() => this.scrollToBottom());
+    this.messages = this.chatsProviders.getMessages(channelId);
+    this.subscriptionMessage = this.messages.subscribe(messages => {
+      this.scrollToBottom();
     });
+    this.subscriptionMarkAsSeen = this.chatsProviders.registerMarkAsSeenSubscription(channelId, this.messages);
+
+  }
+
+  async ionViewWillLeave() {
+    this.subscriptionMessage.unsubscribe();
+    this.subscriptionMarkAsSeen.unsubscribe();
   }
 
   public async onFileChange(event) {
@@ -60,7 +74,7 @@ export class ChatUserPage {
 
     try {
       const file: File = event.target.files[0];
-      const res = await this.chatsProviders.uploadChatFile(file);
+      const res = await this.filesProviders.uploadFile(file);
 
       const fileMsg = `<div class="chat-message-file"><img src="assets/svg/document.svg" /><a href="${res.url}" target="_blank">${res.name}</a></div>`;
       this.message = fileMsg;
@@ -93,7 +107,7 @@ export class ChatUserPage {
     loader.present();
 
     try {
-      const imgUrl = await this.chatsProviders.uploadChatPicture();
+      const imgUrl = await this.filesProviders.uploadFromCamera();
       const imgMsg = `<div class="chat-message-image"><img src="${imgUrl}" /></div>`;
       this.message = imgMsg;
       await this.addMessage();
