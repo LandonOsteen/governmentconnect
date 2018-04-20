@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {UserProvider} from '../../providers/user/user';
-import {ConnectionProvider} from '../../providers/connection/connection';
-import {InvitationsProvider, InvitationStatus} from '../../providers/invitations/invitations';
-import {ChatsProvider} from '../../providers/chat/chats';
-import {NotificationsProvider} from '../../providers/notifications/notifications';
-import {AngularFireAuth} from 'angularfire2/auth';
+import { Component } from '@angular/core';
+import { App, ViewController, IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
+import { ConnectionProvider } from '../../providers/connection/connection';
+import { InvitationsProvider, InvitationStatus } from '../../providers/invitations/invitations';
+import { ChatsProvider } from '../../providers/chat/chats';
+import { NotificationsProvider } from '../../providers/notifications/notifications';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -30,7 +30,10 @@ export class UserPage {
               private chatsProvider: ChatsProvider,
               private notificationsProvider: NotificationsProvider,
               private firebaseAuth: AngularFireAuth,
-              private userProvider: UserProvider) {
+              private userProvider: UserProvider,
+              public appCtrl: App,
+              public viewCtrl: ViewController,
+              public nav: Nav) {
   }
 
   async ionViewDidLoad() {
@@ -76,14 +79,27 @@ export class UserPage {
   }
 
   async startChat() {
-
-    let actorId = this.firebaseAuth.auth.currentUser.uid;
-    let inConversation = await  this.chatsProvider.isInConversationWithUser(this.userId);
+    const actorId = this.firebaseAuth.auth.currentUser.uid;
+    const inConversation = await this.chatsProvider.isInConversationWithUser(this.userId);
 
     if (!inConversation) {
       await this.notificationsProvider.addNotification(this.userId, actorId, " invited to chat");
       let channelId = await  this.chatsProvider.createChannel();
       await  this.chatsProvider.joinChannel(channelId, this.userId);
     }
+
+    const channel = await  this.chatsProvider.findConversationWithUser(this.userId);
+    //this.navCtrl.getRootNav().push('ChatsPage', channel);
+    // this.navCtrl.setRoot('ChatsPage');
+    // this.navCtrl.
+    // this.app.getRootNav().push('ChatUserPage', channel);
+
+    // this.viewCtrl.dismiss();
+    // this.nav.setRoot('ChatsPage');
+    // // this.navCtrl.push('ChatUserPage', channel);
+    // this.nav.
+
+    // this.navCtrl.push('ChatUserPage', channel);
+    // this.navCtrl.parent.select('ChatUserPage', channel);
   }
 }
