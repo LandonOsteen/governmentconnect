@@ -91,9 +91,19 @@ page-chat-user {
     }
 
     .tail {
-      background: url(../../assets/svg/tail-me.svg);
+      background: url(/assets/svg/tail-me.svg);
       right: -6px;
       left: auto;
+    }
+
+    .chat-message-file {
+      .chat-file-icon {
+        background-image: url(/assets/svg/document-white.svg);
+      }
+
+      a {
+        color: #fff;
+      }
     }
   }
 
@@ -168,7 +178,12 @@ page-chat-user {
     padding-left: 30px;
     min-height: 24px;
 
-    img {
+    .chat-file-icon {
+      background-image: url(/assets/svg/document.svg);
+      background-repeat: no-repeat;
+      -webkit-background-size: 24px 24px;
+      background-size: 24px 24px;
+      display: block;
       width: 24px;
       height: 24px;
       position: absolute;
@@ -177,8 +192,8 @@ page-chat-user {
     }
 
     a {
-      color: #fff;
       text-decoration: none;
+      color: #2A2A30;
     }
   }
 }
