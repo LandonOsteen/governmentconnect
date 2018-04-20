@@ -5,6 +5,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {FilesProvider} from '../../providers/file/files';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
+import * as _ from 'lodash';
 
 /**
  * Generated class for the ChatUserPage page.
@@ -90,6 +91,10 @@ export class ChatUserPage {
     if (keyCode == 13) {
       await this.addMessage();
     }
+  }
+
+  public getSeenCount(message: Message) {
+    return _.size(message.seen);
   }
 
   public async addMessage() {
