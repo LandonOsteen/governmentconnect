@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireStorage } from 'angularfire2/storage';
-import { Camera } from '@ionic-native/camera';
-import { IOSFilePicker } from '@ionic-native/file-picker';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {Camera} from '@ionic-native/camera';
 
 import _ from 'lodash';
 import 'rxjs/add/operator/take';
-import { UserProvider } from '../user/user';
+import {UserProvider} from '../user/user';
 import 'rxjs/add/operator/take';
 
-import { UUID } from 'angular2-uuid';
+import {UUID} from 'angular2-uuid';
 import * as firebase from 'firebase';
+import {Subscription} from 'rxjs/Subscription';
+import {Observable} from 'rxjs/Observable';
 
 
 @Injectable()
@@ -19,10 +19,8 @@ export class ChatsProvider {
 
   constructor(private firebaseAuth: AngularFireAuth,
               private firebaseDatabase: AngularFireDatabase,
-              public firebaseStorage: AngularFireStorage,
               private userProvider: UserProvider,
-              public camera: Camera,
-              private filePicker: IOSFilePicker) {
+              public camera: Camera) {
   }
 
   /**
@@ -167,13 +165,16 @@ export class ChatsProvider {
 
     let messageId = UUID.UUID();
 
+    let seen = {};
+    seen[userId] = {seenAt: new Date()};
+
     let message = {
       uid: messageId,
       userId: userId,
       createdAt: new Date(),
       timestamp: firebase.database.ServerValue.TIMESTAMP,
       text: messageText,
-      seen: {}
+      seen: seen
     };
 
     await this.firebaseDatabase
@@ -185,85 +186,57 @@ export class ChatsProvider {
   /**
    *
    * @param {string} channelId
-   * @returns {Promise<any[]>}
+   * @returns {Observable<any[]>}
    */
-  async getMessages(channelId: string) {
-
-    const promise = await this.firebaseDatabase
+  getMessages(channelId: string) {
+    return this.firebaseDatabase
       .list(`/conversations/messages/${channelId}`, ref => ref.orderByChild('timestamp'))
       .valueChanges();
+  }
 
+  public registerMarkAsSeenSubscription(channelId: string, observer: Observable<any[]>): Subscription {
+    let lock = false;
     // Mark message as seen
-    promise.subscribe((res: any) => {
-      if (!res) {
+    return observer.subscribe(async (messages: any) => {
+      if (lock) {
         return;
       }
+      lock = true;
+      setTimeout(async () => {
+          await this.markMessagesAsSeen(channelId, messages);
+          lock = false;
+        }, 500
+      );
+    });
+  }
 
-      const message = res as Message;
-      const userId = this.firebaseAuth.auth.currentUser.uid;
+  private async markMessagesAsSeen(channelId: string, res: any) {
+    if (!res) {
+      return;
+    }
 
-      for (let i = 0; i < _.size(message); i++) {
-        // console.log(message[i].uid, message[i]);
-        const isSeenByMe = message[i].seen && message[i].seen[userId];
+    const messages = res as Message[];
+    const userId = this.firebaseAuth.auth.currentUser.uid;
+    let messageIdsToBeMarked = [];
 
-        if (!isSeenByMe) {
-          // this.markMessageAsSeen(channelId, message[i].uid, userId);
-        }
+    for (let i = 0; i < _.size(messages); i++) {
+      const message = messages[i];
+      const seenAt = message.seen && message.seen[userId];
+      const isSeenByMe = seenAt !== undefined;
+      if (!isSeenByMe) {
+        messageIdsToBeMarked.push(message.uid);
       }
-    });
+    }
 
-    return promise;
-  }
+    console.log(messageIdsToBeMarked);
 
-  /**
-   * Mark message as seen
-   * @param {string} channelId
-   * @param {string} messageId
-   * @param {string} userId
-   * @returns {Promise<void>}
-   */
-  async markMessageAsSeen(channelId: string, messageId: string, userId: string) {
-    return await this.firebaseDatabase
-      .object(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`)
-      .update({seenAt: new Date()});
-  }
-
-  async uploadChatPicture() {
-    const fileUUID = UUID.UUID();
-    const imageURI = await this.camera.getPicture({
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    });
-
-    const filePath = `${ fileUUID }.jpg`;
-
-    const image = 'data:image/jpg;base64,' + imageURI;
-    const result = await this.firebaseStorage.ref(filePath).putString(image, 'data_url');
-    return result.downloadURL
-  }
-
-  async uploadChatFile(file) {
-    try {
-      const fileUUID = UUID.UUID();
-      const fileExt = this.getFileExt(file.name);
-      const filePath = fileExt ? `${ fileUUID }.${ fileExt }` : `${ fileUUID }`;
-      const upload = await this.firebaseStorage.ref(filePath).put(file);
-      const result = {
-        url: upload.downloadURL,
-        name: file.name
-      };
-
-      return result;
-    } catch (err) {
-      console.log('file upload to server failed', err);
+    for (let i = 0; i < messageIdsToBeMarked.length; i++) {
+      const messageId = messageIdsToBeMarked[i];
+      await this.firebaseDatabase
+        .object(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`)
+        .update({seenAt: new Date()});
     }
   }
 
-  getFileExt(file) {
-    const pos = file.lastIndexOf('.');
-    return (pos !== -1) ? file.substr(file.lastIndexOf('.') + 1) : null;
-  }
+
 }

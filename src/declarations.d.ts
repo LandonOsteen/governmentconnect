@@ -62,16 +62,8 @@ interface Message {
   uid: string,
   userId: string,
   text: string,
-  attachment: Attachment,
   createdAt: Date,
   timestamp: number,
   seen?: any,
 }
 
-interface Attachment {
-  uid: string,
-  path: string,
-  name: string[],
-  userId: string,
-  createdAt: Date,
-}
