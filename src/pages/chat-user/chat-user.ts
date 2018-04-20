@@ -62,7 +62,7 @@ export class ChatUserPage {
       const file: File = event.target.files[0];
       const res = await this.chatsProviders.uploadChatFile(file);
 
-      const fileMsg = `<div class="chat-message-file"><img src="assets/svg/document.svg" /><a href="${res.url}" target="_blank">${res.name}</a></div>`;
+      const fileMsg = `<div class="chat-message-file"><span class="chat-file-icon"></span><a href="${res.url}" target="_blank">${res.name}</a></div>`;
       this.message = fileMsg;
       await this.addMessage();
       loader.dismiss();
