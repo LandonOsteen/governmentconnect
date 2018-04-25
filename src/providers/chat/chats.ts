@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Camera} from '@ionic-native/camera';
+import lunr from "lunr";
 
 import _ from 'lodash';
 import 'rxjs/add/operator/take';
@@ -16,6 +17,9 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ChatsProvider {
+
+  channelsCache = [];
+  channelsIndex = null;
 
   constructor(private firebaseAuth: AngularFireAuth,
               private firebaseDatabase: AngularFireDatabase,
@@ -114,10 +118,13 @@ export class ChatsProvider {
         let homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
         channel.homologousUser = await this.userProvider.getUser(homologousUserId);
         channels.push(channel);
+        this.channelsCache[uid] = channel;
       }
     }
 
-    return channels;
+    return channels.sort((a: Channel, b: Channel) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
   }
 
 
@@ -236,6 +243,39 @@ export class ChatsProvider {
         .object(`/conversations/messages/${channelId}/${messageId}/seen/${userId}`)
         .update({seenAt: new Date()});
     }
+  }
+
+  async searchChannels(query?: string) {
+    if (!this.channelsIndex) {
+      const channels = (await this.getChannels()).map((channel: Channel) => {
+        channel["homologousUser_firstName"] = channel.homologousUser.firstName;
+        channel["homologousUser_lastName"] = channel.homologousUser.lastName;
+        return channel;
+      });
+
+      this.channelsIndex = lunr(function () {
+
+        this.ref('uid');
+
+        this.field('homologousUser_firstName');
+        this.field('homologousUser_lastName');
+
+        this.pipeline.remove(lunr.stemmer);
+        this.searchPipeline.remove(lunr.stemmer);
+
+        channels.forEach((channel) => {
+          this.add(channel);
+        })
+      });
+    }
+
+    const results = this.channelsIndex.search(query);
+
+    return results
+      .map(r => this.channelsCache[r.ref])
+      .sort((a: Channel, b: Channel) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      })
   }
 
 

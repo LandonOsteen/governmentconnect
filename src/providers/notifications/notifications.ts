@@ -51,12 +51,9 @@ export class NotificationsProvider {
       });
     }
 
-    return result
-      .sort((a, b) => {
-        if (a.createdAt < b.createdAt) return -1;
-        if (a.createdAt > b.createdAt) return 1;
-        return 0;
-      });
+    return result.sort((a: Notification, b: Notification) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
   }
 
 }

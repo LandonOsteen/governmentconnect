@@ -7,6 +7,7 @@ export enum APP_PAGES {
   CONTACTS_PAGE = 'ContactsPage',
   LOGIN_PAGE = 'LoginPage',
   SEARCH_USERS_PAGE = 'SearchUsersPage',
+  SEARCH_CHATS_PAGE = 'SearchChatsPage',
   SETTINGS_PAGE = 'SettingsPage',
   TABS_PAGE = 'TabsPage',
   USER_PAGe = 'UserPage',

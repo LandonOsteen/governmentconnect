@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only clear (click)="dismiss()">
+        <ion-icon name="gc-back-arrow"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar
+      placeholder="Search conversations"
+      [(ngModel)]="query"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onQuery($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <chat-list [channels]="channels" [loading]="loading" [pushPage]="getPushPage()"></chat-list>
+</ion-content>

@@ -6,6 +6,7 @@ import { InvitationsProvider, InvitationStatus } from '../../providers/invitatio
 import { ChatsProvider } from '../../providers/chat/chats';
 import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { AngularFireAuth } from 'angularfire2/auth';
+import {APP_PAGES} from '../../enums';
 
 @IonicPage()
 @Component({
@@ -89,17 +90,7 @@ export class UserPage {
     }
 
     const channel = await  this.chatsProvider.findConversationWithUser(this.userId);
-    //this.navCtrl.getRootNav().push('ChatsPage', channel);
-    // this.navCtrl.setRoot('ChatsPage');
-    // this.navCtrl.
-    // this.app.getRootNav().push('ChatUserPage', channel);
-
-    // this.viewCtrl.dismiss();
-    // this.nav.setRoot('ChatsPage');
-    // // this.navCtrl.push('ChatUserPage', channel);
-    // this.nav.
-
-    // this.navCtrl.push('ChatUserPage', channel);
-    // this.navCtrl.parent.select('ChatUserPage', channel);
+    this.navCtrl.push(APP_PAGES.CHAT_USER_PAGE, {channel: channel});
+    
   }
 }

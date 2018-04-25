@@ -10,6 +10,7 @@ export class ChatListComponent {
 
   @Input('channels') channels: Channel[] = [];
   @Input('loading') loading: boolean = true;
+  @Input('pushPage') pushPage: any;
 
   maxSlice = 20;
 

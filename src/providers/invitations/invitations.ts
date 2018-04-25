@@ -103,7 +103,10 @@ export class InvitationsProvider {
       });
     }
 
-    return result;
+    return result.sort((a: Invitation, b: Invitation) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
 
   }
 
