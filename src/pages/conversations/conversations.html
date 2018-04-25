@@ -23,6 +23,9 @@
 <div class="chat-type-modal" *ngIf="showChatTypeModal">
   <h3>Single or Group?</h3>
 
-  <button ion-button block outline color="primary" navPush="SearchUsersPage" [navParams]="params">Single Chat</button>
+  <button ion-button block outline color="primary"
+          navPush="SearchUsersPage"
+          [navParams]="'ChatUserPage'">Single Chat
+  </button>
   <button ion-button block color="primary" navPush="GroupChatSettingsPage">Group Chat</button>
 </div>

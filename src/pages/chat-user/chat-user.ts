@@ -6,6 +6,8 @@ import {FilesProvider} from '../../providers/file/files';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
+import {APP_PAGES} from '../../enums';
+import {NotificationsProvider} from '../../providers/notifications/notifications';
 
 /**
  * Generated class for the ChatUserPage page.
@@ -22,7 +24,6 @@ import * as _ from 'lodash';
 export class ChatUserPage {
 
   public channel: Channel;
-  public user: User;
   public message: string = null;
   public messages: Observable<any>;
 
@@ -37,6 +38,7 @@ export class ChatUserPage {
               private firebaseAuth: AngularFireAuth,
               private navCtrl: NavController,
               private navParams: NavParams,
+              private chatsProvider: ChatsProvider,
               private loadingCtrl: LoadingController) {
   }
 
@@ -50,8 +52,15 @@ export class ChatUserPage {
   }
 
   async ionViewWillEnter() {
-    this.channel = this.navParams.get('channel');
-    this.user = this.channel.homologousUser;
+
+
+    let userId = this.navParams.get('userId');
+    if (userId) {
+      this.channel = await this.chatsProviders.startChat([userId]);
+    } else {
+      this.channel = this.navParams.get('channel');
+    }
+
 
     let channelId = this.channel.uid;
     this.messages = this.chatsProviders.getMessages(channelId);

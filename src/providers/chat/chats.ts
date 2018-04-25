@@ -13,6 +13,7 @@ import {UUID} from 'angular2-uuid';
 import * as firebase from 'firebase';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
+import {NotificationsProvider} from '../notifications/notifications';
 
 
 @Injectable()
@@ -24,7 +25,8 @@ export class ChatsProvider {
   constructor(private firebaseAuth: AngularFireAuth,
               private firebaseDatabase: AngularFireDatabase,
               private userProvider: UserProvider,
-              public camera: Camera) {
+              private notificationsProvider: NotificationsProvider,
+              private camera: Camera) {
   }
 
   /**
@@ -115,8 +117,18 @@ export class ChatsProvider {
           .take(1)
           .toPromise() as Channel;
 
-        let homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
-        channel.homologousUser = await this.userProvider.getUser(homologousUserId);
+        // Set channel name
+        if (!channel.name) {
+          // Dynamically set channel name and photo
+          let _homologousUserId = channel.participants.filter(participant => participant !== userId)[0];
+          if (_homologousUserId) {
+            let _homologousUser = await this.userProvider.getUser(_homologousUserId);
+            channel.name = _homologousUser.firstName + ' ' + _homologousUser.lastName;
+            channel.photoUrl = _homologousUser.photoUrl;
+            channel.status = _homologousUser.status;
+          }
+        }
+
         channels.push(channel);
         this.channelsCache[uid] = channel;
       }
@@ -145,6 +157,47 @@ export class ChatsProvider {
     }
 
     return null;
+  }
+
+
+  /**
+   *Find conversation with specified user
+   * @param {string} userId
+   * @returns {Promise<boolean>}
+   */
+  async findConversationWithUsers(userIds?: string[]) {
+
+    let channels = await this.getChannels();
+
+    for (let i in channels) {
+      let participants = channels[i].participants;
+      if (_.isEmpty(_.difference(participants, userIds))) {
+        return channels[i];
+      }
+    }
+
+    return null;
+  }
+
+
+  /**
+   *Find channel by id
+   * @param {string} channelId
+   * @returns {Promise<any>}
+   */
+  async findConversationById(channelId: string) {
+
+    let channels = await this.getChannels();
+
+    for (let i in channels) {
+      const channel = channels[i];
+      if (channel.uid === channelId) {
+        return channel;
+      }
+    }
+
+    return null;
+
   }
 
   /**
@@ -248,8 +301,6 @@ export class ChatsProvider {
   async searchChannels(query?: string) {
     if (!this.channelsIndex) {
       const channels = (await this.getChannels()).map((channel: Channel) => {
-        channel["homologousUser_firstName"] = channel.homologousUser.firstName;
-        channel["homologousUser_lastName"] = channel.homologousUser.lastName;
         return channel;
       });
 
@@ -257,8 +308,8 @@ export class ChatsProvider {
 
         this.ref('uid');
 
-        this.field('homologousUser_firstName');
-        this.field('homologousUser_lastName');
+        this.field('name');
+        this.field('status');
 
         this.pipeline.remove(lunr.stemmer);
         this.searchPipeline.remove(lunr.stemmer);
@@ -276,6 +327,45 @@ export class ChatsProvider {
       .sort((a: Channel, b: Channel) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       })
+  }
+
+
+  /**
+   * Start chat conversation
+   * @param {string[]} userIds
+   * @returns {Promise<Channel | any>}
+   */
+  async startChat(userIds: string[]) {
+
+    const actorId = this.firebaseAuth.auth.currentUser.uid;
+    let channelId = await  this.createChannel();
+
+    userIds
+      .filter((userId) => userId !== actorId)
+      .forEach(async (_userId: string) => {
+        await this.notificationsProvider.addNotification(_userId, actorId, " invited to chat");
+        await  this.joinChannel(channelId, _userId);
+
+        // const inConversation = await this.isInConversationWithUser(_userId);
+        //if (!inConversation) {
+        //}
+      });
+
+    return await this.findConversationById(channelId);
+  }
+
+  /**
+   * Start or resume chat
+   * @param {string[]} userIds
+   * @returns {Promise<any>}
+   */
+  async startOrResumeChat(userIds: string[]) {
+    let channel = await this.findConversationWithUsers(userIds);
+    console.log(channel);
+    if (channel) {
+      return channel;
+    }
+    return await this.startChat(userIds);
   }
 
 

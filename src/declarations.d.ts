@@ -50,11 +50,13 @@ interface Notification {
 
 interface Channel {
   uid: string,
+  name?: string,
+  status?: string,
+  photoUrl?: string,
   ownerId: string,
   createdAt: Date,
   lastMessageAt: Date,
   participants: string[],
-  homologousUser?: User,
 }
 
 

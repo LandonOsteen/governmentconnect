@@ -9,7 +9,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 export class TabsPage {
 
   contactsRoot = 'ContactsPage';
-  chatsRoot = 'ChatsPage';
+  chatsRoot = 'ConversationsChannelsPage';
   notificationsRoot = 'NotificationsPage';
   settingsRoot = 'SettingsPage';
 

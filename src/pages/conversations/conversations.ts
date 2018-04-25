@@ -5,9 +5,9 @@ import { ChatsProvider } from '../../providers/chat/chats';
 @IonicPage()
 @Component({
   selector: 'page-chats',
-  templateUrl: 'chats.html',
+  templateUrl: 'conversations.html',
 })
-export class ChatsPage {
+export class ConversationsChannelsPage {
 
   public channels: Channel[];
   public loading = true;
