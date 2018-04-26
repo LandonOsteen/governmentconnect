@@ -1,13 +1,14 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ChatsProvider } from '../../providers/chat/chats';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { FilesProvider } from '../../providers/file/files';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {ChatsProvider} from '../../providers/chat/chats';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {FilesProvider} from '../../providers/file/files';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import * as _ from 'lodash';
 import {APP_PAGES} from '../../enums';
 import {NotificationsProvider} from '../../providers/notifications/notifications';
+import {UserProvider} from '../../providers/user/user';
 
 /**
  * Generated class for the ChatUserPage page.
@@ -26,9 +27,11 @@ export class ChatUserPage {
   public channel: Channel;
   public message: string = null;
   public messages: Observable<any>;
+  public imageCache = {};
 
   private subscriptionMessage: Subscription;
   private subscriptionMarkAsSeen: Subscription;
+
 
   @ViewChild('content') private content;
   @ViewChild("file") public fileInput: ElementRef;
@@ -38,6 +41,7 @@ export class ChatUserPage {
               private firebaseAuth: AngularFireAuth,
               private navCtrl: NavController,
               private navParams: NavParams,
+              private userProvider: UserProvider,
               private chatsProvider: ChatsProvider,
               private loadingCtrl: LoadingController) {
   }
@@ -65,11 +69,17 @@ export class ChatUserPage {
     let channelId = this.channel.uid;
     this.messages = this.chatsProviders.getMessages(channelId);
     this.subscriptionMessage = this.messages.subscribe(messages => {
+      messages.forEach(async (message) => {
+        const user = await this.userProvider.getUser(message.userId);
+        this.imageCache[message.userId] = user.photoUrl;
+      });
+      console.log(messages);
       this.scrollToBottom();
     });
     this.subscriptionMarkAsSeen = this.chatsProviders.registerMarkAsSeenSubscription(channelId, this.messages);
 
   }
+
 
   async ionViewWillLeave() {
     this.subscriptionMessage.unsubscribe();

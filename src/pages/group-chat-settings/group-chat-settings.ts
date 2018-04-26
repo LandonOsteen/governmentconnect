@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserProvider } from '../../providers/user/user';
 import { APP_PAGES } from "../../enums";
 import { ChatsProvider } from '../../providers/chat/chats';
+import {FilesProvider} from '../../providers/file/files';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,7 @@ export class GroupChatSettingsPage {
               public events: Events,
               public firebaseAuth: AngularFireAuth,
               public userProvider: UserProvider,
+              public fileProvider: FilesProvider,
               public chatsProvider: ChatsProvider) {
 
     this.events.subscribe('multiselect:user', (res) => {
@@ -46,11 +48,8 @@ export class GroupChatSettingsPage {
     });
 
     loader.present();
-
     try {
-      // this.group.photoUrl = await this.userProvider.uploadUserProfilePicture(this.user);
-      // await this.updateUserDetails();
-
+      this.group.photoUrl = await this.fileProvider.uploadFromCamera();
       loader.dismiss();
     } catch (err) {
       console.log('upload failed', err);
@@ -62,10 +61,11 @@ export class GroupChatSettingsPage {
     const actorId = this.firebaseAuth.auth.currentUser.uid;
     let userIds = this.getSelectedUserIds();
     const groupName = (this.group.name) ? this.group.name : this.user.firstName + ' Chat Group';
+    const photoUrl = this.group.photoUrl;
 
     if (userIds) {
       userIds.push(actorId);
-      const channel = await this.chatsProvider.startOrResumeChat(userIds, groupName);
+      const channel = await this.chatsProvider.startOrResumeChat(userIds, groupName, photoUrl);
       this.navCtrl.push(APP_PAGES.CHAT_USER_PAGE, {channel: channel});
     }
   }
