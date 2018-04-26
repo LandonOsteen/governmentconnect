@@ -288,7 +288,6 @@ export class ChatsProvider {
       }
     }
 
-    // console.log(messageIdsToBeMarked);
 
     for (let i = 0; i < messageIdsToBeMarked.length; i++) {
       const messageId = messageIdsToBeMarked[i];
@@ -361,7 +360,6 @@ export class ChatsProvider {
    */
   async startOrResumeChat(userIds: string[]) {
     let channel = await this.findConversationWithUsers(userIds);
-    console.log(channel);
     if (channel) {
       return channel;
     }
