@@ -12,6 +12,7 @@ export class SearchUsersPage {
   public users = [];
   public query = '';
   public loading = true;
+  public isGroupSearch = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -23,6 +24,8 @@ export class SearchUsersPage {
     this.loading = true;
     this.users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*');
     this.loading = false;
+
+    this.isGroupSearch = this.navParams.get('data') === 'groupSearch';
   }
 
   getPushPage() {

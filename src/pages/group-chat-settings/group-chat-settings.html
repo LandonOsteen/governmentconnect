@@ -4,9 +4,9 @@
     <ion-title>Group Details</ion-title>
 
     <ion-buttons end>
-      <span class="chat-avatar">
-      <img src="assets/imgs/temp-avatar.png">
-    </span>
+      <span class="chat-avatar" *ngIf="group && group.photoUrl">
+        <img src="{{group.photoUrl}}">
+      </span>
     </ion-buttons>
   </ion-navbar>
 
@@ -22,13 +22,13 @@
     <ion-item>
       <ion-label>Group Photo</ion-label>
 
-      <button ion-button clear item-end>Upload Photo</button>
+      <button ion-button clear item-end (click)="uploadPhoto()">Upload Photo</button>
     </ion-item>
 
   </ion-list>
 
   <div class="btn-wrapper">
-    <button ion-button block outline color="primary">
+    <button ion-button block outline color="primary" navPush="SearchUsersPage" [navParams]="params">
       Add Users
     </button>
 

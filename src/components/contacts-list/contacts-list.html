@@ -1,6 +1,9 @@
 <div class="contacts-list" *ngIf="contacts && contacts.length >0 ">
   <div class="contact" *ngFor="let contact of contacts" navPush="UserPage" [navParams]="getNavParams(contact)">
-    <img class="contact-image" [src]="contact.user.photoUrl"/>
+    <div class="contact-image-wrapper">
+      <img class="contact-image" [src]="contact.user.photoUrl"/>
+    </div>
+
     <div class="contact-title">{{contact.user.firstName}} {{contact.user.lastName}}</div>
     <div class="contact-subtitle">{{contact.user.title}}</div>
   </div>

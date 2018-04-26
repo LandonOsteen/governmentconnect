@@ -1,10 +1,10 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
-import {ChatsProvider} from '../../providers/chat/chats';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {FilesProvider} from '../../providers/file/files';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ChatsProvider } from '../../providers/chat/chats';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { FilesProvider } from '../../providers/file/files';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 
 /**

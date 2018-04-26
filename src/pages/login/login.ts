@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, AlertController} from 'ionic-angular';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {APP_PAGES} from "../../enums";
-import {PushProvider} from '../../providers/push/push';
-import {Keyboard} from '@ionic-native/keyboard';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { APP_PAGES } from "../../enums";
+import { PushProvider } from '../../providers/push/push';
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @IonicPage()
@@ -26,7 +26,6 @@ export class LoginPage {
   async login() {
     try {
       await this.firebaseAuth.auth.signInAndRetrieveDataWithEmailAndPassword(this.email, this.password);
-      this.navCtrl.push(APP_PAGES.TABS_PAGE);
 
       this.navCtrl.push(APP_PAGES.TABS_PAGE);
 

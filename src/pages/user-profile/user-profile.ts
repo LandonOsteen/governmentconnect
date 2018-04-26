@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, App, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, App, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { UserProvider } from '../../providers/user/user';
 
@@ -17,7 +17,8 @@ export class UserProfilePage {
               public navCtrl: NavController,
               public navParams: NavParams,
               public firebaseAuth: AngularFireAuth,
-              public userProvider: UserProvider) {
+              public userProvider: UserProvider,
+              private loadingCtrl: LoadingController) {
   }
 
 
@@ -36,11 +37,19 @@ export class UserProfilePage {
   }
 
   async updateUserPhoto() {
+    const loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+
+    loader.present();
+
     try {
       this.user.photoUrl = await this.userProvider.uploadUserProfilePicture(this.user);
       await this.updateUserDetails();
+      loader.dismiss();
     } catch (err) {
       console.log('upload failed', err);
+      loader.dismiss();
     }
   }
 

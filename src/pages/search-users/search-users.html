@@ -16,5 +16,8 @@
 </ion-header>
 
 <ion-content>
-  <users-list [users]="users" [loading]="loading" [pushPage]="getPushPage()"></users-list>
+  <users-list [users]="users"
+              [loading]="loading"
+              [pushPage]="getPushPage()"
+              [isGroupSearch]="isGroupSearch"></users-list>
 </ion-content>

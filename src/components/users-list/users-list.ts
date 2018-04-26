@@ -8,8 +8,10 @@ export class UsersListComponent {
   @Input('users') users: any[] = [];
   @Input('loading') loading: boolean = false;
   @Input('pushPage') pushPage: any;
+  @Input('isGroupSearch') isGroupSearch: boolean = false;
 
   public maxSlice = 20;
+  public addUserToGroup = false;
 
   constructor() {
   }
@@ -21,6 +23,12 @@ export class UsersListComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.users) {
       this.maxSlice = 20;
+    }
+
+    console.log(changes.isGroupSearch);
+
+    if (changes.isGroupSearch && changes.isGroupSearch.currentValue) {
+      this.addUserToGroup = true;
     }
   }
 
