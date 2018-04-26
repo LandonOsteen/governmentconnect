@@ -45,13 +45,15 @@ page-chat-user {
 }
 
 .chat-messages {
+  padding-top: 20px;
+
   .item {
-    margin: 0 0 10px;
+    margin: 0 0 20px;
   }
 
   .label {
     margin: 0;
-    padding: 0;
+    padding: 12px 0 0;
   }
 
   .list-header {
@@ -112,6 +114,11 @@ page-chat-user {
           stroke: #fff;
         }
       }
+    }
+
+    .user-char-avatar {
+      left: -10px;
+      right: auto;
     }
   }
 
@@ -208,6 +215,21 @@ page-chat-user {
     a {
       text-decoration: none;
       color: #2A2A30;
+    }
+  }
+
+  .user-char-avatar {
+    width: 24px;
+    height: 24px;
+    display: block;
+    overflow: hidden;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+
+    img {
+      min-height: 24px;
     }
   }
 }

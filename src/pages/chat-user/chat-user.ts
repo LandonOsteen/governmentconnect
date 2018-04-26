@@ -53,7 +53,6 @@ export class ChatUserPage {
 
   async ionViewWillEnter() {
 
-
     let userId = this.navParams.get('userId');
     if (userId) {
       const actorId = this.firebaseAuth.auth.currentUser.uid;

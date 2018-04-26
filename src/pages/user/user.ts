@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {App, ViewController, IonicPage, NavController, NavParams, Nav} from 'ionic-angular';
-import {UserProvider} from '../../providers/user/user';
-import {ConnectionProvider} from '../../providers/connection/connection';
-import {InvitationsProvider, InvitationStatus} from '../../providers/invitations/invitations';
-import {ChatsProvider} from '../../providers/chat/chats';
-import {NotificationsProvider} from '../../providers/notifications/notifications';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {APP_PAGES} from '../../enums';
+import { Component } from '@angular/core';
+import { App, ViewController, IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
+import { ConnectionProvider } from '../../providers/connection/connection';
+import { InvitationsProvider, InvitationStatus } from '../../providers/invitations/invitations';
+import { ChatsProvider } from '../../providers/chat/chats';
+import { NotificationsProvider } from '../../providers/notifications/notifications';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { APP_PAGES } from '../../enums';
 
 @IonicPage()
 @Component({

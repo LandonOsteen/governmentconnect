@@ -1,19 +1,19 @@
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase} from 'angularfire2/database';
-import {Camera} from '@ionic-native/camera';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Camera } from '@ionic-native/camera';
 import lunr from "lunr";
 
 import _ from 'lodash';
 import 'rxjs/add/operator/take';
-import {UserProvider} from '../user/user';
+import { UserProvider } from '../user/user';
 import 'rxjs/add/operator/take';
 
-import {UUID} from 'angular2-uuid';
+import { UUID } from 'angular2-uuid';
 import * as firebase from 'firebase';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
-import {NotificationsProvider} from '../notifications/notifications';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { NotificationsProvider } from '../notifications/notifications';
 
 
 @Injectable()
@@ -32,8 +32,11 @@ export class ChatsProvider {
   /**
    * Create new channel and add into it
    * @param {string} userId
+   * @param {string} name
+   * @param {string} photoUrl
+   * @returns {Promise<string>}
    */
-  async createChannel(userId?: string) {
+  async createChannel(userId?: string, name?: string, photoUrl?: string) {
 
     if (!userId) {
       userId = this.firebaseAuth.auth.currentUser.uid;
@@ -41,15 +44,25 @@ export class ChatsProvider {
 
     let channelId = UUID.UUID();
 
+    let payload = {
+      uid: channelId,
+      ownerId: userId,
+      createdAt: new Date(),
+      lastMessageAt: new Date(),
+      participants: [userId]
+    };
+
+    if (name) {
+      payload ['name'] = name;
+    }
+
+    if (photoUrl) {
+      payload ['photoUrl'] = photoUrl;
+    }
+
     await this.firebaseDatabase
       .object(`conversations/channels/${channelId}`)
-      .update({
-        uid: channelId,
-        ownerId: userId,
-        createdAt: new Date(),
-        lastMessageAt: new Date(),
-        participants: [userId]
-      });
+      .update(payload);
 
     await this.joinChannel(channelId, userId);
 
@@ -333,10 +346,10 @@ export class ChatsProvider {
    * @param {string[]} userIds
    * @returns {Promise<Channel | any>}
    */
-  async startChat(userIds: string[]) {
+  async startChat(userIds: string[], name?: string, photoUrl?: string) {
 
     const actorId = this.firebaseAuth.auth.currentUser.uid;
-    let channelId = await  this.createChannel();
+    let channelId = await  this.createChannel(actorId, name, photoUrl);
 
     userIds
       .filter((userId) => userId !== actorId)
@@ -357,12 +370,12 @@ export class ChatsProvider {
    * @param {string[]} userIds
    * @returns {Promise<any>}
    */
-  async startOrResumeChat(userIds: string[]) {
+  async startOrResumeChat(userIds: string[], name?: string, photoUrl?: string) {
     let channel = await this.findConversationWithUsers(userIds);
     if (channel) {
       return channel;
     }
-    return await this.startChat(userIds);
+    return await this.startChat(userIds, name, photoUrl);
   }
 
 

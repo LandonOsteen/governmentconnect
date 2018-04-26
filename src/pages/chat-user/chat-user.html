@@ -67,11 +67,16 @@
           </ion-note>
         </div>
 
+        <span class="user-char-avatar">
+          <img src="{{channel.photoUrl}}">
+        </span>
+
         <span class="tail"></span>
       </div>
     </ion-item>
   </ion-list>
 </ion-content>
+
 <ion-footer ion-fixed>
   <ion-toolbar class="no-border chat-toolbar" color="white">
     <ion-input [(ngModel)]="message"

@@ -38,8 +38,8 @@
       Add Users
     </button>
 
-    <button ion-button block>
-      Save Group Details
+    <button ion-button block *ngIf="selectedUsers && selectedUsers.length > 0" (click)="startChat($event)">
+      Start Group Chat
     </button>
   </div>
 
