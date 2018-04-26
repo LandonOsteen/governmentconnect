@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireDatabase} from 'angularfire2/database';
 import lunr from "lunr";
-import { AngularFireStorage } from 'angularfire2/storage';
-import { Camera } from '@ionic-native/camera';
+import {AngularFireStorage} from 'angularfire2/storage';
+import {Camera} from '@ionic-native/camera';
 import 'rxjs/add/operator/take';
 
 @Injectable()
@@ -53,6 +53,8 @@ export class UserProvider {
     if (forceReload) {
       this.usersCache = null;
     }
+
+    const currentUserId = this.firebaseAuth.auth.currentUser.uid;
 
     if (!this.usersCache) {
       this.usersCache = await this.firebaseDatabase

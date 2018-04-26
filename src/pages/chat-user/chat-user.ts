@@ -56,7 +56,8 @@ export class ChatUserPage {
 
     let userId = this.navParams.get('userId');
     if (userId) {
-      this.channel = await this.chatsProviders.startChat([userId]);
+      const actorId = this.firebaseAuth.auth.currentUser.uid;
+      this.channel = await this.chatsProvider.startOrResumeChat([userId, actorId]);
     } else {
       this.channel = this.navParams.get('channel');
     }

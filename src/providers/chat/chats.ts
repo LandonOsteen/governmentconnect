@@ -168,10 +168,9 @@ export class ChatsProvider {
   async findConversationWithUsers(userIds?: string[]) {
 
     let channels = await this.getChannels();
-
     for (let i in channels) {
       let participants = channels[i].participants;
-      if (_.isEmpty(_.difference(participants, userIds))) {
+      if (_.isEqual(participants.sort(), userIds.sort())) {
         return channels[i];
       }
     }
