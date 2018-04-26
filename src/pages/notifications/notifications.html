@@ -6,7 +6,16 @@
 <ion-content padding>
 
   <div class="notification-block" *ngIf="notifications && notifications.length > 0;">
-    <div class="notification-block-title">Notifications</div>
+    <div class="notification-header">
+      <div class="notification-block-title">Notifications</div>
+
+      <div class="notification-actions" *ngIf="notifications.length > 0 ">
+        <button ion-button small color="primary" (click)="clearAllNotifications()">
+          Clear all
+        </button>
+      </div>
+    </div>
+
     <div class="spacer-vertical-2"></div>
 
     <div class="notification" *ngFor="let notification of notifications">

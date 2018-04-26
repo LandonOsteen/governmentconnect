@@ -46,4 +46,9 @@ export class NotificationsPage {
     await this.loadNotifications();
   }
 
+  async clearAllNotifications(){
+    await this.notificationsProvider.clearAllNotifications();
+    await this.loadNotifications();
+  }
+
 }
