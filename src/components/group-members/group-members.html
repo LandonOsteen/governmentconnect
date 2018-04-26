@@ -1,0 +1,21 @@
+<div class="group-members">
+  <h3>Group Members</h3>
+
+  <div class="users-list" *ngIf="users">
+
+    <div class="user" *ngFor="let user of users">
+
+      <div class="user-wrap">
+        <div class="user-image-wrap">
+          <img class="user-image" [src]="user.photoUrl"/>
+        </div>
+
+        <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
+        <div class="user-subtitle">{{user.title}}</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+

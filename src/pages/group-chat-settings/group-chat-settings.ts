@@ -13,19 +13,16 @@ export class GroupChatSettingsPage {
     photoUrl: ''
   };
 
+  public selectedUsers = [];
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private loadingCtrl: LoadingController,
               public events: Events) {
 
-    console.log('enter view');
-
-    this.events.subscribe('multiselect:user', (users) => {
-      console.log(users);
+    this.events.subscribe('multiselect:user', (res) => {
+      this.selectedUsers = res;
     });
-  }
-
-  ionViewDidLoad() {
   }
 
   async uploadPhoto() {

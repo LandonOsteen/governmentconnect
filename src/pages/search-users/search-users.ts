@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {UserProvider} from '../../providers/user/user';
-import {ConnectionProvider} from '../../providers/connection/connection';
-import * as _ from 'lodash/fp';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
+import { ConnectionProvider } from '../../providers/connection/connection';
 
 @IonicPage()
 @Component({

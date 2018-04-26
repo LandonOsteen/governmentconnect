@@ -27,6 +27,11 @@
 
   </ion-list>
 
+  <ng-container *ngIf="selectedUsers && selectedUsers.length > 0">
+    <group-members [users]="selectedUsers"></group-members>
+  </ng-container>
+
+
   <div class="btn-wrapper">
     <button ion-button block outline color="primary" navPush="SearchUsersPage"
             [navParams]="{limitOnContacts:true, multiselect: true}">
