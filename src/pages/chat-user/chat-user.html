@@ -7,14 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title *ngIf="user">
-      {{ user.firstName }} {{ user.lastName }}
-      <span class="sub-title">{{user.status}}</span>
+    <ion-title *ngIf="channel">
+      {{channel.name}}
+      <span class="sub-title">{{channel.status}}</span>
     </ion-title>
 
-    <ion-buttons end *ngIf="user">
+    <ion-buttons end *ngIf="channel">
       <span class="chat-avatar">
-      <img src="{{user.photoUrl}}">
+      <img src="{{channel.photoUrl}}">
     </span>
     </ion-buttons>
   </ion-navbar>

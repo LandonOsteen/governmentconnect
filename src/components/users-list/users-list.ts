@@ -1,4 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { Events } from 'ionic-angular';
+import _ from 'lodash';
 
 @Component({
   selector: 'users-list',
@@ -8,12 +10,12 @@ export class UsersListComponent {
   @Input('users') users: any[] = [];
   @Input('loading') loading: boolean = false;
   @Input('pushPage') pushPage: any;
-  @Input('isGroupSearch') isGroupSearch: boolean = false;
+  @Input('multiselect') multiselect: boolean = false;
+  public selectedUsers = [];
 
   public maxSlice = 20;
-  public addUserToGroup = false;
 
-  constructor() {
+  constructor(public events: Events) {
   }
 
   public getNavParams(user) {
@@ -24,12 +26,6 @@ export class UsersListComponent {
     if (changes.users) {
       this.maxSlice = 20;
     }
-
-    console.log(changes.isGroupSearch);
-
-    if (changes.isGroupSearch && changes.isGroupSearch.currentValue) {
-      this.addUserToGroup = true;
-    }
   }
 
   doInfinite(infiniteScroll) {
@@ -38,4 +34,13 @@ export class UsersListComponent {
     infiniteScroll.complete();
   }
 
+  addUser(user) {
+    this.selectedUsers.push(user);
+
+    this.events.publish('multiselect:user', this.selectedUsers);
+  }
+
+  isUserSelected(user) {
+    return _.includes(this.selectedUsers, user);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -13,12 +13,16 @@ export class GroupChatSettingsPage {
     photoUrl: ''
   };
 
-  public groupUsers: User[];
-  public params = 'groupSearch';
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              public events: Events) {
+
+    console.log('enter view');
+
+    this.events.subscribe('multiselect:user', (users) => {
+      console.log(users);
+    });
   }
 
   ionViewDidLoad() {

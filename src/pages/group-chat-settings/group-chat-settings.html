@@ -28,7 +28,8 @@
   </ion-list>
 
   <div class="btn-wrapper">
-    <button ion-button block outline color="primary" navPush="SearchUsersPage" [navParams]="params">
+    <button ion-button block outline color="primary" navPush="SearchUsersPage"
+            [navParams]="{limitOnContacts:true, multiselect: true}">
       Add Users
     </button>
 

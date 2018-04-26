@@ -1,8 +1,30 @@
 <div class="users-list">
-  <div class="user" *ngFor="let user of users.slice(0, maxSlice)" [navPush]="pushPage" [navParams]="getNavParams(user)">
-    <img class="user-image" [src]="user.photoUrl"/>
-    <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
-    <div class="user-subtitle">{{user.title}}</div>
+
+  <div class="user" *ngFor="let user of users.slice(0, maxSlice)">
+    <ng-container *ngIf="!multiselect; else multiselectTemplate">
+      <div [navPush]="pushPage" [navParams]="getNavParams(user)">
+        <div class="user-image-wrap">
+          <img class="user-image" [src]="user.photoUrl"/>
+        </div>
+
+        <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
+        <div class="user-subtitle">{{user.title}}</div>
+      </div>
+    </ng-container>
+
+    <ng-template #multiselectTemplate>
+      <div class="user-wrap" (click)="addUser(user)">
+        <div class="user-image-wrap">
+          <img class="user-image" [src]="user.photoUrl"/>
+
+          <span *ngIf="isUserSelected(user)" class="selected-user">User <br> Selected</span>
+        </div>
+
+        <div class="user-title">{{user.firstName}} {{user.lastName}}</div>
+        <div class="user-subtitle">{{user.title}}</div>
+      </div>
+    </ng-template>
+
   </div>
 
   <div class="no-users-message" *ngIf="users.length === 0 && !loading">

@@ -6,14 +6,14 @@
             navPush="ChatUserPage"
             [navParams]="getNavParams(channel)">
 
-    <ion-avatar item-start *ngIf="channel.homologousUser">
-      <img src="{{ channel.homologousUser.photoUrl }}">
+    <ion-avatar item-start *ngIf="channel">
+      <img src="{{ channel.photoUrl }}">
     </ion-avatar>
-    <h2 *ngIf="channel.homologousUser">
-      {{ channel.homologousUser.firstName}} {{ channel.homologousUser.lastName}}
+    <h2 *ngIf="channel">
+      {{ channel.name}}
     </h2>
-    <p *ngIf="channel.homologousUser">
-      {{ channel.homologousUser.status}}
+    <p *ngIf="channel">
+      {{ channel.status}}
     </p>
     <ion-note item-end>{{channel.lastMessageAt | amTimeAgo}}</ion-note>
 

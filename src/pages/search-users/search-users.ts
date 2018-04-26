@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {UserProvider} from '../../providers/user/user';
+import {ConnectionProvider} from '../../providers/connection/connection';
+import * as _ from 'lodash/fp';
 
 @IonicPage()
 @Component({
@@ -13,34 +15,51 @@ export class SearchUsersPage {
   public query = '';
   public loading = true;
   public isGroupSearch = false;
+  private params: { selectionPage?: string, limitOnContacts?: boolean, multiselect?: boolean };
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public userProvider: UserProvider,
+              public connectionProvider: ConnectionProvider,
               public viewController: ViewController) {
   }
 
   async ionViewDidLoad() {
-    this.loading = true;
-    this.users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*');
-    this.loading = false;
+    this.params = this.navParams.data;
 
-    this.isGroupSearch = this.navParams.get('data') === 'groupSearch';
+    this.loading = true;
+    await this.search();
+    this.loading = false;
+  }
+
+  private async search() {
+    this.users = await this.userProvider.searchUsers(this.query ? this.query + '*' : '*');
+
+    if (this.params && this.params.limitOnContacts) {
+      const contactsIds = await this.connectionProvider.getConnectionsIds();
+
+      this.users = this.users.filter((user) => {
+        return contactsIds.indexOf(user.uid) !== -1;
+      });
+    }
   }
 
   getPushPage() {
-    return (this.navParams.data) ? this.navParams.data : 'UserPage';
+    const params = this.params;
+    return (params && params.selectionPage) ? params.selectionPage : 'UserPage';
   }
 
   async onQuery(ev) {
     this.loading = true;
-
-    this.users = await this.userProvider.searchUsers(this.query + '*');
-
+    await this.search();
     this.loading = false;
   }
 
   dismiss() {
     this.viewController.dismiss();
+  }
+
+  isMultiselection() {
+    return this.params && this.params.multiselect;
   }
 }

@@ -14,16 +14,6 @@ export class ConnectionProvider {
               public userProvider: UserProvider) {
   }
 
-  // async getContact(contactId: string): Promise<{ err?: any, contact?: Connection }> {
-  //   const user = this.firebaseAuth.auth.currentUser;
-  //
-  //   return await this.firebaseDatabase
-  //     .object(`connections/${user.uid}/${contactId}`)
-  //     .valueChanges()
-  //     .take(1)
-  //     .toPromise()
-  // }
-
   async getConnections() {
     const user = this.firebaseAuth.auth.currentUser;
     const userId = user.uid;
@@ -44,6 +34,17 @@ export class ConnectionProvider {
     return result;
 
 
+  }
+
+  async getConnectionsIds() {
+    const user = this.firebaseAuth.auth.currentUser;
+    const userId = user.uid;
+    const contacts = await this.firebaseDatabase
+      .object(`connections/${userId}`)
+      .valueChanges()
+      .take(1)
+      .toPromise();
+    return Object.keys(contacts);
   }
 
   async isUserConnectedTo(connectionId: string) {
