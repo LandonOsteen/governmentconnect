@@ -56,4 +56,11 @@ export class NotificationsProvider {
     });
   }
 
+  async clearAllNotifications() {
+    let userId = this.firebaseAuth.auth.currentUser.uid;
+    await this.firebaseDatabase
+      .object(`/notifications/${userId}`)
+      .remove();
+  }
+
 }

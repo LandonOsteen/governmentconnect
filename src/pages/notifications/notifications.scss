@@ -72,6 +72,12 @@ page-notifications {
   color: map-get($map: $colors, $key: semidark)
 }
 
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .notification-actions {
   padding: 5px 0 0;
   margin: 0 0 0 58px;
